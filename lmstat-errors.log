@@ -1,0 +1,28 @@
+lmutil - Copyright (c) 1989-2005 Macrovision Europe Ltd. and/or Macrovision Corporation. All Rights Reserved.
+Flexible License Manager status on Thu 11/20/2008 15:42
+
+[Detecting lmgrd processes...]
+License server status: 7601@SERVER001,7601@SERVER002,7601@SERVER003
+    License file(s) on SERVER001: D:\License Servers\Theorem\theorem.dat:
+
+  SERVER001: license server UP (MASTER) v10.8
+  SERVER002: license server UP (MASTER) v10.8
+  SERVER003: license server UP v10.8
+
+Vendor daemon status (on SERVER002):
+
+   theorem: The desired vendor daemon is down. (-97,121)
+
+Feature usage info:
+
+Users of Catia_GCO: Cannot get users of Catia_GCO: No such feature exists. (-5,222)
+Users of Catia_GCO_V4: Cannot get users of Catia_GCO_V4: No such feature exists. (-5,222)
+Users of Catia_UG: Cannot get users of Catia_UG: No such feature exists. (-5,222)
+Users of Catia_UG_2D: Cannot get users of Catia_UG_2D: No such feature exists. (-5,222)
+Users of GCO_Catia: Cannot get users of GCO_Catia: No such feature exists. (-5,222)
+Users of GCO_Parasolid: Cannot get users of GCO_Parasolid: No such feature exists. (-5,222)
+Users of GCO_UG: Cannot get users of GCO_UG: No such feature exists. (-5,222)
+Users of GCO_Viewer: Cannot get users of GCO_Viewer: No such feature exists. (-5,222)
+Users of UG_Catia: Cannot get users of UG_Catia: No such feature exists. (-5,222)
+Users of UG_Catia_2D: Cannot get users of UG_Catia_2D: No such feature exists. (-5,222)
+Users of UG_GCO: Cannot get users of UG_GCO: No such feature exists. (-5,222)

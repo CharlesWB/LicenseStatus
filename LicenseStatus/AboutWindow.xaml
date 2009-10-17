@@ -1,0 +1,98 @@
+﻿<Window x:Class="LicenseStatus.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:LicenseStatus"
+        xmlns:licenseManager="clr-namespace:CWBozarth.LicenseManager;assembly=LicenseManager"
+        Title="{Binding Source={x:Static local:AboutWindow.AssemblyTitle}, StringFormat={} About \{0\}}"
+        Icon="Images\Application.ico"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner">
+    
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommand_Executed" />
+    </Window.CommandBindings>
+    
+    <Window.Resources>
+        <!-- Used to access the LicenseStatus assembly's information. -->
+        <!-- Using GetExecutingAssembly returns PresentationFramework.dll instead of the application's assembly. -->
+        <ObjectDataProvider x:Key="ApplicationAssembly" ObjectType="{x:Type sys:Reflection.Assembly}" MethodName="GetAssembly">
+            <ObjectDataProvider.MethodParameters>
+                <x:TypeExtension Type="{x:Type local:AboutWindow}" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <!-- Used to access the LicenseManager assembly's version. -->
+        <ObjectDataProvider x:Key="ApplicationAssemblyName" ObjectInstance="{StaticResource ApplicationAssembly}" MethodName="GetName" />
+
+        <!-- Used to access the LicenseManager assembly's information. -->
+        <ObjectDataProvider x:Key="LicenseManagerAssembly" ObjectType="{x:Type sys:Reflection.Assembly}" MethodName="GetAssembly">
+            <ObjectDataProvider.MethodParameters>
+                <x:TypeExtension Type="{x:Type licenseManager:License}" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        
+        <!-- Used to access the LicenseManager assembly's version. -->
+        <ObjectDataProvider x:Key="LicenseManagerAssemblyName" ObjectInstance="{StaticResource LicenseManagerAssembly}" MethodName="GetName" />
+
+        <!-- Used as the background of the title area. -->
+        <LinearGradientBrush x:Key="TitleBackground" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="MediumBlue" Offset="0" />
+            <GradientStop Color="MidnightBlue" Offset="1" />
+        </LinearGradientBrush>
+
+        <!-- Used as the background of the information area. -->
+        <LinearGradientBrush x:Key="InformationBackground" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#CDF" Offset="0" />
+            <GradientStop Color="Transparent" Offset="1" />
+        </LinearGradientBrush>
+
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <Border Padding="10,5,10,10" Background="{StaticResource TitleBackground}" Grid.Row="0">
+            <StackPanel>
+                <TextBlock Text="{Binding Source={x:Static local:AboutWindow.AssemblyTitle}}" FontSize="20" FontWeight="Bold" Foreground="White" />
+                <TextBlock Text="{Binding Source={x:Static local:AboutWindow.AssemblyDescription}}" Foreground="White" Margin="10,0,0,0" />
+            </StackPanel>
+        </Border>
+
+        <Border Padding="10" Background="{StaticResource InformationBackground}" Grid.Row="1">
+            <StackPanel>
+                <TextBlock Text="{Binding Source={StaticResource ApplicationAssembly}, Path=ManifestModule.Name}" />
+                <TextBlock>
+                    <TextBlock Text="Version" />
+                    <TextBlock Text="{Binding Source={StaticResource ApplicationAssemblyName}, Path=Version}" />
+                </TextBlock>
+                
+                <TextBlock Text="{Binding Source={x:Static local:AboutWindow.AssemblyCompany}}" Margin="0,5,0,0" />
+                <TextBlock>
+                    <TextBlock Text="Copyright" />
+                    <TextBlock Text="{Binding Source={x:Static local:AboutWindow.AssemblyCopyright}}" />
+                </TextBlock>
+                <TextBlock>
+                    <Hyperlink NavigateUri="http://charlesbozarth.spaces.live.com" RequestNavigate="Hyperlink_RequestNavigate">http://charlesbozarth.spaces.live.com</Hyperlink>
+                </TextBlock>
+                
+                <!-- Display the LicenseManager assembly's information. -->
+                <TextBlock Margin="0,15,0,0" Text="Components:" />
+                <TextBlock Margin="10,0,0,0">
+                    <TextBlock Text="{Binding Source={StaticResource LicenseManagerAssembly}, Path=ManifestModule.Name}" />
+                    <TextBlock>
+                        <TextBlock Text="Version" />
+                        <TextBlock Text="{Binding Source={StaticResource LicenseManagerAssemblyName}, Path=Version}" />
+                    </TextBlock>
+                </TextBlock>
+                
+                <Button Content="OK" IsDefault="True" IsCancel="True" HorizontalAlignment="Right" Width="72" Command="ApplicationCommands.Close" Margin="0,20,0,0" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

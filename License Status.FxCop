@@ -1,0 +1,582 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FxCopProject Version="1.36" Name="My FxCop Project">
+ <ProjectOptions>
+  <SharedProject>True</SharedProject>
+  <Stylesheet Apply="False">c:\program files\microsoft fxcop 1.36\Xml\FxCopReport.xsl</Stylesheet>
+  <SaveMessages>
+   <Project Status="Active, Excluded" NewOnly="False" />
+   <Report Status="Active" NewOnly="False" />
+  </SaveMessages>
+  <ProjectFile Compress="True" DefaultTargetCheck="True" DefaultRuleCheck="True" SaveByRuleGroup="" Deterministic="True" />
+  <EnableMultithreadedLoad>True</EnableMultithreadedLoad>
+  <EnableMultithreadedAnalysis>True</EnableMultithreadedAnalysis>
+  <SourceLookup>True</SourceLookup>
+  <AnalysisExceptionsThreshold>10</AnalysisExceptionsThreshold>
+  <RuleExceptionsThreshold>1</RuleExceptionsThreshold>
+  <Spelling Locale="en-US" />
+  <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
+  <CustomDictionaries SearchFxCopDir="True" SearchUserProfile="True" SearchProjectDir="True" />
+  <SearchGlobalAssemblyCache>False</SearchGlobalAssemblyCache>
+  <DeadlockDetectionTimeout>120</DeadlockDetectionTimeout>
+  <IgnoreGeneratedCode>False</IgnoreGeneratedCode>
+ </ProjectOptions>
+ <Targets>
+  <AssemblyReferenceDirectories>
+   <Directory>$(ProjectDir)/LicenseManager/bin/Debug/</Directory>
+  </AssemblyReferenceDirectories>
+  <Target Name="$(ProjectDir)/LicenseStatus/bin/Debug/LicenseManager.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/LicenseStatus/bin/Debug/LicenseStatus.exe" Analyze="True" AnalyzeAllChildren="True" />
+ </Targets>
+ <Rules>
+  <RuleFiles>
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PortabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="True" AllRulesEnabled="True" />
+  </RuleFiles>
+  <Groups />
+  <Settings />
+ </Rules>
+ <FxCopReport Version="1.36">
+  <Targets>
+   <Target Name="$(ProjectDir)/LicenseStatus/bin/Debug/LicenseManager.dll">
+    <Modules>
+     <Module Name="licensemanager.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2009-06-22 23:38:18Z">
+        <Issue Name="NoStrongName">
+         <Item>'LicenseManager.dll'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="LicenseManager">
+        <Types>
+         <Type Name="Feature">
+          <Members>
+           <Member Name="#Type">
+            <Messages>
+             <Message TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721" Created="2008-11-18 02:19:19Z" FixCategory="NonBreaking">
+              <Issue Name="BaseType">
+               <Item>'Feature.Type'</Item>
+               <Item>'object.GetType()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="License">
+          <Messages>
+           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2008-11-18 02:19:19Z" FixCategory="DependsOnFix">
+            <Issue Name="DependsOnFix">
+             <Item>'License'</Item>
+             <Item>'Timer', 'Process'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#ConfigureProcess()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-06-22 23:38:18Z">
+              <Issue>
+               <Item>'License.ConfigureProcess()'</Item>
+               <Item>'Process.StartInfo.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.GetStatus()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.ConfigureProcess()'</Item>
+               <Item>'Process.StartInfo.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.GetStatusAsync()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.ConfigureProcess()'</Item>
+               <Item>'ProcessStartInfo.Arguments.set(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.GetStatus()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.ConfigureProcess()'</Item>
+               <Item>'ProcessStartInfo.Arguments.set(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.GetStatusAsync()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.ConfigureProcess()'</Item>
+               <Item>'ProcessStartInfo.CreateNoWindow.set(bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.GetStatus()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.ConfigureProcess()'</Item>
+               <Item>'ProcessStartInfo.CreateNoWindow.set(bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.GetStatusAsync()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.ConfigureProcess()'</Item>
+               <Item>'ProcessStartInfo.FileName.set(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.GetStatus()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.ConfigureProcess()'</Item>
+               <Item>'ProcessStartInfo.FileName.set(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.GetStatusAsync()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.ConfigureProcess()'</Item>
+               <Item>'ProcessStartInfo.RedirectStandardOutput.set(bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.GetStatus()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.ConfigureProcess()'</Item>
+               <Item>'ProcessStartInfo.RedirectStandardOutput.set(bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.GetStatusAsync()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.ConfigureProcess()'</Item>
+               <Item>'ProcessStartInfo.UseShellExecute.set(bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.GetStatus()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.ConfigureProcess()'</Item>
+               <Item>'ProcessStartInfo.UseShellExecute.set(bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.ConfigureProcess()'&#xD;&#xA;   -&gt;'License.GetStatusAsync()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetStatus()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-06-22 23:38:18Z">
+              <Issue>
+               <Item>'License.GetStatus()'</Item>
+               <Item>'Process.Close()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.GetStatus()'&#xD;&#xA;   -&gt;'License.GetStatus()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.GetStatus()'</Item>
+               <Item>'Process.EnableRaisingEvents.set(bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.GetStatus()'&#xD;&#xA;   -&gt;'License.GetStatus()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.GetStatus()'</Item>
+               <Item>'Process.StandardOutput.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.GetStatus()'&#xD;&#xA;   -&gt;'License.GetStatus()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.GetStatus()'</Item>
+               <Item>'Process.Start()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.GetStatus()'&#xD;&#xA;   -&gt;'License.GetStatus()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.GetStatus()'</Item>
+               <Item>'Process.WaitForExit()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.GetStatus()'&#xD;&#xA;   -&gt;'License.GetStatus()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetStatusAsync()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-06-22 23:38:18Z">
+              <Issue>
+               <Item>'License.GetStatusAsync()'</Item>
+               <Item>'Process.BeginOutputReadLine()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.GetStatusAsync()'&#xD;&#xA;   -&gt;'License.GetStatusAsync()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.GetStatusAsync()'</Item>
+               <Item>'Process.EnableRaisingEvents.set(bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.GetStatusAsync()'&#xD;&#xA;   -&gt;'License.GetStatusAsync()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.GetStatusAsync()'</Item>
+               <Item>'Process.Exited.add(EventHandler)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.GetStatusAsync()'&#xD;&#xA;   -&gt;'License.GetStatusAsync()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.GetStatusAsync()'</Item>
+               <Item>'Process.OutputDataReceived.add(DataReceivedEventHandler)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.GetStatusAsync()'&#xD;&#xA;   -&gt;'License.GetStatusAsync()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.GetStatusAsync()'</Item>
+               <Item>'Process.Start()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.GetStatusAsync()'&#xD;&#xA;   -&gt;'License.GetStatusAsync()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetStatusAsyncCancel()">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-06-22 23:38:18Z">
+              <Issue>
+               <Item>'License.GetStatusAsyncCancel()'</Item>
+               <Item>'Process.CancelOutputRead()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.GetStatusAsyncCancel()'&#xD;&#xA;   -&gt;'License.GetStatusAsyncCancel()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.GetStatusAsyncCancel()'</Item>
+               <Item>'Process.EnableRaisingEvents.set(bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.GetStatusAsyncCancel()'&#xD;&#xA;   -&gt;'License.GetStatusAsyncCancel()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'License.GetStatusAsyncCancel()'</Item>
+               <Item>'Process.Kill()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'License.GetStatusAsyncCancel()'&#xD;&#xA;   -&gt;'License.GetStatusAsyncCancel()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="User">
+          <Members>
+           <Member Name="#.ctor(System.String)">
+            <Messages>
+             <Message Id="System.DateTime.TryParseExact(System.String,System.String,System.IFormatProvider,System.Globalization.DateTimeStyles,System.DateTime@)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-11-18 02:19:19Z">
+              <Issue Name="TryParse">
+               <Item>'User.User(string)'</Item>
+               <Item>'DateTime.TryParseExact(string, string, IFormatProvider, DateTimeStyles, out DateTime)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="UtilityProgram">
+          <Members>
+           <Member Name="#Version">
+            <Accessors>
+             <Accessor Name="#get_Version()">
+              <Messages>
+               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-06-22 23:38:18Z">
+                <Issue>
+                 <Item>'UtilityProgram.Version.get()'</Item>
+                 <Item>'FileVersionInfo.FileBuildPart.get()'</Item>
+                 <Item>&#xD;&#xA;   -&gt;'UtilityProgram.Version.get()'&#xD;&#xA;   -&gt;'UtilityProgram.Version.get()'</Item>
+                </Issue>
+                <Issue>
+                 <Item>'UtilityProgram.Version.get()'</Item>
+                 <Item>'FileVersionInfo.FileMajorPart.get()'</Item>
+                 <Item>&#xD;&#xA;   -&gt;'UtilityProgram.Version.get()'&#xD;&#xA;   -&gt;'UtilityProgram.Version.get()'</Item>
+                </Issue>
+                <Issue>
+                 <Item>'UtilityProgram.Version.get()'</Item>
+                 <Item>'FileVersionInfo.FileMinorPart.get()'</Item>
+                 <Item>&#xD;&#xA;   -&gt;'UtilityProgram.Version.get()'&#xD;&#xA;   -&gt;'UtilityProgram.Version.get()'</Item>
+                </Issue>
+                <Issue>
+                 <Item>'UtilityProgram.Version.get()'</Item>
+                 <Item>'FileVersionInfo.FilePrivatePart.get()'</Item>
+                 <Item>&#xD;&#xA;   -&gt;'UtilityProgram.Version.get()'&#xD;&#xA;   -&gt;'UtilityProgram.Version.get()'</Item>
+                </Issue>
+                <Issue>
+                 <Item>'UtilityProgram.Version.get()'</Item>
+                 <Item>'FileVersionInfo.GetVersionInfo(string)'</Item>
+                 <Item>&#xD;&#xA;   -&gt;'UtilityProgram.Version.get()'&#xD;&#xA;   -&gt;'UtilityProgram.Version.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/LicenseStatus/bin/Debug/LicenseStatus.exe">
+    <Modules>
+     <Module Name="licensestatus.exe">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2009-08-21 03:06:00Z">
+        <Issue Name="NoStrongName">
+         <Item>'LicenseStatus.exe'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2009-08-21 03:06:00Z">
+        <Issue>
+         <Item>'LicenseStatus.exe'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Created="2009-08-21 03:06:00Z">
+        <Issue>
+         <Item>'LicenseStatus.exe'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="LicenseStatus">
+        <Types>
+         <Type Name="AboutWindow">
+          <Members>
+           <Member Name="#System.Windows.Markup.IComponentConnector.Connect(System.Int32,System.Object)">
+            <Messages>
+             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2009-08-21 03:06:00Z">
+              <Issue>
+               <Item>'AboutWindow'</Item>
+               <Item>'IComponentConnector.Connect(int, object)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="CueBannerService">
+          <Members>
+           <Member Name="#GetCueBannerAdorner(System.Windows.Controls.Control)">
+            <Messages>
+             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2009-08-21 03:06:00Z">
+              <Issue Name="Local">
+               <Item>'adorner'</Item>
+               <Item>'CueBannerAdorner'</Item>
+               <Item>'CueBannerService.GetCueBannerAdorner(Control)'</Item>
+               <Item>isint</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FeatureUserItem">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-08-21 03:06:00Z">
+            <Issue Name="Equals">
+             <Item>'FeatureUserItem'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'FeatureUserItem'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="LicenseListViewModel">
+          <Members>
+           <Member Name="#UnusedFeatures_Filter(System.Object,System.Windows.Data.FilterEventArgs)">
+            <Messages>
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2009-08-21 03:06:00Z">
+              <Issue Name="Member">
+               <Item>'LicenseListViewModel.UnusedFeatures_Filter(object, FilterEventArgs)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ReviewVisibleEventHandlers" Category="Microsoft.Security" CheckId="CA2109" Created="2009-08-21 03:06:00Z">
+              <Issue>
+               <Item>'LicenseListViewModel.UnusedFeatures_Filter(object, FilterEventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="LicenseViewModel">
+          <Members>
+           <Member Name="#Error">
+            <Accessors>
+             <Accessor Name="#get_Error()">
+              <Messages>
+               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-08-21 03:06:00Z" FixCategory="Breaking">
+                <Issue Name="PropertyGetter" Level="Warning">
+                 <Item>'LicenseViewModel.Error.get()'</Item>
+                 <Item>'NotImplementedException'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="MainWindow">
+          <Members>
+           <Member Name="#AboutCommand">
+            <Messages>
+             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2009-08-21 03:06:00Z">
+              <Issue>
+               <Item>'MainWindow.AboutCommand'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#BrowseLMUtilCommand">
+            <Messages>
+             <Message Id="Util" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-08-21 03:06:00Z">
+              <Issue Name="Member">
+               <Item>Util</Item>
+               <Item>'MainWindow.BrowseLMUtilCommand'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2009-08-21 03:06:00Z">
+              <Issue>
+               <Item>'MainWindow.BrowseLMUtilCommand'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ExitCommand">
+            <Messages>
+             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2009-08-21 03:06:00Z">
+              <Issue>
+               <Item>'MainWindow.ExitCommand'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ProgramText">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-08-21 03:06:00Z">
+              <Issue>
+               <Item>'MainWindow.ProgramText'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ShowUnusedFeaturesCommand">
+            <Messages>
+             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2009-08-21 03:06:00Z">
+              <Issue>
+               <Item>'MainWindow.ShowUnusedFeaturesCommand'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#System.Windows.Markup.IComponentConnector.Connect(System.Int32,System.Object)">
+            <Messages>
+             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2009-08-21 03:06:00Z">
+              <Issue Name="Parameter">
+               <Item>'target'</Item>
+               <Item>'CommandBinding'</Item>
+               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
+               <Item>castclass</Item>
+              </Issue>
+              <Issue Name="Parameter">
+               <Item>'target'</Item>
+               <Item>'CommandBinding'</Item>
+               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
+               <Item>castclass</Item>
+              </Issue>
+              <Issue Name="Parameter">
+               <Item>'target'</Item>
+               <Item>'CommandBinding'</Item>
+               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
+               <Item>castclass</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2009-08-21 03:06:00Z">
+              <Issue>
+               <Item>'MainWindow'</Item>
+               <Item>'IComponentConnector.Connect(int, object)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#System.Windows.Markup.IStyleConnector.Connect(System.Int32,System.Object)">
+            <Messages>
+             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2009-08-21 03:06:00Z">
+              <Issue Name="Parameter">
+               <Item>'target'</Item>
+               <Item>'Style'</Item>
+               <Item>'MainWindow.IStyleConnector.Connect(int, object)'</Item>
+               <Item>castclass</Item>
+              </Issue>
+              <Issue Name="Parameter">
+               <Item>'target'</Item>
+               <Item>'Style'</Item>
+               <Item>'MainWindow.IStyleConnector.Connect(int, object)'</Item>
+               <Item>castclass</Item>
+              </Issue>
+              <Issue Name="Parameter">
+               <Item>'target'</Item>
+               <Item>'Style'</Item>
+               <Item>'MainWindow.IStyleConnector.Connect(int, object)'</Item>
+               <Item>castclass</Item>
+              </Issue>
+              <Issue Name="Parameter">
+               <Item>'target'</Item>
+               <Item>'Style'</Item>
+               <Item>'MainWindow.IStyleConnector.Connect(int, object)'</Item>
+               <Item>castclass</Item>
+              </Issue>
+              <Issue Name="Parameter">
+               <Item>'target'</Item>
+               <Item>'TextBox'</Item>
+               <Item>'MainWindow.IStyleConnector.Connect(int, object)'</Item>
+               <Item>castclass</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2009-08-21 03:06:00Z">
+              <Issue>
+               <Item>'MainWindow'</Item>
+               <Item>'IStyleConnector.Connect(int, object)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+  </Targets>
+  <Rules>
+   <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
+    <Resolution Name="NoStrongName">Sign {0} with a strong name key.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
+    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800">
+    <Resolution Name="Local">{0}, a variable, is cast to type {1} multiple times in method {2}. Cache the result of the 'as' operator or direct cast in order to eliminate the redundant {3} instruction.</Resolution>
+    <Resolution Name="Parameter">{0}, a parameter, is cast to type {1} multiple times in method {2}. Cache the result of the 'as' operator or direct cast in order to eliminate the redundant {3} instruction.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806">
+    <Resolution Name="TryParse">{0} calls {1} but does not explicitly check whether the conversion succeeded. Either use the return value in a conditional statement or verify that the call site expects that the out argument will be set to the default value when the conversion fails.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122">
+    <Resolution Name="Default">{0} calls into {1} which has a LinkDemand. By making this call, {1} is indirectly exposed to user code. Review the following call stack that might expose a way to circumvent security protection: {2}</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065">
+    <Resolution Name="PropertyGetter">{0} creates an exception of type {1}, an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
+    <Resolution Name="Member">Correct the spelling of '{0}' in member name {1} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
+    <Resolution Name="Member">Remove the underscores from member name {0}.</Resolution>
+   </Rule>
+   <Rule TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033">
+    <Resolution Name="Default">Make {0} sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of {1} and is visible to derived classes.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014">
+    <Resolution Name="Default">Mark {0} with CLSCompliant(true) because it exposes externally visible types.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
+    <Resolution Name="Default">Because assembly {0} contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Resolution>
+   </Rule>
+   <Rule TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211">
+    <Resolution Name="Default">Consider making {0} non-public or a constant.</Resolution>
+   </Rule>
+   <Rule TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815">
+    <Resolution Name="Equals">{0} should override Equals.</Resolution>
+    <Resolution Name="op_Equality">{0} should override the equality (==) and inequality (!=) operators.</Resolution>
+   </Rule>
+   <Rule TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721">
+    <Resolution Name="BaseType">The property name {0} is confusing given the existence of inherited method {1}. Rename or remove this property.</Resolution>
+   </Rule>
+   <Rule TypeName="ReviewVisibleEventHandlers" Category="Microsoft.Security" CheckId="CA2109">
+    <Resolution Name="Default">Consider making {0} not externally visible.</Resolution>
+   </Rule>
+   <Rule TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001">
+    <Resolution Name="DependsOnFix">Implement IDisposable on {0} because it creates members of the following IDisposable types: {1}. If {0} has previously shipped, adding new members that implement IDisposable to this type is considered a breaking change to existing consumers.</Resolution>
+   </Rule>
+  </Rules>
+ </FxCopReport>
+</FxCopProject>

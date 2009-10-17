@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{280E7C3D-FD51-442D-A5FB-35309A245B23}"
+	ProjectSection(SolutionItems) = preProject
+		License Status.FxCop = License Status.FxCop
+		lmstat-acad.log = lmstat-acad.log
+		lmstat-connect.log = lmstat-connect.log
+		lmstat-errors.log = lmstat-errors.log
+		lmstat-invalid.log = lmstat-invalid.log
+		lmstat-large.log = lmstat-large.log
+		lmstat-nx.log = lmstat-nx.log
+		lmstat-test.log = lmstat-test.log
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseStatus", "LicenseStatus\LicenseStatus.csproj", "{46C70832-B7BC-49E5-BAC1-32B8D7F0AE45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseManager", "LicenseManager\LicenseManager.csproj", "{79BD1B1B-B2D8-4DC9-8ED8-C3676CFC1AC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseManagerTests", "LicenseManagerTests\LicenseManagerTests.csproj", "{6FB28D7E-0B26-4AF6-BF24-257458E5A1EB}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "LicenseStatusSetup", "LicenseStatusSetup\LicenseStatusSetup.vdproj", "{478516CD-EC9F-43C3-9CD4-81886485E984}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{46C70832-B7BC-49E5-BAC1-32B8D7F0AE45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46C70832-B7BC-49E5-BAC1-32B8D7F0AE45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46C70832-B7BC-49E5-BAC1-32B8D7F0AE45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46C70832-B7BC-49E5-BAC1-32B8D7F0AE45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79BD1B1B-B2D8-4DC9-8ED8-C3676CFC1AC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79BD1B1B-B2D8-4DC9-8ED8-C3676CFC1AC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79BD1B1B-B2D8-4DC9-8ED8-C3676CFC1AC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79BD1B1B-B2D8-4DC9-8ED8-C3676CFC1AC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FB28D7E-0B26-4AF6-BF24-257458E5A1EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FB28D7E-0B26-4AF6-BF24-257458E5A1EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FB28D7E-0B26-4AF6-BF24-257458E5A1EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{478516CD-EC9F-43C3-9CD4-81886485E984}.Debug|Any CPU.ActiveCfg = Debug
+		{478516CD-EC9F-43C3-9CD4-81886485E984}.Release|Any CPU.ActiveCfg = Release
+		{478516CD-EC9F-43C3-9CD4-81886485E984}.Release|Any CPU.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

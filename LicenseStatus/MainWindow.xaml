@@ -1,0 +1,700 @@
+﻿<Window x:Class="LicenseStatus.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+        xmlns:local="clr-namespace:LicenseStatus"
+        xmlns:appSettings="clr-namespace:LicenseStatus.Properties"
+        xmlns:licenseManager="clr-namespace:CWBozarth.LicenseManager;assembly=LicenseManager"
+        Title="License Status"
+        Icon="Images\Application.ico"
+        WindowState="{Binding Source={x:Static appSettings:Settings.Default}, Path=WindowState, Mode=TwoWay}"
+        Height="{Binding Source={x:Static appSettings:Settings.Default}, Path=WindowHeight, Mode=TwoWay}"
+        Width="{Binding Source={x:Static appSettings:Settings.Default}, Path=WindowWidth, Mode=TwoWay}"
+        Top="{Binding Source={x:Static appSettings:Settings.Default}, Path=WindowTop, Mode=TwoWay}"
+        Left="{Binding Source={x:Static appSettings:Settings.Default}, Path=WindowLeft, Mode=TwoWay}"
+        Closed="MainWindow_Closed">
+    
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:MainWindow.ShowUnusedFeaturesCommand}" Executed="ShowUnusedFeaturesCommand_Executed" />
+        <CommandBinding Command="{x:Static local:MainWindow.AboutCommand}" Executed="AboutCommand_Executed" />
+        <CommandBinding Command="{x:Static local:MainWindow.ExitCommand}" Executed="ExitCommand_Executed" />
+        <CommandBinding Command="{x:Static local:MainWindow.BrowseLMUtilCommand}" Executed="BrowseLMUtilCommand_Executed" />
+    </Window.CommandBindings>
+    
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- From http://www.grafile.com/presentation/Vista_Toolbar_library.html -->
+                <ResourceDictionary Source="Images\Error.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <local:TimeToTimeDayConverter x:Key="TimeToTimeDayConverter" />
+            <local:DateTimeToRelativeDescriptionConverter x:Key="DateTimeToRelativeDescriptionConverter" />
+            <local:MinimumDateToEmptyStringConverter x:Key="MinimumDateToEmptyStringConverter" />
+            <local:NullableValueConverter x:Key="NullableValueConverter" />
+            <local:CountToCountPhraseConverter x:Key="CountToCountPhraseConverter" />
+            <local:IntegerToVisibilityConverter x:Key="IntegerToVisibilityConverter" />
+            <local:EmptyStringToNoneConverter x:Key="EmptyStringToNoneConverter" />
+            <local:EmptyStringToUnspecifiedConverter x:Key="EmptyStringToUnspecifiedConverter" />
+            <local:ZeroGroupNameToNoneConverter x:Key="ZeroGroupNameToNoneConverter" />
+            <local:FileInfoToStringConverter x:Key="FileInfoToStringConverter" />
+            <local:BooleanToYesNoConverter x:Key="BooleanToYesNoConverter" />
+            <local:WrapPanelToMinMaxHeightConverter x:Key="WrapPanelToMinMaxHeightConverter" />
+            <local:ZeroToEmptyStringConverter x:Key="ZeroToEmptyStringConverter" />
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+            <local:LicenseListViewModel x:Key="LicenseListViewModel" />
+            <CollectionViewSource x:Key="LicenseListSource" Source="{Binding Source={StaticResource LicenseListViewModel}, Path=Licenses}" />
+            <CollectionViewSource x:Key="FeaturesUsersSource" Source="{Binding Source={StaticResource LicenseListSource}, Path=FeaturesUsers}" />
+
+            <!-- Used as the color of property labels. -->
+            <Color x:Key="LabelColor">DimGray</Color>
+
+            <!-- Used to define the style of labels of editable property labels. -->
+            <!-- The padding's top offset is intended to align the baseline of the label with a text box's text. -->
+            <Style x:Key="EditablePropertyLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="Foreground" Value="DimGray" />
+                <Setter Property="HorizontalContentAlignment" Value="Right" />
+                <Setter Property="Padding" Value="5,4" />
+            </Style>
+            
+            <!-- Used to define the style of text boxes of editable property values. -->
+            <!-- This has a hidden border unless it has focus or the mouse is over it. -->
+            <Style x:Key="EditablePropertyTextHiddenBorderStyle" TargetType="{x:Type TextBox}">
+                <Setter Property="MinWidth" Value="20" />
+                <EventSetter Event="GotFocus" Handler="TextBox_GotFocus" />
+                <EventSetter Event="PreviewMouseLeftButtonDown" Handler="TextBox_PreviewMouseLeftButtonDown" />
+                <Style.Triggers>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsMouseOver" Value="False" />
+                            <Condition Property="IsFocused" Value="False" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" Value="{x:Null}" />
+                        <Setter Property="BorderBrush" Value="{x:Null}" />
+                    </MultiTrigger>
+                </Style.Triggers>
+            </Style>
+            
+            <!-- Used to define the style of text boxes of editable property values. -->
+            <Style x:Key="EditablePropertyTextStyle" TargetType="{x:Type TextBox}">
+                <Setter Property="Margin" Value="0,1,0,1" />
+                <Setter Property="MinWidth" Value="40" />
+                <EventSetter Event="GotFocus" Handler="TextBox_GotFocus" />
+                <EventSetter Event="PreviewMouseLeftButtonDown" Handler="TextBox_PreviewMouseLeftButtonDown" />
+                <Style.Triggers>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsMouseOver" Value="False" />
+                            <Condition Property="IsFocused" Value="False" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" Value="{x:Null}" />
+                    </MultiTrigger>
+                    <Trigger Property="Validation.HasError" Value="True">
+                        <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                    </Trigger>
+                    <!-- The check for an empty Text is a quick method for making sure the cue banner is fully visible. -->
+                    <Trigger Property="Text" Value="{x:Null}">
+                        <Setter Property="MinWidth" Value="120" />
+                    </Trigger>
+                    <Trigger Property="Text" Value="">
+                        <Setter Property="MinWidth" Value="120" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!-- Used to define the style of text boxes of editable property values. -->
+            <!-- This has an extra right margin for spacing content to the right. -->
+            <Style x:Key="EditablePropertyTextExtendRightStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource EditablePropertyTextStyle}">
+                <Setter Property="Margin" Value="0,1,10,1" />
+            </Style>
+
+            <!-- Used to define the base style of read-only property values and labels. -->
+            <!-- The left and right margin's are there to have the same separation as a Label and TextBox. -->
+            <Style x:Key="ReadOnlyPropertyBaseStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="Margin" Value="5,1,5,1" />
+            </Style>
+
+            <!-- Used to define the style of text blocks of read-only property labels. -->
+            <Style x:Key="ReadOnlyPropertyLabelStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ReadOnlyPropertyBaseStyle}">
+                <Setter Property="Foreground" Value="DimGray" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+            </Style>
+            
+            <!-- Used to define the style of text blocks of read-only property values. -->
+            <Style x:Key="ReadOnlyPropertyTextStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ReadOnlyPropertyBaseStyle}">
+                <Setter Property="MinWidth" Value="40" />
+                <Setter Property="TextTrimming" Value="WordEllipsis" />
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Text}" />
+            </Style>
+            
+            <!-- Used to define the style of text blocks of read-only property labels which are aligned with editable properties. -->
+            <!-- The top margin is increased to align the baseline with a Label or TextBox. -->
+            <Style x:Key="AlignedReadOnlyPropertyLabelStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ReadOnlyPropertyLabelStyle}">
+                <Setter Property="Margin" Value="5,4,5,1" />
+            </Style>
+
+            <!-- Used to define the style of text blocks of read-only property values which are aligned with editable properties. -->
+            <!-- The top margin is increased to align the baseline with a Label or TextBox. -->
+            <Style x:Key="AlignedReadOnlyPropertyTextStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ReadOnlyPropertyTextStyle}">
+                <Setter Property="Margin" Value="5,4,5,1" />
+            </Style>
+            
+            <!-- Used to define the style of a cue banner for an editable property. -->
+            <Style x:Key="CueBannerTextStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="Foreground" Value="Navy" />
+                <Setter Property="FontStyle" Value="Italic" />
+                <Setter Property="Margin" Value="5,0,3,0" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+
+            <!-- Used to define the style of horizontal repeat buttons which are inline with the scrolling content. -->
+            <!-- I'd like to see the RepeatButtons style look like the system default without having to recreate the template.
+                 This is just an approximation of the Vista style. -->
+            <Style x:Key="InlineHorizontalScrollBarButtonStyle" TargetType="{x:Type RepeatButton}">
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="IsTabStop" Value="False"/>
+                <Setter Property="Width" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}" />
+                <Setter Property="Foreground" Value="{x:Static SystemColors.ControlDarkDarkBrush}" />
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Foreground" Value="{x:Static SystemColors.ControlDarkBrush}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!-- Used to define the style of a horizontal scrollviewer that is inline with the scrolling content. -->
+            <!-- Like the repeat button this is an approximation of the system style. -->
+            <Style x:Key="InlineHorizontalScrollViewerStyle" TargetType="{x:Type ScrollViewer}">
+                <Setter Property="VerticalScrollBarVisibility" Value="Disabled" />
+                <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}" />
+                                    <ColumnDefinition Width="0.00001*" />
+                                    <ColumnDefinition Width="Auto" MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}" />
+                                </Grid.ColumnDefinitions>
+
+                                <RepeatButton Grid.Column="0" Style="{StaticResource InlineHorizontalScrollBarButtonStyle}" IsEnabled="{TemplateBinding IsMouseOver}" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Command="{x:Static ScrollBar.LineLeftCommand}">
+                                    <Path HorizontalAlignment="Center" VerticalAlignment="Center" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RepeatButton}}, Path=Foreground}" Data="M 4 0 L 0 3.5 L 4 7 Z"/>
+                                </RepeatButton>
+
+                                <ScrollContentPresenter Grid.Column="1" Content="{TemplateBinding Content}" />
+
+                                <RepeatButton Grid.Column="2" Style="{StaticResource InlineHorizontalScrollBarButtonStyle}" IsEnabled="{TemplateBinding IsMouseOver}" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Command="{x:Static ScrollBar.LineRightCommand}">
+                                    <Path HorizontalAlignment="Center" VerticalAlignment="Center" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RepeatButton}}, Path=Foreground}" Data="M 0 0 L 4 3.5 L 0 7 Z"/>
+                                </RepeatButton>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Used as the ending color of the detail area's background gradient. -->
+            <Color x:Key="DetailBackgroundEndColor">#E9ECFA</Color>
+            <!--<Color x:Key="DetailBackgroundEndColor">#BDBDBD</Color>-->
+
+            <!-- Used for the background of the details areas. -->
+            <LinearGradientBrush x:Key="DetailBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
+                <GradientStop Color="Transparent" Offset="0" />
+                <GradientStop Color="{StaticResource DetailBackgroundEndColor}" Offset="1" />
+            </LinearGradientBrush>
+
+            <!-- Used as the primary color of the group header. -->
+            <SolidColorBrush x:Key="GroupHeaderPrimaryBrush" Color="DimGray" />
+
+            <!-- Used as the secondary color of the group header. -->
+            <SolidColorBrush x:Key="GroupHeaderSecondaryBrush" Color="LightGray" />
+
+            <!-- Used as the primary brush of splitter backgrounds. -->
+            <Color x:Key="SplitterPrimaryBrush">LightSteelBlue</Color>
+            
+            <!-- Used as the secondary brush of splitter backgrounds. -->
+            <Color x:Key="SplitterSecondaryBrush">Blue</Color>
+            
+            <!-- Used as the background of horizontal splitters. -->
+            <RadialGradientBrush x:Key="HorizontalSplitterBackgroundBrush" RadiusX=".7">
+                <GradientStop Color="{StaticResource SplitterPrimaryBrush}" Offset="0" />
+                <GradientStop Color="Transparent" Offset="1" />
+            </RadialGradientBrush>
+
+            <!-- Used as the background of horizontal splitters when mouse is over it. -->
+            <RadialGradientBrush x:Key="HorizontalSplitterMouseOverBackgroundBrush" RadiusX="1">
+                <GradientStop Color="{StaticResource SplitterSecondaryBrush}" Offset="0" />
+                <GradientStop Color="{StaticResource SplitterPrimaryBrush}" Offset=".25" />
+                <GradientStop Color="Transparent" Offset="1" />
+            </RadialGradientBrush>
+            
+            <!-- Used as the background of vertical splitters. -->
+            <RadialGradientBrush x:Key="VerticalSplitterBackgroundBrush" RadiusY=".7">
+                <GradientStop Color="{StaticResource SplitterPrimaryBrush}" Offset="0" />
+                <GradientStop Color="Transparent" Offset="1" />
+            </RadialGradientBrush>
+
+            <!-- Used as the background of vertical splitters when mouse is over it. -->
+            <RadialGradientBrush x:Key="VerticalSplitterMouseOverBackgroundBrush" RadiusY="1">
+                <GradientStop Color="{StaticResource SplitterSecondaryBrush}" Offset="0" />
+                <GradientStop Color="{StaticResource SplitterPrimaryBrush}" Offset=".25" />
+                <GradientStop Color="Transparent" Offset="1" />
+            </RadialGradientBrush>
+
+            <!-- Used to define the style of the GridSplitter. -->
+            <!-- HorizontalAlignment or VerticalAlignment must be set to Stretch to indicate the orientation of the splitter. -->
+            <!-- Is there a better way to orient the background? -->
+            <Style x:Key="GridSplitterStyle" TargetType="{x:Type GridSplitter}">
+                <Style.Triggers>
+                    <Trigger Property="HorizontalAlignment" Value="Stretch">
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="Height" Value="5" />
+                        <Setter Property="Margin" Value="0,3,0,3" />
+                        <Setter Property="Background" Value="{StaticResource HorizontalSplitterBackgroundBrush}" />
+                    </Trigger>
+                    <Trigger Property="VerticalAlignment" Value="Stretch">
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="Width" Value="5" />
+                        <Setter Property="Margin" Value="3,0,3,0" />
+                        <Setter Property="Background" Value="{StaticResource VerticalSplitterBackgroundBrush}" />
+                    </Trigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsMouseOver" Value="True" />
+                            <Condition Property="HorizontalAlignment" Value="Stretch" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" Value="{StaticResource HorizontalSplitterMouseOverBackgroundBrush}" />
+                    </MultiTrigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsMouseOver" Value="True" />
+                            <Condition Property="VerticalAlignment" Value="Stretch" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" Value="{StaticResource VerticalSplitterMouseOverBackgroundBrush}" />
+                    </MultiTrigger>
+                </Style.Triggers>
+            </Style>
+            
+            <!-- Used to display a Thumb control as a vertical grid splitter. -->
+            <Style x:Key="CustomVerticalSplitterStyle" TargetType="{x:Type Thumb}">
+                <Setter Property="Width" Value="5" />
+                <Setter Property="Background" Value="{StaticResource VerticalSplitterBackgroundBrush}" />
+                <Setter Property="Cursor" Value="SizeWE" />
+                <Setter Property="Margin" Value="3,0,3,0" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Thumb}">
+                            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <EventSetter Event="DragDelta" Handler="ThumbVerticalSplitter_DragDelta" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{StaticResource VerticalSplitterMouseOverBackgroundBrush}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!-- Used as the small error icon -->
+            <Style x:Key="ErrorIconSmallStyle" TargetType="{x:Type Image}">
+                <Setter Property="Source" Value="{StaticResource Horizon_Image_Error}" />
+                <Setter Property="Height" Value="16" />
+            </Style>
+
+            <!-- Used to display the user name within the grid view. -->
+            <DataTemplate x:Key="UserNameCellTemplate">
+                <TextBlock x:Name="UserNameCellText" Text="{Binding User.Name}" />
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding User.IsBorrowed}" Value="True">
+                        <Setter TargetName="UserNameCellText" Property="Foreground" Value="Blue" />
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+
+            <!-- Used to display the feature name within the grid view. -->
+            <DataTemplate x:Key="FeatureNameCellTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Feature.Name}" />
+                    <Image ToolTip="{Binding Feature.ErrorMessage}" Style="{StaticResource ErrorIconSmallStyle}" Margin="5,0,0,0" Visibility="{Binding Feature.HasError, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <!-- Column header used when sort is ascending. -->
+            <DataTemplate x:Key="ColumnHeaderTemplateSortAscending">
+                <DockPanel>
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding}" />
+                    <Path StrokeThickness="1" Fill="Gray" Data="M 5,10 L 15,10 L 10,5 L 5,10" />
+                </DockPanel>
+            </DataTemplate>
+
+            <!-- Column header used when sort is descending. -->
+            <DataTemplate x:Key="ColumnHeaderTemplateSortDescending">
+                <DockPanel>
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding}" />
+                    <Path StrokeThickness="1" Fill="Gray" Data="M 5,5 L 10,10 L 15,5 L 5,5" />
+                </DockPanel>
+            </DataTemplate>
+
+            <!-- Used as the base style for the group header. -->
+            <Style x:Key="GroupHeaderBaseStyle">
+                <Setter Property="Control.Foreground" Value="{StaticResource GroupHeaderPrimaryBrush}" />
+            </Style>
+            
+            <!-- Used to style the group name. -->
+            <Style x:Key="GroupHeaderNameStyle" BasedOn="{StaticResource GroupHeaderBaseStyle}">
+                <Setter Property="Control.FontWeight" Value="Bold" />
+            </Style>
+            
+            <!-- Used as a generic group header. -->
+            <DataTemplate x:Key="GenericGroupTemplate">
+                <DockPanel Margin="3,10,0,5" Style="{StaticResource GroupHeaderBaseStyle}">
+                    <TextBlock Text="{Binding Name}" Margin="0,0,8,0" Style="{StaticResource GroupHeaderNameStyle}" />
+                    <TextBlock Text="(" />
+                    <TextBlock Text="{Binding ItemCount, Converter={StaticResource CountToCountPhraseConverter}, ConverterParameter=Item}" />
+                    <TextBlock Text=")" />
+                    <Line X2="1" Stretch="Fill" Stroke="{StaticResource GroupHeaderSecondaryBrush}" SnapsToDevicePixels="True" Margin="5,0,5,0" />
+                </DockPanel>
+            </DataTemplate>
+
+            <!-- Used as the group header when grouped by User name. -->
+            <DataTemplate x:Key="UserNameGroupTemplate">
+                <DockPanel Margin="3,10,0,5" Style="{StaticResource GroupHeaderBaseStyle}">
+                    <TextBlock Text="{Binding Name}" Margin="0,0,8,0" Style="{StaticResource GroupHeaderNameStyle}" />
+                    <TextBlock Text="(" />
+                    <TextBlock Text="{Binding ItemCount, Converter={StaticResource CountToCountPhraseConverter}, ConverterParameter=Feature}" />
+                    <TextBlock Text=")" />
+                    <Line X2="1" Stretch="Fill" Stroke="{StaticResource GroupHeaderSecondaryBrush}" SnapsToDevicePixels="True" Margin="5,0,5,0" />
+                </DockPanel>
+            </DataTemplate>
+
+            <!-- Used as the group header when grouped by Feature name. -->
+            <DataTemplate x:Key="FeatureNameGroupTemplate">
+                <StackPanel Margin="3,10,0,5" Style="{StaticResource GroupHeaderBaseStyle}">
+                    <DockPanel>
+                        <TextBlock Text="{Binding Name}" Margin="0,0,8,0" Style="{StaticResource GroupHeaderNameStyle}" />
+                        <TextBlock Text="(" />
+                        <TextBlock Text="{Binding Items[0].Feature.QuantityUsed, Converter={StaticResource CountToCountPhraseConverter}, ConverterParameter=User}" />
+                        <TextBlock Text=")" />
+                        <Line X2="1" Stretch="Fill" Stroke="{StaticResource GroupHeaderSecondaryBrush}" SnapsToDevicePixels="True" Margin="5,0,5,0" />
+                    </DockPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Items[0].Feature.QuantityIssued, Converter={StaticResource CountToCountPhraseConverter}, ConverterParameter=License}" />
+                        <TextBlock Text=" issued, " />
+                        <TextBlock Text="{Binding Items[0].Feature.QuantityUsed}" />
+                        <TextBlock Text=" in use" />
+                        <TextBlock Text="{Binding Items[0].Feature.QuantityBorrowed, StringFormat={} ({0} borrowed)}" Visibility="{Binding Path=Items[0].Feature.QuantityBorrowed, Converter={StaticResource IntegerToVisibilityConverter}}" />
+                        <TextBlock Text="{Binding Items[0].Feature.QuantityAvailable, StringFormat={}\, {0} available}" Visibility="{Binding Path=Items[0].Feature.InUse, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </StackPanel>
+
+                    <TextBlock Visibility="{Binding Items[0].Feature.InUse, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <TextBlock Text="{Binding Items[0].Feature.Vendor}" />
+                        <TextBlock Text="{Binding Items[0].Feature.Version}" />
+                        <TextBlock Text="{Binding Items[0].Feature.Type}" />
+                    </TextBlock>
+
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding Items[0].Feature.HasError, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Image Style="{StaticResource ErrorIconSmallStyle}" Margin="0,2,4,2" />
+                        <TextBlock Text="{Binding Items[0].Feature.ErrorMessage}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </StackPanel>
+            </DataTemplate>
+            
+            <!-- Used as the tool tip on the license tab. -->
+            <!-- This is defined as a resource because it currently cannot be defined directly in a style's setter. -->
+            <ToolTip x:Key="LicenseToolTip">
+                <StackPanel>
+                    <TextBlock Text="{Binding License.Port, StringFormat=Port: \{0\}}" />
+                    <TextBlock Text="{Binding License.Host, StringFormat=Host: \{0\}}" />
+                    <TextBlock Text="{Binding License.Time, StringFormat=Updated at: \{0\}, Converter={StaticResource TimeToTimeDayConverter}}" />
+                    <TextBlock Text="{Binding License.InUse, StringFormat=In use: \{0\}, Converter={StaticResource BooleanToYesNoConverter}}" />
+                    <TextBlock>
+                        <TextBlock Text="Vendor daemon:" />
+                        <TextBlock Text="{Binding License.VendorDaemonName}" />
+                        <TextBlock Text="{Binding License.VendorDaemonVersion}" />
+                        <TextBlock Text="{Binding License.VendorDaemonStatus}" />
+                    </TextBlock>
+                </StackPanel>
+            </ToolTip>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0">
+            <MenuItem Header="_File">
+                <MenuItem Header="Add _license" Command="{Binding Source={StaticResource LicenseListViewModel}, Path=AddLicenseCommand}" />
+                <MenuItem Header="_Remove license" Command="{Binding Source={StaticResource LicenseListViewModel}, Path=RemoveLicenseCommand}" />
+                <Separator />
+                <MenuItem Header="E_xit" Command="{x:Static local:MainWindow.ExitCommand}" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Command="ApplicationCommands.Cut" />
+                <MenuItem Command="ApplicationCommands.Copy" />
+                <MenuItem Command="ApplicationCommands.Paste" />
+            </MenuItem>
+            <MenuItem Header="_View">
+                <MenuItem Header="_Refresh all" Command="{Binding Source={StaticResource LicenseListViewModel}, Path=GetStatusCommand}" />
+                <Separator />
+                <MenuItem Header="R_eport" IsCheckable="True" IsChecked="{Binding Source={x:Static appSettings:Settings.Default}, Path=ShowReport, Mode=TwoWay}" />
+                <Separator />
+                <MenuItem Header="Show _unused features" IsCheckable="True" IsChecked="{Binding Source={x:Static appSettings:Settings.Default}, Path=ShowUnusedFeatures, Mode=TwoWay}" Command="{x:Static local:MainWindow.ShowUnusedFeaturesCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" />
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About License Status" Command="{x:Static local:MainWindow.AboutCommand}" />
+            </MenuItem>
+        </Menu>
+        
+        <TabControl
+            ItemsSource="{Binding Source={StaticResource LicenseListSource}}"
+            SelectedItem="{Binding Source={StaticResource LicenseListViewModel}, Path=SelectedLicense}"
+            Background="{StaticResource DetailBackgroundBrush}"
+            Grid.Row="1">
+            
+            <!--<TabControl.LayoutTransform>
+                <ScaleTransform ScaleX="2" ScaleY="2" />
+            </TabControl.LayoutTransform>-->
+            
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="ToolTip" Value="{StaticResource LicenseToolTip}" />
+                </Style>
+            </TabControl.ItemContainerStyle>
+            
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel>
+                        <ProgressBar DockPanel.Dock="Bottom" Height="8" Width="80" Margin="0,1,0,0" IsIndeterminate="True" ToolTip="Refreshing status..." Visibility="{Binding License.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <Image DockPanel.Dock="Right" ToolTip="One or more features are reporting an error." Style="{StaticResource ErrorIconSmallStyle}" Margin="5,0,0,0" Visibility="{Binding License.IsFeatureError, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <Image DockPanel.Dock="Right" ToolTip="{Binding License.ErrorMessage}" Style="{StaticResource ErrorIconSmallStyle}" Margin="5,0,0,0" Visibility="{Binding License.HasError, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <!-- Binding IsHitTextVisible and IsTabStop to the TabItem's IsSelected is so that the text box is
+                             only editable on the selected tab. -->
+                        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource EditablePropertyTextHiddenBorderStyle}"
+                                 IsTabStop="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabItem}}, Path=IsSelected}"
+                                 IsHitTestVisible="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabItem}}, Path=IsSelected}"
+                                 LostFocus="LicenseNameTextBox_LostFocus"
+                                 KeyUp="LicenseNameTextBox_KeyUp" />
+                    </DockPanel>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="{Binding Source={x:Static appSettings:Settings.Default}, Path=LicensePropertiesPanelHeight, Mode=TwoWay}"
+                                           MinHeight="{Binding ElementName=PropertyPanel, Converter={StaticResource WrapPanelToMinMaxHeightConverter}, ConverterParameter=MinHeight}"
+                                           MaxHeight="{Binding ElementName=PropertyPanel, Converter={StaticResource WrapPanelToMinMaxHeightConverter}, ConverterParameter=MaxHeight}" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" Margin="0,0,0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" Content="_Port:" Target="{Binding ElementName=PortText}" Style="{StaticResource EditablePropertyLabelStyle}" />
+                            <TextBox x:Name="PortText" Grid.Column="1" Text="{Binding Port, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Converter={StaticResource NullableValueConverter}}" MaxWidth="60" Style="{DynamicResource EditablePropertyTextExtendRightStyle}">
+                                <local:CueBannerService.CueBanner>
+                                    <TextBlock Text="Enter port number" Style="{StaticResource CueBannerTextStyle}" />
+                                </local:CueBannerService.CueBanner>
+                            </TextBox>
+
+                            <Label Grid.Column="2" Content="Ho_st:" Target="{Binding ElementName=HostText}" Style="{StaticResource EditablePropertyLabelStyle}" />
+                            <TextBox x:Name="HostText" Grid.Column="3" Text="{Binding License.Host, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" MaxWidth="180" Style="{DynamicResource EditablePropertyTextExtendRightStyle}">
+                                <local:CueBannerService.CueBanner>
+                                    <TextBlock Text="Enter host name" Style="{StaticResource CueBannerTextStyle}" />
+                                </local:CueBannerService.CueBanner>
+                            </TextBox>
+
+                            <TextBlock Grid.Column="4" Text="Updated at:" Style="{StaticResource AlignedReadOnlyPropertyLabelStyle}" />
+                            <TextBlock Grid.Column="5" Text="{Binding License.Time, Converter={StaticResource TimeToTimeDayConverter}}" Style="{StaticResource AlignedReadOnlyPropertyTextStyle}" />
+                        </Grid>
+
+                        <Grid Grid.Row="1" Margin="0,0,0,4" Visibility="{Binding License.HasError, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Style="{DynamicResource ErrorIconSmallStyle}" Margin="5,1,2,1" />
+                            <TextBlock Grid.Column="1" Text="{Binding License.ErrorMessage}" Style="{StaticResource ReadOnlyPropertyTextStyle}" />
+                        </Grid>
+
+                        <ScrollViewer Grid.Row="2" Style="{DynamicResource InlineHorizontalScrollViewerStyle}">
+                            <!-- The name is used to access the desired height for binding. -->
+                            <WrapPanel x:Name="PropertyPanel" Orientation="Vertical" Grid.IsSharedSizeScope="True" SizeChanged="LicensePropertiesWrapPanel_SizeChanged">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition SharedSizeGroup="Column0" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Number of features:" Style="{StaticResource ReadOnlyPropertyLabelStyle}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding License.Features.Count}" Style="{StaticResource ReadOnlyPropertyTextStyle}" />
+                                </Grid>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition SharedSizeGroup="Column0" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Features in use:" Style="{StaticResource ReadOnlyPropertyLabelStyle}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding License.InUseCount}" Style="{StaticResource ReadOnlyPropertyTextStyle}" />
+                                </Grid>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition SharedSizeGroup="Column0" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Number of users:" Style="{StaticResource ReadOnlyPropertyLabelStyle}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding License.UserCount}" Style="{StaticResource ReadOnlyPropertyTextStyle}" />
+                                </Grid>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition SharedSizeGroup="Column0" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Vendor daemon name:" Style="{StaticResource ReadOnlyPropertyLabelStyle}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding License.VendorDaemonName}" Style="{StaticResource ReadOnlyPropertyTextStyle}" />
+                                </Grid>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition SharedSizeGroup="Column0" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Vendor daemon version:" Style="{StaticResource ReadOnlyPropertyLabelStyle}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding License.VendorDaemonVersion}" Style="{StaticResource ReadOnlyPropertyTextStyle}" />
+                                </Grid>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition SharedSizeGroup="Column0" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Vendor daemon status:" Style="{StaticResource ReadOnlyPropertyLabelStyle}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding License.VendorDaemonStatus}" Style="{StaticResource ReadOnlyPropertyTextStyle}" />
+                                </Grid>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition SharedSizeGroup="Column0" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Server file:" Style="{StaticResource ReadOnlyPropertyLabelStyle}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding License.ServerFile}" Style="{StaticResource ReadOnlyPropertyTextStyle}" />
+                                </Grid>
+                            </WrapPanel>
+                        </ScrollViewer>
+                        
+                        <GridSplitter Grid.Row="3" HorizontalAlignment="Stretch" Style="{StaticResource GridSplitterStyle}" />
+
+                        <local:SortListView
+                            Name="FeaturesUsersListView"
+                            ItemsSource="{Binding Source={StaticResource FeaturesUsersSource}}"
+                            IsSynchronizedWithCurrentItem="True"
+                            SortProperty="{Binding Source={x:Static appSettings:Settings.Default}, Path=SortProperty, Mode=TwoWay}"
+                            SortDirection="{Binding Source={x:Static appSettings:Settings.Default}, Path=SortDirection, Mode=TwoWay}"
+                            CollectionViewSource="{StaticResource FeaturesUsersSource}"
+                            ColumnHeaderTemplate="ColumnHeaderTemplateSort"
+                            Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                            DataContextChanged="SortListView_DataContextChanged"
+                            Grid.Row="4">
+
+                            <ListView.GroupStyle>
+                                <GroupStyle />
+                            </ListView.GroupStyle>
+
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="False">
+                                    <local:SortGridViewColumn Header="User name" SortProperty="User.Name" SecondarySort="True" CellTemplate="{StaticResource UserNameCellTemplate}" GroupTemplate="UserNameGroupTemplate" GroupConverter="{StaticResource EmptyStringToNoneConverter}" />
+                                    <local:SortGridViewColumn Header="Host" SortProperty="User.Host" DisplayMemberBinding="{Binding User.Host}" GroupTemplate="GenericGroupTemplate" GroupConverter="{StaticResource EmptyStringToNoneConverter}" />
+                                    <local:SortGridViewColumn Header="Checkout time" SortProperty="User.Time" DisplayMemberBinding="{Binding User.Time, Converter={StaticResource TimeToTimeDayConverter}}" GroupTemplate="UserNameGroupTemplate" GroupConverter="{StaticResource DateTimeToRelativeDescriptionConverter}" />
+                                    <local:SortGridViewColumn Header="Borrow ends" SortProperty="User.BorrowEndTime" DisplayMemberBinding="{Binding User.BorrowEndTime, Converter={StaticResource TimeToTimeDayConverter}}" GroupTemplate="UserNameGroupTemplate" GroupConverter="{StaticResource DateTimeToRelativeDescriptionConverter}" />
+                                    <local:SortGridViewColumn Header="Version" SortProperty="User.Version" DisplayMemberBinding="{Binding User.Version}" GroupTemplate="GenericGroupTemplate" GroupConverter="{StaticResource EmptyStringToNoneConverter}" />
+                                    <local:SortGridViewColumn Header="Handle" SortProperty="User.Handle" DisplayMemberBinding="{Binding User.Handle, Converter={StaticResource ZeroToEmptyStringConverter}}" GroupTemplate="GenericGroupTemplate" GroupConverter="{StaticResource ZeroGroupNameToNoneConverter}" />
+                                    <local:SortGridViewColumn Header="Display" SortProperty="User.Display" DisplayMemberBinding="{Binding User.Display}" GroupTemplate="GenericGroupTemplate" GroupConverter="{StaticResource EmptyStringToNoneConverter}" />
+                                    <local:SortGridViewColumn Header="Port" SortProperty="User.Port" DisplayMemberBinding="{Binding User.Port, Converter={StaticResource ZeroToEmptyStringConverter}}" GroupTemplate="GenericGroupTemplate" GroupConverter="{StaticResource ZeroGroupNameToNoneConverter}" />
+                                    <local:SortGridViewColumn Header="Server" SortProperty="User.Server" DisplayMemberBinding="{Binding User.Server}" GroupTemplate="GenericGroupTemplate" GroupConverter="{StaticResource EmptyStringToNoneConverter}" />
+                                    
+                                    <local:SortGridViewColumn Header="Feature name" SortProperty="Feature.Name" SecondarySort="True" CellTemplate="{StaticResource FeatureNameCellTemplate}" GroupTemplate="FeatureNameGroupTemplate" GroupConverter="{StaticResource EmptyStringToUnspecifiedConverter}" />
+                                    <local:SortGridViewColumn Header="Vendor" SortProperty="Feature.Vendor" DisplayMemberBinding="{Binding Feature.Vendor}" GroupTemplate="GenericGroupTemplate" GroupConverter="{StaticResource EmptyStringToUnspecifiedConverter}" />
+                                    <local:SortGridViewColumn Header="Version" SortProperty="Feature.Version" DisplayMemberBinding="{Binding Feature.Version}" GroupTemplate="GenericGroupTemplate" GroupConverter="{StaticResource EmptyStringToUnspecifiedConverter}" />
+                                    <local:SortGridViewColumn Header="Type" SortProperty="Feature.Type" DisplayMemberBinding="{Binding Feature.Type}" GroupTemplate="GenericGroupTemplate" GroupConverter="{StaticResource EmptyStringToUnspecifiedConverter}" />
+                                    <local:SortGridViewColumn Header="Issued" SortProperty="Feature.QuantityIssued" DisplayMemberBinding="{Binding Feature.QuantityIssued}" GroupTemplate="GenericGroupTemplate" />
+                                    <local:SortGridViewColumn Header="Used" SortProperty="Feature.QuantityUsed" DisplayMemberBinding="{Binding Feature.QuantityUsed}" GroupTemplate="GenericGroupTemplate" />
+                                    <local:SortGridViewColumn Header="Available" SortProperty="Feature.QuantityAvailable" DisplayMemberBinding="{Binding Feature.QuantityAvailable}" GroupTemplate="GenericGroupTemplate" />
+                                    <local:SortGridViewColumn Header="Borrowed" SortProperty="Feature.QuantityBorrowed" DisplayMemberBinding="{Binding Feature.QuantityBorrowed}" GroupTemplate="GenericGroupTemplate" />
+                                </GridView>
+                            </ListView.View>
+                        </local:SortListView>
+
+                        <Thumb Grid.Column="1" Grid.RowSpan="5" Style="{StaticResource CustomVerticalSplitterStyle}" Visibility="{Binding Source={x:Static appSettings:Settings.Default}, Path=ShowReport, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                        <DockPanel Grid.Column="2" Grid.RowSpan="5" Width="{Binding Source={x:Static appSettings:Settings.Default}, Path=ReportPanelWidth, Mode=TwoWay}" Visibility="{Binding Source={x:Static appSettings:Settings.Default}, Path=ShowReport, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <TextBlock DockPanel.Dock="Top" Text="Report:" HorizontalAlignment="Left" Margin="0,1,0,1" Style="{StaticResource ReadOnlyPropertyLabelStyle}" />
+                            <TextBox Text="{Binding License.Report, Mode=OneWay}" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" IsReadOnly="True" />
+                        </DockPanel>
+                    </Grid>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+        
+        <Border Grid.Row="2" Padding="0,5" Background="{StaticResource DetailBackgroundBrush}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="lm_util program:" Target="{Binding ElementName=ProgramText}" Style="{StaticResource EditablePropertyLabelStyle}" />
+                
+                <!-- See the code behind notes for why an AdornerDecorator is here. -->
+                <AdornerDecorator Grid.Column="1">
+                    <TextBox x:Name="ProgramText" Style="{StaticResource EditablePropertyTextStyle}">
+                        <TextBox.Text>
+                            <Binding Source="{x:Static licenseManager:UtilityProgram.Instance}"
+                                             Path="Executable"
+                                             Converter="{StaticResource FileInfoToStringConverter}"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             ValidatesOnDataErrors="True" />
+                        </TextBox.Text>
+                        <local:CueBannerService.CueBanner>
+                            <TextBlock Text="Browse for the lmutil program" Style="{StaticResource CueBannerTextStyle}" />
+                        </local:CueBannerService.CueBanner>
+                    </TextBox>
+                </AdornerDecorator>
+                <Button Grid.Column="2" Content="..." Command="{x:Static local:MainWindow.BrowseLMUtilCommand}" VerticalAlignment="Center" Padding="4,0" Margin="5,0,10,0" ToolTip="Browse for the lmutil program." />
+                
+                <TextBlock Grid.Column="3" Text="lmutil version:" Style="{StaticResource AlignedReadOnlyPropertyLabelStyle}" />
+                <TextBlock Grid.Column="4" Text="{Binding Source={x:Static licenseManager:UtilityProgram.Instance}, Path=Version}" Style="{StaticResource AlignedReadOnlyPropertyTextStyle}" />
+            </Grid>
+        </Border>
+
+    </Grid>
+</Window>
