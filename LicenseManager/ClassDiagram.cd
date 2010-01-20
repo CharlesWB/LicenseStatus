@@ -1,32 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="LicenseManager.License">
-    <Position X="0.5" Y="0.5" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AABFAAAEKAAAAAMEAAADAAYEKACECAkACAggACkABQo=</HashCode>
-      <FileName>License.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="Features" />
-    </ShowAsCollectionAssociation>
-  </Class>
-  <Class Name="LicenseManager.Feature">
+  <Class Name="CWBozarth.LicenseManager.Feature">
     <Position X="3.25" Y="0.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>IAAEACAAAAAAAAAEBAAAAAUAIUAFAABAAQQAICAEBCA=</HashCode>
+      <HashCode>IQAEACEAAAAAAAAMBAAAAAQAIUAFAABIAQQAACAEBAA=</HashCode>
       <FileName>Feature.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Users" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="LicenseManager.User">
+  <Class Name="CWBozarth.LicenseManager.User">
     <Position X="6" Y="0.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
@@ -36,15 +23,29 @@
       <FileName>User.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="LicenseManager.UtilityProgram">
+  <Class Name="CWBozarth.LicenseManager.UtilityProgram">
     <Position X="8.25" Y="0.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAAAIAAAAAAAgAAgAJAAAAAQAAAAAAAAAA=</HashCode>
+      <HashCode>IAAAAAAAAAAAAYAACAAAAgAAgAJAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>UtilityProgram.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CWBozarth.LicenseManager.License">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AQBFAIEEKARAAYOMCEALgAZEqACECAgICAggACkQBQo=</HashCode>
+      <FileName>License.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Features" />
+    </ShowAsCollectionAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Font Name="Tahoma" Size="8.25" />
