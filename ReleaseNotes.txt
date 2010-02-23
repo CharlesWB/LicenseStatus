@@ -1,0 +1,13 @@
+License Status Release Notes
+
+October 17, 2009 v2.3
+- Released on SourceForge.
+
+October 9, 2009 v2.3
+- Fixed issue with feature and vendor daemon name containing a period.
+
+August 30, 2009 v2.2
+- Public release.
+
+August 17, 2009 v2.1
+- Private beta release.
