@@ -19,6 +19,10 @@
 // <url>http://charlesbozarth.spaces.live.com</url>
 // <summary>Display the status of FlexLM licenses.</summary>
 
+// TODO Settings upgrade will not work when the new version's evidence is different.
+// http://www.vesic.org/english/blog/winforms/upgrade-of-applicationuser-settings-between-application-versions/
+// http://www.devx.com/dotnet/Article/33944/0/page/4
+
 #region Notes
 // Text Box Select All on Focus:
 //
