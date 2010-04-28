@@ -613,7 +613,7 @@
                         <GridSplitter Grid.Row="3" HorizontalAlignment="Stretch" Style="{StaticResource GridSplitterStyle}" />
 
                         <local:SortListView
-                            Name="FeaturesUsersListView"
+                            x:Name="FeaturesUsersListView"
                             ItemsSource="{Binding Source={StaticResource FeaturesUsersSource}}"
                             IsSynchronizedWithCurrentItem="True"
                             SortProperty="{Binding Source={x:Static appSettings:Settings.Default}, Path=SortProperty, Mode=TwoWay}"

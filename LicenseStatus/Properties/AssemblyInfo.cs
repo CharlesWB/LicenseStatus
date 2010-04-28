@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Charles W. Bozarth")]
 [assembly: AssemblyProduct("License Status")]
-[assembly: AssemblyCopyright("© 2009 Charles W. Bozarth")]
+[assembly: AssemblyCopyright("© 2010 Charles W. Bozarth")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -51,5 +51,5 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.3.*")]
-[assembly: AssemblyFileVersion("2.3.0.0")]
+[assembly: AssemblyVersion("2.4.*")]
+[assembly: AssemblyFileVersion("2.4.0.0")]

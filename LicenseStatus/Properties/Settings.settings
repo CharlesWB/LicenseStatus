@@ -12,10 +12,10 @@
       <Value Profile="(Default)">Normal</Value>
     </Setting>
     <Setting Name="WindowLeft" Type="System.Double" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">NaN</Value>
     </Setting>
     <Setting Name="WindowTop" Type="System.Double" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">NaN</Value>
     </Setting>
     <Setting Name="SortProperty" Type="System.String" Scope="User">
       <Value Profile="(Default)">Feature.Name</Value>
@@ -32,7 +32,7 @@
     <Setting Name="UtilityProgramExecutable" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="Licenses" Type="System.Collections.Generic.List`1[LicenseManager.License]" Scope="User">
+    <Setting Name="Licenses" Type="System.Collections.Generic.List`1[CWBozarth.LicenseManager.License]" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="LicensePropertiesPanelHeight" Type="System.Windows.GridLength" Scope="User">

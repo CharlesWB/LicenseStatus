@@ -320,8 +320,8 @@ namespace LicenseStatus
             string testFilesPath;
             if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
-                testFilesPath = @"C:\Users\Charles\Documents\Visual Studio 2008\Projects\License Status\";
-                ////testFilesPath = @"C:\Documents and Settings\Charles\My Documents\Visual Studio 2008\Projects\License Status\";
+                testFilesPath = @"C:\Users\Charles\Documents\Visual Studio 2010\Projects\License Status\";
+                ////testFilesPath = @"C:\Documents and Settings\Charles\My Documents\Visual Studio 2010\Projects\License Status\";
             }
             else
             {
