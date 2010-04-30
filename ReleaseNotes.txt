@@ -3,6 +3,7 @@ License Status Release Notes
 TBD 2010
 - Updated to use .NET 4.0.
 - Changed text formatting mode from Ideal to Display. This improves the "blurry" font display seen in WPF .NET 3.5.
+- Changed the Help-> About url to the Sourceforge project site.
 
 October 17, 2009 v2.3
 - Released on SourceForge.

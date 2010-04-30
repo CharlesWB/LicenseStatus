@@ -1,5 +1,5 @@
 ﻿// <copyright file="Program.cs" company="Charles W. Bozarth">
-// Copyright (C) 2009 Charles W. Bozarth
+// Copyright (C) 2010 Charles W. Bozarth
 // Refer to License.cs for the full copyright notice.
 // </copyright>
 
