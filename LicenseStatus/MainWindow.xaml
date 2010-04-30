@@ -13,7 +13,8 @@
         Width="{Binding Source={x:Static appSettings:Settings.Default}, Path=WindowWidth, Mode=TwoWay}"
         Top="{Binding Source={x:Static appSettings:Settings.Default}, Path=WindowTop, Mode=TwoWay}"
         Left="{Binding Source={x:Static appSettings:Settings.Default}, Path=WindowLeft, Mode=TwoWay}"
-        Closed="MainWindow_Closed">
+        Closed="MainWindow_Closed"
+        TextOptions.TextFormattingMode="Display">
     
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:MainWindow.ShowUnusedFeaturesCommand}" Executed="ShowUnusedFeaturesCommand_Executed" />

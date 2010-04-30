@@ -9,7 +9,8 @@
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        TextOptions.TextFormattingMode="Display">
     
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommand_Executed" />
@@ -20,7 +21,7 @@
         <!-- Using GetExecutingAssembly returns PresentationFramework.dll instead of the application's assembly. -->
         <ObjectDataProvider x:Key="ApplicationAssembly" ObjectType="{x:Type sys:Reflection.Assembly}" MethodName="GetAssembly">
             <ObjectDataProvider.MethodParameters>
-                <x:TypeExtension Type="{x:Type local:AboutWindow}" />
+                <x:TypeExtension TypeName="local:AboutWindow" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
@@ -30,7 +31,7 @@
         <!-- Used to access the LicenseManager assembly's information. -->
         <ObjectDataProvider x:Key="LicenseManagerAssembly" ObjectType="{x:Type sys:Reflection.Assembly}" MethodName="GetAssembly">
             <ObjectDataProvider.MethodParameters>
-                <x:TypeExtension Type="{x:Type licenseManager:License}" />
+                <x:TypeExtension TypeName="licenseManager:License" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
         

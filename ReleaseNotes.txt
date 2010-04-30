@@ -1,5 +1,9 @@
 License Status Release Notes
 
+TBD 2010
+- Updated to use .NET 4.0.
+- Changed text formatting mode from Ideal to Display. This improves the "blurry" font display seen in WPF .NET 3.5.
+
 October 17, 2009 v2.3
 - Released on SourceForge.
 
