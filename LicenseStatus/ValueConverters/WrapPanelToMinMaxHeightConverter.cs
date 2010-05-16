@@ -47,13 +47,22 @@ namespace LicenseStatus
             {
                 if (panel.Children.Count != 0)
                 {
+                    double desiredHeight = panel.Children[0].DesiredSize.Height;
+
+                    // HACK In VS2010 (but not VS2008) DesiredSize is zero at design time. This forces it to the typical value
+                    // so that design time looks correct.
+                    if (desiredHeight == 0 && System.ComponentModel.DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+                    {
+                        desiredHeight = 17;
+                    }
+
                     if (parameter.ToString() == "MinHeight")
                     {
-                        result = panel.Children[0].DesiredSize.Height;
+                        result = desiredHeight;
                     }
                     else
                     {
-                        result = panel.Children.Count * panel.Children[0].DesiredSize.Height;
+                        result = panel.Children.Count * desiredHeight;
                     }
 
                     // This is specific to having a parent of the WrapPanel define the margin instead of the WrapPanel
