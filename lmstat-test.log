@@ -35,9 +35,9 @@ Users of Feature_With_Borrow:  (Total of 16 licenses issued;  Total of 3 license
     user005 comp005 comp005 (v22.0) (SERVER001/27001 601), start Tue 3/17 10:18 (linger: 14437140)
     user004 comp004 comp004 (v22.0) (SERVER001/27001 6118), start Tue 3/17 9:55
 
-Users of Feature_With_Various_Dates_3_17_08:  (Total of 28 licenses issued;  Total of 28 licenses in use)
+Users of Feature_With_Various_Dates_3_17_09:  (Total of 28 licenses issued;  Total of 28 licenses in use)
 
-  "Feature_With_Various_Dates_3_17_08" v22.0, vendor: testdaemon
+  "Feature_With_Various_Dates_3_17_09" v22.0, vendor: testdaemon
   floating license
 
     user_d02 comp_d02 comp_d02 (v22.0) (SERVER001/27001 181), start Tue 3/17 10:06
