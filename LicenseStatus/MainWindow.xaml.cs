@@ -1,5 +1,5 @@
 ﻿// <copyright file="MainWindow.xaml.cs" company="Charles W. Bozarth">
-// Copyright (C) 2009 Charles W. Bozarth
+// Copyright (C) 2010 Charles W. Bozarth
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 // </copyright>
 // <author>Charles W. Bozarth</author>
 // <date>2009-08-17</date>
-// <url>http://charlesbozarth.spaces.live.com</url>
+// <url>http://licensestatus.sourceforge.net</url>
 // <summary>Display the status of FlexLM licenses.</summary>
 
 // TODO Settings upgrade will not work when the new version's evidence is different.

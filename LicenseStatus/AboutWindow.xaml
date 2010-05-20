@@ -78,7 +78,7 @@
                     <TextBlock Text="{Binding Source={x:Static local:AboutWindow.AssemblyCopyright}}" />
                 </TextBlock>
                 <TextBlock>
-                    <Hyperlink NavigateUri="http://charlesbozarth.spaces.live.com" RequestNavigate="Hyperlink_RequestNavigate">http://charlesbozarth.spaces.live.com</Hyperlink>
+                    <Hyperlink NavigateUri="http://licensestatus.sourceforge.net" RequestNavigate="Hyperlink_RequestNavigate">http://licensestatus.sourceforge.net</Hyperlink>
                 </TextBlock>
                 
                 <!-- Display the LicenseManager assembly's information. -->
