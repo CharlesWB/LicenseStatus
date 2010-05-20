@@ -53,7 +53,7 @@
 		<codepage>1252</codepage>
 		<title>License Status</title>
 		<subject></subject>
-		<author>InstallShield</author>
+		<author>##ID_STRING7##</author>
 		<keywords>Installer,MSI,Database</keywords>
 		<comments>Display the status of FlexLM licenses</comments>
 		<template>Intel;1033</template>
@@ -2759,7 +2759,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>CWBozarth</td><td>0</td><td/><td>446599822</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>CWBozarth</td><td>0</td><td/><td>-1566645838</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>446601838</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>446601838</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION40CLIENT</td><td>1033</td><td>Microsoft .NET Framework 4.0 Client Package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>446608302</td></row>
@@ -3860,10 +3860,11 @@
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>446601838</td></row>
 		<row><td>ID_STRING1</td><td>1033</td><td/><td>0</td><td/><td>446603886</td></row>
 		<row><td>ID_STRING2</td><td>1033</td><td>Charles W. Bozarth</td><td>0</td><td/><td>446599822</td></row>
-		<row><td>ID_STRING3</td><td>1033</td><td>http://licensestatus.sourceforge.net</td><td>0</td><td/><td>446563118</td></row>
+		<row><td>ID_STRING3</td><td>1033</td><td>http://www.CWBozarth.com</td><td>0</td><td/><td>-1566645838</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>Display the status of FlexLM licenses</td><td>0</td><td/><td>446599822</td></row>
 		<row><td>ID_STRING5</td><td>1033</td><td/><td>0</td><td/><td>446612110</td></row>
-		<row><td>ID_STRING6</td><td>1033</td><td>http://licensestatus.sourceforge.net</td><td>0</td><td/><td>446563118</td></row>
+		<row><td>ID_STRING6</td><td>1033</td><td>http://www.CWBozarth.com</td><td>0</td><td/><td>-1566645838</td></row>
+		<row><td>ID_STRING7</td><td>1033</td><td>CWBozarth</td><td>0</td><td/><td>-1566645838</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>446601838</td></row>
 	</table>
 
@@ -4479,7 +4480,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
 		<row><td>ProductCode</td><td>{B2EAAF74-7508-4EDA-B15F-74A5325C4E53}</td><td/></row>
 		<row><td>ProductName</td><td>License Status</td><td/></row>
-		<row><td>ProductVersion</td><td>2.4.0</td><td/></row>
+		<row><td>ProductVersion</td><td>2.5.0</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>
