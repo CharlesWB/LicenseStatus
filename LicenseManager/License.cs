@@ -1,5 +1,5 @@
 // <copyright file="License.cs" company="Charles W. Bozarth">
-// Copyright (C) 2010 Charles W. Bozarth
+// Copyright (C) 2012 Charles W. Bozarth
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -85,6 +85,8 @@
 // No special attempt has been made to ensure GetStatusAsyncCancel does not cause an exception. This violates the best practices.
 //
 // No special attempt has been made to catch exceptions during GetStatusAsync. This violates the best practices.
+//
+// Record line numbers of Features and Users to allow for highlighting of lines in the report.
 #endregion
 
 namespace CWBozarth.LicenseManager

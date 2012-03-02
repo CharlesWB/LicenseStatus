@@ -1,6 +1,6 @@
 License Status Release Notes
 
-TBD 2010 v2.5
+TBD 2012 v3.0
 - Updated to use .NET 4.0.
 - Changed text formatting mode from Ideal to Display. This improves the "blurry" font display seen in WPF .NET 3.5.
 
