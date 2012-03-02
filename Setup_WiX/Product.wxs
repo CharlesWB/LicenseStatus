@@ -1,27 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="D7C7D189-09AB-4599-A743-F967F96A78A0" Name="License Status" Language="1033" Version="3.0.0" Manufacturer="CWBozarth" UpgradeCode="99B04D07-358A-4273-B2AE-0FE6A229D73F">
-		<Package Id="*" InstallerVersion="200" Compressed="yes" />
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+  <Product Id="{ED33C9A1-B3F3-4A2E-813B-F901664C13EE}" Name="License Status" Manufacturer="Charles W. Bozarth" Version="3.0.0" UpgradeCode="{99B04D07-358A-4273-B2AE-0FE6A229D73F}" Language="1033" Codepage="1252">
+    
+    <Package Id="*" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Manufacturer="Charles W. Bozarth" Comments="Display the status of FlexLM licenses" />
 
-		<Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+    <MajorUpgrade DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
+    
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
 
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLLOCATION" Name="Setup_WiX">
-					<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-					<!-- <Component Id="ProductComponent" Guid="06c28278-3b88-4c50-8ae2-556c01af52f3"> -->
-						<!-- TODO: Insert files, registry keys, and other resources here. -->
-					<!-- </Component> -->
-				</Directory>
-			</Directory>
-		</Directory>
+    <PropertyRef Id="NETFRAMEWORK40CLIENT" />
 
-		<Feature Id="ProductFeature" Title="Setup_WiX" Level="1">
-			<!-- TODO: Remove the comments around this ComponentRef element and the Component above in order to add resources to this installer. -->
-			<!-- <ComponentRef Id="ProductComponent" /> -->
-			
-			<!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. -->
-			<ComponentGroupRef Id="Product.Generated" />
-		</Feature>
-	</Product>
+    <Property Id="ARPPRODUCTICON" Value="Application.ico" />
+    <Property Id="ARPCOMMENTS" Value="Display the status of FlexLM licenses" />
+    <Property Id="ARPCONTACT" Value="Charles W. Bozarth" />
+    <Property Id="ARPURLINFOABOUT" Value="http://sourceforge.net/projects/licensestatus/" />
+    <Property Id="ARPHELPLINK" Value="http://licensestatus.sourceforge.net/" />
+    <Property Id="ARPNOMODIFY" Value="yes" />
+
+    <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR NETFRAMEWORK40CLIENT]]>
+    </Condition>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="CWBozarth" Name="CWBozarth">
+          <Directory Id="INSTALLLOCATION" Name="License Status">
+            
+            <Component Id="MainExecutable" Guid="{E5B46488-E96B-CFB7-083F-71AB471C1BCA}">
+              <File Id="LicenseStatus.exe" KeyPath="yes" Name="$(var.LicenseStatus.TargetFileName)" Source="$(var.LicenseStatus.TargetPath)" DiskId="1" />
+              <Shortcut Id="LicenseStatusShortcut" Directory="ProgramMenuFolder" Name="License Status" Description="Display the status of FlexLM licenses" Icon="Application.ico" IconIndex="0" Advertise="yes" />
+            </Component>
+
+            <Component Id="MainExecutableConfig" Guid="{2FAEF5E3-BB14-9795-FF71-F1195AC68512}">
+              <File Id="LicenseStatus.exe.config" KeyPath="yes" Name="$(var.LicenseStatus.TargetFileName).config" Source="$(var.LicenseStatus.TargetPath).config" DiskId="1" />
+            </Component>
+
+            <Component Id="LicenseManager" Guid="{6E47651A-60BC-C045-53FF-0EA4FFE3AD48}">
+              <File Id="LicenseManager.dll" KeyPath="yes" Name="$(var.LicenseManager.TargetFileName)" Source="$(var.LicenseManager.TargetPath)" DiskId="1" />
+            </Component>
+
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="ProgramMenuFolder" Name="Programs" />
+    </Directory>
+
+    <Feature Id="DefaultFeature" Level="1">
+      <!-- TODO: Remove the comments around this ComponentRef element and the Component above in order to add resources to this installer. -->
+      <ComponentRef Id="MainExecutable" />
+      <ComponentRef Id="MainExecutableConfig" />
+      <ComponentRef Id="LicenseManager" /> 
+      
+      <!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. -->
+      <!--<ComponentGroupRef Id="Product.Generated" />-->
+    </Feature>
+
+    <Icon Id="Application.ico" SourceFile="$(var.LicenseStatus.ProjectDir)\Images\Application.ico" />
+  </Product>
 </Wix>
