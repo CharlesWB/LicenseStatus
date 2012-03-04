@@ -1,5 +1,5 @@
 lmutil - Copyright (c) 1989-2006 Macrovision Europe Ltd. and/or Macrovision Corporation. All Rights Reserved.
-Flexible License Manager status on Mon 6/16/2008 10:43
+Flexible License Manager status on Fri 3/2/2012 10:43
 
 [Detecting lmgrd processes...]
 License server status: 27000@SERVER001,27000@SERVER002,27000@SERVER003
@@ -24,7 +24,7 @@ Users of UG13500:  (Total of 2 licenses issued;  Total of 1 license in use)
   "UG13500" v22.0, vendor: uglmd
   floating license
 
-    steenwyk CAD9649D CAD9649D0.0 (v22.0) (SERVER001/27000 3861), start Mon 6/16 7:13
+    steenwyk CAD9649D CAD9649D0.0 (v22.0) (SERVER001/27000 3861), start Fri 3/2 7:13
 
 Users of adv_assemblies:  (Total of 7 licenses issued;  Total of 0 licenses in use)
 
@@ -37,9 +37,9 @@ Users of assemblies:  (Total of 16 licenses issued;  Total of 3 licenses in use)
   "assemblies" v22.0, vendor: uglmd
   floating license
 
-    czuhai CAD9651D CAD9651D0.0 (v22.0) (SERVER001/27000 2009), start Mon 6/16 10:21
-    deman CAD9210D CAD9210D0.0 (v22.0) (SERVER001/27000 6118), start Mon 6/16 9:55
-    kreys CAD9654D CAD9654D0.0 (v22.0) (SERVER001/27000 181), start Mon 6/16 10:06
+    czuhai CAD9651D CAD9651D0.0 (v22.0) (SERVER001/27000 2009), start Fri 3/2 10:21
+    deman CAD9210D CAD9210D0.0 (v22.0) (SERVER001/27000 6118), start Fri 3/2 9:55
+    kreys CAD9654D CAD9654D0.0 (v22.0) (SERVER001/27000 181), start Fri 3/2 10:06
 
 Users of c_p_p_runtime:  (Total of 20 licenses issued;  Total of 0 licenses in use)
 
@@ -50,14 +50,14 @@ Users of drafting:  (Total of 16 licenses issued;  Total of 8 licenses in use)
   "drafting" v22.0, vendor: uglmd
   floating license
 
-    boulter CAD9656D CAD9656D0.0 (v22.0) (SERVER001/27000 6049), start Mon 6/16 10:13
-    ehlert CAD9647D CAD9647D0.0 (v22.0) (SERVER001/27000 1884), start Mon 6/16 9:27
-    harkema CAD9698D CAD9698D0.0 (v22.0) (SERVER001/27000 2658), start Mon 6/16 8:04
-    houtman CAD9690D CAD9690D0.0 (v22.0) (SERVER001/27000 703), start Mon 6/16 8:45
-    morris CAD9648D CAD9648D0.0 (v22.0) (SERVER001/27000 5533), start Mon 6/16 8:09
-    owczarzak CAD9692D CAD9692D0.0 (v22.0) (SERVER001/27000 6825), start Mon 6/16 9:14
-    stiop CAD9575d CAD9575d0.0 (v22.0) (SERVER001/27000 5980), start Mon 6/16 10:16
-    tasma CAD9696D CAD9696D0.0 (v22.0) (SERVER001/27000 5347), start Mon 6/16 10:38
+    boulter CAD9656D CAD9656D0.0 (v22.0) (SERVER001/27000 6049), start Fri 3/2 10:13
+    ehlert CAD9647D CAD9647D0.0 (v22.0) (SERVER001/27000 1884), start Fri 3/2 9:27
+    harkema CAD9698D CAD9698D0.0 (v22.0) (SERVER001/27000 2658), start Fri 3/2 8:04
+    houtman CAD9690D CAD9690D0.0 (v22.0) (SERVER001/27000 703), start Fri 3/2 8:45
+    morris CAD9648D CAD9648D0.0 (v22.0) (SERVER001/27000 5533), start Fri 3/2 8:09
+    owczarzak CAD9692D CAD9692D0.0 (v22.0) (SERVER001/27000 6825), start Fri 3/2 9:14
+    stiop CAD9575d CAD9575d0.0 (v22.0) (SERVER001/27000 5980), start Fri 3/2 10:16
+    tasma CAD9696D CAD9696D0.0 (v22.0) (SERVER001/27000 5347), start Fri 3/2 10:38
 
 Users of dxf_to_ug:  (Total of 1 license issued;  Total of 0 licenses in use)
 
@@ -74,26 +74,26 @@ Users of gateway:  (Total of 28 licenses issued;  Total of 20 licenses in use)
   "gateway" v22.0, vendor: uglmd
   floating license
 
-    boulter CAD9656D CAD9656D0.0 (v22.0) (SERVER001/27000 7244), start Mon 6/16 7:43
-    bozarth CAD9574D CAD9574D0.0 (v22.0) (SERVER001/27000 2961), start Mon 6/16 8:44
-    czuhai CAD9651D CAD9651D0.0 (v22.0) (SERVER001/27000 1128), start Mon 6/16 8:04
-    deboer CAD9668D CAD9668D0.0 (v22.0) (SERVER001/27000 3318), start Mon 6/16 6:35
-    deman CAD9210D CAD9210D0.0 (v22.0) (SERVER001/27000 7135), start Mon 6/16 7:03
-    ehlert CAD9647D CAD9647D0.0 (v22.0) (SERVER001/27000 980), start Mon 6/16 6:43
-    harkema CAD9698D CAD9698D0.0 (v22.0) (SERVER001/27000 6763), start Mon 6/16 7:09
-    houtman CAD9690D CAD9690D0.0 (v22.0) (SERVER001/27000 3477), start Mon 6/16 7:30
-    karas CAD9701d CAD9701d0.0 (v22.0) (SERVER001/27000 3782), start Mon 6/16 7:12
-    kreys CAD9654D CAD9654D0.0 (v22.0) (SERVER001/27000 1989), start Mon 6/16 7:50
-    morris CAD9648D CAD9648D0.0 (v22.0) (SERVER001/27000 6274), start Mon 6/16 8:05
-    moshauer CAD8272D CAD8272D0.0 (v22.0) (SERVER001/27000 4876), start Mon 6/16 6:37
-    owczarzak CAD9692D CAD9692D0.0 (v22.0) (SERVER001/27000 615), start Mon 6/16 9:12
-    schestag CAD8273D CAD8273D0.0 (v22.0) (SERVER001/27000 5234), start Mon 6/16 7:48
-    sheffer CAD9653d CAD9653d0.0 (v22.0) (SERVER001/27000 4069), start Mon 6/16 7:12
-    sternaman CAD9657D CAD9657D0.0 (v22.0) (SERVER001/27000 6439), start Mon 6/16 7:32
-    stiop CAD9575d CAD9575d0.0 (v22.0) (SERVER001/27000 838), start Mon 6/16 7:13
-    tasma CAD9696D CAD9696D0.0 (v22.0) (SERVER001/27000 5758), start Mon 6/16 7:24
-    wetters CAD9699d CAD9699d0.0 (v22.0) (SERVER001/27000 1409), start Mon 6/16 7:17
-    white CAD9695D CAD9695D0.0 (v22.0) (SERVER001/27000 4257), start Mon 6/16 6:38
+    boulter CAD9656D CAD9656D0.0 (v22.0) (SERVER001/27000 7244), start Fri 3/2 7:43
+    bozarth CAD9574D CAD9574D0.0 (v22.0) (SERVER001/27000 2961), start Fri 3/2 8:44
+    czuhai CAD9651D CAD9651D0.0 (v22.0) (SERVER001/27000 1128), start Fri 3/2 8:04
+    deboer CAD9668D CAD9668D0.0 (v22.0) (SERVER001/27000 3318), start Fri 3/2 6:35
+    deman CAD9210D CAD9210D0.0 (v22.0) (SERVER001/27000 7135), start Fri 3/2 7:03
+    ehlert CAD9647D CAD9647D0.0 (v22.0) (SERVER001/27000 980), start Fri 3/2 6:43
+    harkema CAD9698D CAD9698D0.0 (v22.0) (SERVER001/27000 6763), start Fri 3/2 7:09
+    houtman CAD9690D CAD9690D0.0 (v22.0) (SERVER001/27000 3477), start Fri 3/2 7:30
+    karas CAD9701d CAD9701d0.0 (v22.0) (SERVER001/27000 3782), start Fri 3/2 7:12
+    kreys CAD9654D CAD9654D0.0 (v22.0) (SERVER001/27000 1989), start Fri 3/2 7:50
+    morris CAD9648D CAD9648D0.0 (v22.0) (SERVER001/27000 6274), start Fri 3/2 8:05
+    moshauer CAD8272D CAD8272D0.0 (v22.0) (SERVER001/27000 4876), start Fri 3/2 6:37
+    owczarzak CAD9692D CAD9692D0.0 (v22.0) (SERVER001/27000 615), start Fri 3/2 9:12
+    schestag CAD8273D CAD8273D0.0 (v22.0) (SERVER001/27000 5234), start Fri 3/2 7:48
+    sheffer CAD9653d CAD9653d0.0 (v22.0) (SERVER001/27000 4069), start Fri 3/2 7:12
+    sternaman CAD9657D CAD9657D0.0 (v22.0) (SERVER001/27000 6439), start Fri 3/2 7:32
+    stiop CAD9575d CAD9575d0.0 (v22.0) (SERVER001/27000 838), start Fri 3/2 7:13
+    tasma CAD9696D CAD9696D0.0 (v22.0) (SERVER001/27000 5758), start Fri 3/2 7:24
+    wetters CAD9699d CAD9699d0.0 (v22.0) (SERVER001/27000 1409), start Fri 3/2 7:17
+    white CAD9695D CAD9695D0.0 (v22.0) (SERVER001/27000 4257), start Fri 3/2 6:38
 
 Users of gfem_ansys:  (Total of 2 licenses issued;  Total of 0 licenses in use)
 
@@ -138,7 +138,7 @@ Users of nx_sheet_metal:  (Total of 8 licenses issued;  Total of 1 license in us
   "nx_sheet_metal" v22.0, vendor: uglmd
   floating license
 
-    steenwyk CAD9649D CAD9649D0.0 (v22.0) (SERVER001/27000 6964), start Mon 6/16 10:40
+    steenwyk CAD9649D CAD9649D0.0 (v22.0) (SERVER001/27000 6964), start Fri 3/2 10:40
 
 Users of pstudio_cons:  (Total of 28 licenses issued;  Total of 0 licenses in use)
 
@@ -153,17 +153,17 @@ Users of solid_modeling:  (Total of 19 licenses issued;  Total of 11 licenses in
   "solid_modeling" v22.0, vendor: uglmd
   floating license
 
-    czuhai CAD9651D CAD9651D0.0 (v22.0) (SERVER001/27000 4423), start Mon 6/16 10:02
-    deboer CAD9668D CAD9668D0.0 (v22.0) (SERVER001/27000 6614), start Mon 6/16 6:37
-    deman CAD9210D CAD9210D0.0 (v22.0) (SERVER001/27000 1709), start Mon 6/16 10:35
-    karas CAD9701d CAD9701d0.0 (v22.0) (SERVER001/27000 5144), start Mon 6/16 10:09
-    kreys CAD9654D CAD9654D0.0 (v22.0) (SERVER001/27000 309), start Mon 6/16 10:25
-    moshauer CAD8272D CAD8272D0.0 (v22.0) (SERVER001/27000 468), start Mon 6/16 8:57
-    schestag CAD8273D CAD8273D0.0 (v22.0) (SERVER001/27000 3091), start Mon 6/16 7:48
-    sheffer CAD9653d CAD9653d0.0 (v22.0) (SERVER001/27000 3106), start Mon 6/16 10:27
-    stiop CAD9575d CAD9575d0.0 (v22.0) (SERVER001/27000 7338), start Mon 6/16 8:43
-    wetters CAD9699d CAD9699d0.0 (v22.0) (SERVER001/27000 211), start Mon 6/16 8:30
-    white CAD9695D CAD9695D0.0 (v22.0) (SERVER001/27000 3227), start Mon 6/16 6:38
+    czuhai CAD9651D CAD9651D0.0 (v22.0) (SERVER001/27000 4423), start Fri 3/2 10:02
+    deboer CAD9668D CAD9668D0.0 (v22.0) (SERVER001/27000 6614), start Fri 3/2 6:37
+    deman CAD9210D CAD9210D0.0 (v22.0) (SERVER001/27000 1709), start Fri 3/2 10:35
+    karas CAD9701d CAD9701d0.0 (v22.0) (SERVER001/27000 5144), start Fri 3/2 10:09
+    kreys CAD9654D CAD9654D0.0 (v22.0) (SERVER001/27000 309), start Fri 3/2 10:25
+    moshauer CAD8272D CAD8272D0.0 (v22.0) (SERVER001/27000 468), start Fri 3/2 8:57
+    schestag CAD8273D CAD8273D0.0 (v22.0) (SERVER001/27000 3091), start Fri 3/2 7:48
+    sheffer CAD9653d CAD9653d0.0 (v22.0) (SERVER001/27000 3106), start Fri 3/2 10:27
+    stiop CAD9575d CAD9575d0.0 (v22.0) (SERVER001/27000 7338), start Fri 3/2 8:43
+    wetters CAD9699d CAD9699d0.0 (v22.0) (SERVER001/27000 211), start Fri 3/2 8:30
+    white CAD9695D CAD9695D0.0 (v22.0) (SERVER001/27000 3227), start Fri 3/2 6:38
 
 Users of ufunc_execute:  (Total of 20 licenses issued;  Total of 0 licenses in use)
 
@@ -208,14 +208,14 @@ Users of UG13500_features_modeling:  (Total of 2 licenses issued;  Total of 1 li
   "UG13500_features_modeling" v22.0, vendor: uglmd
   floating license
 
-    steenwyk CAD9649D CAD9649D0.0 (v22.0) (SERVER001/27000 1550), start Mon 6/16 10:25
+    steenwyk CAD9649D CAD9649D0.0 (v22.0) (SERVER001/27000 1550), start Fri 3/2 10:25
 
 Users of UG13500_gateway:  (Total of 2 licenses issued;  Total of 1 license in use)
 
   "UG13500_gateway" v22.0, vendor: uglmd
   floating license
 
-    steenwyk CAD9649D CAD9649D0.0 (v22.0) (SERVER001/27000 6586), start Mon 6/16 7:13
+    steenwyk CAD9649D CAD9649D0.0 (v22.0) (SERVER001/27000 6586), start Fri 3/2 7:13
 
 Users of UG13500_grip_execute:  (Total of 2 licenses issued;  Total of 0 licenses in use)
 
@@ -250,7 +250,7 @@ Users of UG13500_solid_modeling:  (Total of 2 licenses issued;  Total of 1 licen
   "UG13500_solid_modeling" v22.0, vendor: uglmd
   floating license
 
-    steenwyk CAD9649D CAD9649D0.0 (v22.0) (SERVER001/27000 5653), start Mon 6/16 10:19
+    steenwyk CAD9649D CAD9649D0.0 (v22.0) (SERVER001/27000 5653), start Fri 3/2 10:19
 
 Users of UG13500_step_ap203:  (Total of 2 licenses issued;  Total of 0 licenses in use)
 

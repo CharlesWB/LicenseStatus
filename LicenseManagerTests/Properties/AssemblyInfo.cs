@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("LicenseManagerTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("ChasB Creations")]
+[assembly: AssemblyCompany("Charles W. Bozarth")]
 [assembly: AssemblyProduct("LicenseManagerTests")]
-[assembly: AssemblyCopyright("Copyright © ChasB Creations 2008")]
+[assembly: AssemblyCopyright("© 2008 Charles W. Bozarth")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
