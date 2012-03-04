@@ -4,6 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{280E7C3D-FD51-442D-A5FB-35309A245B23}"
 	ProjectSection(SolutionItems) = preProject
 		License Status.FxCop = License Status.FxCop
+		License.txt = License.txt
 		lmstat-acad.log = lmstat-acad.log
 		lmstat-connect.log = lmstat-connect.log
 		lmstat-errors.log = lmstat-errors.log

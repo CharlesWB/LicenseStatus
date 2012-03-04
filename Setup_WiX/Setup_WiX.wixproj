@@ -22,6 +22,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />
+    <Compile Include="WelcomeOnlyDlg.wxs" />
+    <Compile Include="WixUI_WelcomeOnly.wxs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LicenseManager\LicenseManager.csproj">
@@ -30,7 +32,7 @@
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLLOCATION</RefTargetDir>
+      <RefTargetDir>INSTALLDIR</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\LicenseStatus\LicenseStatus.csproj">
       <Name>LicenseStatus</Name>
@@ -38,10 +40,14 @@
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLLOCATION</RefTargetDir>
+      <RefTargetDir>INSTALLDIR</RefTargetDir>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
     <WixExtension Include="WixNetFxExtension">
       <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
       <Name>WixNetFxExtension</Name>
