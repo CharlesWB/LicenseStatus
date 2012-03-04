@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Charles W. Bozarth")]
 [assembly: AssemblyProduct("License Status")]
-[assembly: AssemblyCopyright("© 2012 Charles W. Bozarth")]
+[assembly: AssemblyCopyright("© 2009-2012 Charles W. Bozarth")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

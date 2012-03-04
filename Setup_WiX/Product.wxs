@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (C) 2012 Charles W. Bozarth
+  Copyright (C) 2009-2012 Charles W. Bozarth
   Refer to MainWindow.xaml.cs for the full copyright notice.
 -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">

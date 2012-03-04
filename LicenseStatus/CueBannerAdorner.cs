@@ -1,5 +1,5 @@
 ﻿// <copyright file="CueBannerAdorner.cs" company="Charles W. Bozarth">
-// Copyright (C) 2012 Charles W. Bozarth
+// Copyright (C) 2009-2012 Charles W. Bozarth
 // Refer to MainWindow.xaml.cs for the full copyright notice.
 // </copyright>
 
