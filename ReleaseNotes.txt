@@ -1,12 +1,13 @@
 License Status Release Notes
 
-TBD 2012 v3.0
+March 6, 2012 v3.0
 - Updated to use .NET 4.0.
 - Changed text formatting mode from Ideal to Display. This improves the "blurry" font display seen in WPF .NET 3.5.
 - Replaced old Visual Studio installer project with a WiX installer.
+- Corrected issue where the settings were not remembered when upgrading from a previous version.
 
 May 20, 2010 v2.4
-- Changed the Help-> About url to the Sourceforge project site.
+- Changed the Help-> About url to the Sourceforge project web site.
 - Changed the copyright to 2010.
 
 October 17, 2009 v2.3
