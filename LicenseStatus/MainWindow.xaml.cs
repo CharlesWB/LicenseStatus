@@ -19,10 +19,6 @@
 // <url>http://licensestatus.sourceforge.net</url>
 // <summary>Display the status of FlexLM licenses.</summary>
 
-// TODO Settings upgrade will not work when the new version's evidence is different.
-// http://www.vesic.org/english/blog/winforms/upgrade-of-applicationuser-settings-between-application-versions/
-// http://www.devx.com/dotnet/Article/33944/0/page/4
-
 #region Notes
 // Text Box Select All on Focus:
 //
@@ -149,6 +145,17 @@
 // While not perfect custom code has been added to the DataContextChanged event of the TabControl. This
 // resizes the columns when a new tab is selected.
 //
+// Settings Upgrade Failure When Framework Changes:
+//
+// Usually Settings.Default.Upgrade() handles transferring application settings from the last version to the
+// current version. But when the version also changes the .NET framework Upgrade will fail. For License Status
+// this occurred at v3.0. V2.x was .NET 3.5 SP1, and v3.0 changed to .NET 4.
+// Since the executable path has not changed it appears that .NET 4 changes how the hash is generated for the local settings path.
+// http://stackoverflow.com/questions/2722209/applicationsettingsbase-upgrade-not-upgrading-user-settings-after-recompiling
+// http://social.msdn.microsoft.com/Forums/en-SG/vbgeneral/thread/3e3d3471-237d-4905-9785-cd024cbf0ebb
+// http://www.dotnetmonster.com/Uwe/Forum.aspx/dotnet-vb/58638/My-Settings-Upgrade-doesn-t-upgrade
+// http://www.vesic.org/english/blog/winforms/upgrade-of-applicationuser-settings-between-application-versions/
+//
 // Possible Enhancements:
 //
 // The DataGrid in .NET 4.0 may eliminate most of the ListView custom code.
@@ -173,6 +180,7 @@ namespace LicenseStatus
     using System.Windows.Data;
     using System.Windows.Input;
     using LicenseStatus.Properties;
+    using System.Configuration;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -214,6 +222,12 @@ namespace LicenseStatus
             if (Settings.Default.UpgradeSettings)
             {
                 Settings.Default.Upgrade();
+
+                if (Settings.Default.UpgradeSettings)
+                {
+                    this.UpgradeSettingsFromOldVersion();
+                }
+
                 Settings.Default.UpgradeSettings = false;
             }
 
@@ -487,6 +501,102 @@ namespace LicenseStatus
                 {
                     column.Width = column.ActualWidth;
                     column.Width = double.NaN;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Upgrades application settings from an older version that cannot be automatically upgraded.
+        /// </summary>
+        /// <remarks>
+        /// This will manually search for the latest non-upgraded version and copy the old version folder
+        /// to the new local settings path.
+        /// </remarks>
+        private void UpgradeSettingsFromOldVersion()
+        {
+            Configuration currentConfiguration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+
+            if (File.Exists(currentConfiguration.FilePath))
+            {
+                return;
+            }
+
+            DirectoryInfo currentVersionFolder = Directory.GetParent(currentConfiguration.FilePath);
+            Version currentVersion;
+            if (currentVersionFolder != null && Version.TryParse(currentVersionFolder.Name, out currentVersion))
+            {
+                DirectoryInfo currentAppSettingsFolder = currentVersionFolder.Parent;
+                if (currentAppSettingsFolder != null)
+                {
+                    DirectoryInfo companyFolder = currentAppSettingsFolder.Parent;
+                    if (companyFolder != null)
+                    {
+                        // The folder name is in the form, ExeName_TypeName_Hash. The ExeName can be modified to replace invalid path
+                        // characters and shortened (if needed) to a maximum length. See the internal class System.Configuration.ClientConfigPaths.
+                        // The following will extract the ExeName from the current settings folder by trimming it down to the next to last underscore.
+                        // An underscore could exist in the ExeName, so the first underscore cannot be searched for. For License Status the TypeName
+                        // is probably always Url but there is no reason to assume this.
+                        // This could have been done with a RegularExpression, but for no particular reason this was done with string searches.
+                        // Although unlikely, versions from another program could be found. The other program would have to have the same executable
+                        // and company names.
+                        int hashUnderscore = currentAppSettingsFolder.Name.LastIndexOf('_');
+                        if (hashUnderscore > 1)
+                        {
+                            int typeUnderscore = currentAppSettingsFolder.Name.LastIndexOf('_', hashUnderscore - 1);
+                            if (typeUnderscore > 0)
+                            {
+                                string searchName = currentAppSettingsFolder.Name.Substring(0, typeUnderscore + 1) + "*";
+
+                                Version oldVersion = new Version(0, 0, 0, 0);
+                                DirectoryInfo oldVersionFolder = null;
+
+                                foreach (DirectoryInfo appSettingsFolder in companyFolder.GetDirectories(searchName))
+                                {
+                                    // Ignore the current settings folder. These should have been correctly handled by Settings.Default.Upgrade.
+                                    if (string.Compare(currentAppSettingsFolder.Name, appSettingsFolder.Name, StringComparison.InvariantCultureIgnoreCase) != 0)
+                                    {
+                                        foreach (DirectoryInfo versionFolder in appSettingsFolder.GetDirectories())
+                                        {
+                                            Version version;
+                                            if (Version.TryParse(versionFolder.Name, out version))
+                                            {
+                                                if (version > oldVersion && version < currentVersion)
+                                                {
+                                                    oldVersion = version;
+                                                    oldVersionFolder = versionFolder;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (oldVersionFolder != null)
+                                {
+                                    FileInfo oldConfigFile = new FileInfo(Path.Combine(oldVersionFolder.FullName, "user.config"));
+                                    if (oldConfigFile.Exists)
+                                    {
+                                        try
+                                        {
+                                            DirectoryInfo oldVersionInNewFolder = new DirectoryInfo(Path.Combine(currentAppSettingsFolder.FullName, oldVersion.ToString()));
+                                            if (!oldVersionInNewFolder.Exists)
+                                            {
+                                                oldVersionInNewFolder.Create();
+                                            }
+
+                                            oldConfigFile.CopyTo(Path.Combine(oldVersionInNewFolder.FullName, "user.config"));
+
+                                            Settings.Default.Upgrade();
+                                        }
+                                        catch (Exception)
+                                        {
+                                            // This is overkill, but we'll ignore any exceptions that may occur during folder and file creation.
+                                            // The only thing this should cause is that the old configuration won't be transferred to the new.
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
