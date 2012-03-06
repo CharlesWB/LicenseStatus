@@ -1,5 +1,5 @@
 lmutil - Copyright (c) 1989-2006 Macrovision Europe Ltd. and/or Macrovision Corporation. All Rights Reserved.
-Flexible License Manager status on Sat 3/3/2012 10:43
+Flexible License Manager status on Mon 3/5/2012 10:43
 
 [Detecting lmgrd processes...]
 License server status: 27001@SERVER001
@@ -20,7 +20,7 @@ Users of Used_Feature_One_License:  (Total of 1 license issued;  Total of 1 lice
   "Used_Feature_One_License" v22.0, vendor: testdaemon
   floating license
 
-    user001 comp001 comp001 (v22.0) (SERVER001/27001 3861), start Sat 3/3 7:13
+    user001 comp001 comp001 (v22.0) (SERVER001/27001 3861), start Mon 3/5 7:13
 
 Users of Feature_With_Error: Cannot get users of Feature_With_Error: No such feature exists. (-5,222)
 
@@ -31,37 +31,37 @@ Users of Feature_With_Borrow:  (Total of 16 licenses issued;  Total of 3 license
   "Feature_With_Borrow" v22.0, vendor: testdaemon
   floating license
 
-    user003 comp003 comp003 (v22.0) (SERVER001/27001 2009), start Sat 3/3 10:21
-    user005 comp005 comp005 (v22.0) (SERVER001/27001 601), start Sat 3/3 10:18 (linger: 14437140)
-    user004 comp004 comp004 (v22.0) (SERVER001/27001 6118), start Sat 3/3 9:55
+    user003 comp003 comp003 (v22.0) (SERVER001/27001 2009), start Mon 3/5 10:21
+    user005 comp005 comp005 (v22.0) (SERVER001/27001 601), start Mon 3/5 10:18 (linger: 14437140)
+    user004 comp004 comp004 (v22.0) (SERVER001/27001 6118), start Mon 3/5 9:55
 
-Users of Feature_With_Various_Dates_3_3_12:  (Total of 28 licenses issued;  Total of 28 licenses in use)
+Users of Feature_With_Various_Dates_3_5_12:  (Total of 28 licenses issued;  Total of 28 licenses in use)
 
-  "Feature_With_Various_Dates_3_3_12" v22.0, vendor: testdaemon
+  "Feature_With_Various_Dates_3_5_12" v22.0, vendor: testdaemon
   floating license
 
-    user_d02 comp_d02 comp_d02 (v22.0) (SERVER001/27001 181), start Sat 3/3 10:06
-    user_d03 comp_d03 comp_d03 (v22.0) (SERVER001/27001 2009), start Sat 3/3 10:21
-    user_d04 comp_d04 comp_d04 (v22.0) (SERVER001/27001 6118), start Sat 3/3 9:55
-    user_d05 comp_d05 comp_d05 (v22.0) (SERVER001/27001 601), start Sat 3/3 10:18
-    user_d06 comp_d06 comp_d06 (v22.0) (SERVER001/27001 182), start Sun 3/4 8:06
-    user_d07 comp_d07 comp_d07 (v22.0) (SERVER001/27001 2008), start Sun 3/4 7:21
+    user_d02 comp_d02 comp_d02 (v22.0) (SERVER001/27001 181), start Mon 3/5 10:06
+    user_d03 comp_d03 comp_d03 (v22.0) (SERVER001/27001 2009), start Mon 3/5 10:21
+    user_d04 comp_d04 comp_d04 (v22.0) (SERVER001/27001 6118), start Mon 3/5 9:55
+    user_d05 comp_d05 comp_d05 (v22.0) (SERVER001/27001 601), start Mon 3/5 10:18
+    user_d06 comp_d06 comp_d06 (v22.0) (SERVER001/27001 182), start Tue 3/6 8:06
+    user_d07 comp_d07 comp_d07 (v22.0) (SERVER001/27001 2008), start Tue 3/6 7:21
     user_d08 comp_d08 comp_d08 (v22.0) (SERVER001/27001 6117), start Mon 3/5 10:55
     user_d09 comp_d09 comp_d09 (v22.0) (SERVER001/27001 602), start Mon 3/5 9:18
-    user_d10 comp_d10 comp_d10 (v22.0) (SERVER001/27001 6116), start Thu 3/1 0:01
-    user_d11 comp_d11 comp_d11 (v22.0) (SERVER001/27001 603), start Thu 3/1 6:18
-    user_d12 comp_d12 comp_d12 (v22.0) (SERVER001/27001 6115), start Fri 3/2 15:01
-    user_d13 comp_d13 comp_d13 (v22.0) (SERVER001/27001 604), start Fri 3/2 6:18
-    user_d14 comp_d14 comp_d14 (v22.0) (SERVER001/27001 6114), start Wed 3/7 15:01
-    user_d15 comp_d15 comp_d15 (v22.0) (SERVER001/27001 605), start Wed 3/7 6:18
-    user_d16 comp_d16 comp_d16 (v22.0) (SERVER001/27001 6113), start Thu 3/8 0:00
-    user_d17 comp_d17 comp_d17 (v22.0) (SERVER001/27001 606), start Wed 3/14 23:59
-    user_d18 comp_d18 comp_d18 (v22.0) (SERVER001/27001 6112), start Thu 3/15 0:00
-    user_d19 comp_d19 comp_d19 (v22.0) (SERVER001/27001 607), start Sat 3/31 23:59
+    user_d10 comp_d10 comp_d10 (v22.0) (SERVER001/27001 6116), start Sat 3/3 0:01
+    user_d11 comp_d11 comp_d11 (v22.0) (SERVER001/27001 603), start Sat 3/3 6:18
+    user_d12 comp_d12 comp_d12 (v22.0) (SERVER001/27001 6115), start Sun 3/4 15:01
+    user_d13 comp_d13 comp_d13 (v22.0) (SERVER001/27001 604), start Sun 3/4 6:18
+    user_d14 comp_d14 comp_d14 (v22.0) (SERVER001/27001 6114), start Fri 3/9 15:01
+    user_d15 comp_d15 comp_d15 (v22.0) (SERVER001/27001 605), start Fri 3/9 6:18
+    user_d16 comp_d16 comp_d16 (v22.0) (SERVER001/27001 6113), start Sat 3/10 0:00
+    user_d17 comp_d17 comp_d17 (v22.0) (SERVER001/27001 606), start Fri 3/16 23:59
+    user_d18 comp_d18 comp_d18 (v22.0) (SERVER001/27001 6112), start Sat 3/17 0:00
+    user_d19 comp_d19 comp_d19 (v22.0) (SERVER001/27001 607), start Tue 3/13 23:59
     user_d20 comp_d20 comp_d20 (v22.0) (SERVER001/27001 6111), start Wed 2/29 23:59
     user_d21 comp_d21 comp_d21 (v22.0) (SERVER001/27001 608), start Thu 2/23 0:00
     user_d22 comp_d22 comp_d22 (v22.0) (SERVER001/27001 6110), start Wed 2/22 23:59
-    user_d23 comp_d23 comp_d23 (v22.0) (SERVER001/27001 609), start Thu 3/1 0:00
+    user_d23 comp_d23 comp_d23 (v22.0) (SERVER001/27001 609), start Mon 3/5 0:00
     user_d24 comp_d24 comp_d24 (v22.0) (SERVER001/27001 6109), start Tue 2/28 23:59
     user_d25 comp_d25 comp_d25 (v22.0) (SERVER001/27001 610), start Sun 1/1 0:00
     user_d26 comp_d26 comp_d26 (v22.0) (SERVER001/27001 6108), start Sat 12/31 23:59
@@ -74,9 +74,9 @@ Users of Feature_Non-Word.Characters:  (Total of 16 licenses issued;  Total of 6
   "Feature_Non-Word.Characters" v22.0, vendor: testdaemon
   floating license
 
-    user-001 comp-001 comp-001 (v1.000) (SERVER.001/27001 2009), start Sat 3/3 10:21
-    user-001 comp-003 comp-003 (v1.000) (SERVER.001/27001 2001), start Sat 3/3 10:31
-    user-001 comp-002 comp-002 (v1.000) (SERVER.001/27001 2000), start Sat 3/3 11:20
-    user-001 comp-004 comp-004 (v1.000) (SERVER.001/27001 2004), start Sat 3/3 10:12
-    user.005 comp.005 comp.005 (v22.0) (SERVER001/27001 662), start Sat 3/3 10:10
-    user.004 comp.004 comp.004 (v22.0) (SERVER001/27001 6101), start Sat 3/3 9:52
+    user-001 comp-001 comp-001 (v1.000) (SERVER.001/27001 2009), start Mon 3/5 10:21
+    user-001 comp-003 comp-003 (v1.000) (SERVER.001/27001 2001), start Mon 3/5 10:31
+    user-001 comp-002 comp-002 (v1.000) (SERVER.001/27001 2000), start Mon 3/5 11:20
+    user-001 comp-004 comp-004 (v1.000) (SERVER.001/27001 2004), start Mon 3/5 10:12
+    user.005 comp.005 comp.005 (v22.0) (SERVER001/27001 662), start Mon 3/5 10:10
+    user.004 comp.004 comp.004 (v22.0) (SERVER001/27001 6101), start Mon 3/5 9:52
