@@ -529,9 +529,9 @@ namespace LicenseStatus
                 if (currentAppSettingsFolder != null)
                 {
                     DirectoryInfo companyFolder = currentAppSettingsFolder.Parent;
-                    if (companyFolder != null)
+                    if (companyFolder != null && companyFolder.Exists)
                     {
-                        // The folder name is in the form, ExeName_TypeName_Hash. The ExeName can be modified to replace invalid path
+                        // The application folder name is in the form, ExeName_TypeName_Hash. The ExeName can be modified to replace invalid path
                         // characters and shortened (if needed) to a maximum length. See the internal class System.Configuration.ClientConfigPaths.
                         // The following will extract the ExeName from the current settings folder by trimming it down to the next to last underscore.
                         // An underscore could exist in the ExeName, so the first underscore cannot be searched for. For License Status the TypeName
