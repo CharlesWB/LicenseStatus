@@ -303,7 +303,7 @@ namespace LicenseStatus
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Filter = "lmutil Executable (lmutil.exe)|lmutil.exe|Executable Files (*.exe)|*.exe";
 
-            System.Nullable<bool> result = dialog.ShowDialog();
+            bool? result = dialog.ShowDialog();
 
             if (result == true)
             {
@@ -400,7 +400,7 @@ namespace LicenseStatus
                             location = slot.X;
                         }
 
-                        string groupName = String.Format(CultureInfo.InvariantCulture, "Column{0}", column);
+                        string groupName = string.Format(CultureInfo.InvariantCulture, "Column{0}", column);
 
                         if (item.ColumnDefinitions.Count == 2 && item.ColumnDefinitions[0].SharedSizeGroup != groupName)
                         {
@@ -446,7 +446,7 @@ namespace LicenseStatus
 
             if (textBox != null)
             {
-                if (String.IsNullOrEmpty(textBox.Text))
+                if (string.IsNullOrEmpty(textBox.Text))
                 {
                     BindingExpression binding = textBox.GetBindingExpression(TextBox.TextProperty);
                     if (binding != null)
@@ -473,7 +473,7 @@ namespace LicenseStatus
                 TextBox textBox = sender as TextBox;
                 if (textBox != null)
                 {
-                    if (String.IsNullOrEmpty(textBox.Text))
+                    if (string.IsNullOrEmpty(textBox.Text))
                     {
                         BindingExpression binding = textBox.GetBindingExpression(TextBox.TextProperty);
                         if (binding != null)
