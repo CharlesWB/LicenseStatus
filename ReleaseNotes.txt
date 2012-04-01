@@ -1,8 +1,7 @@
 License Status Release Notes
 
 April 1, 2012 v3.1
-- Changed window position management to use native Windows window placement methods. This corrects an issue
-  where the window can be restored to a second monitor even if that monitor is disabled.
+- Corrected issue where the window position would be restored to a second monitor even if that monitor was disabled.
 
 March 6, 2012 v3.0
 - Updated to use .NET 4.0.
