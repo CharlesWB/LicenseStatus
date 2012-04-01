@@ -4,7 +4,7 @@
   Refer to MainWindow.xaml.cs for the full copyright notice.
 -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
-  <Product Id="{ED33C9A1-B3F3-4A2E-813B-F901664C13EE}" Name="License Status" Manufacturer="Charles W. Bozarth" Version="3.1.0" UpgradeCode="{99B04D07-358A-4273-B2AE-0FE6A229D73F}" Language="1033" Codepage="1252">
+  <Product Id="{E904FC5A-6B86-43CA-8BA2-E7FE93982D0A}" Name="License Status" Manufacturer="Charles W. Bozarth" Version="3.1.0" UpgradeCode="{99B04D07-358A-4273-B2AE-0FE6A229D73F}" Language="1033" Codepage="1252">
 
     <Package Id="*" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Manufacturer="Charles W. Bozarth" Comments="Display the status of FlexLM licenses" />
 
