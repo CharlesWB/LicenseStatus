@@ -8,12 +8,10 @@
         xmlns:licenseManager="clr-namespace:CWBozarth.LicenseManager;assembly=LicenseManager"
         Title="License Status"
         Icon="Images\Application.ico"
-        WindowState="{Binding Source={x:Static appSettings:Settings.Default}, Path=WindowState, Mode=TwoWay}"
-        Height="{Binding Source={x:Static appSettings:Settings.Default}, Path=WindowHeight, Mode=TwoWay}"
-        Width="{Binding Source={x:Static appSettings:Settings.Default}, Path=WindowWidth, Mode=TwoWay}"
-        Top="{Binding Source={x:Static appSettings:Settings.Default}, Path=WindowTop, Mode=TwoWay}"
-        Left="{Binding Source={x:Static appSettings:Settings.Default}, Path=WindowLeft, Mode=TwoWay}"
-        Closed="MainWindow_Closed"
+        Height="380"
+        Width="600"
+        SourceInitialized="MainWindow_SourceInitialized"
+        Closing="MainWindow_Closing"
         TextOptions.TextFormattingMode="Display">
     
     <Window.CommandBindings>

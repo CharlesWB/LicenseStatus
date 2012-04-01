@@ -171,7 +171,7 @@
 namespace LicenseStatus
 {
     using System;
-    using System.ComponentModel;
+    using System.Configuration;
     using System.Globalization;
     using System.IO;
     using System.Windows;
@@ -180,7 +180,6 @@ namespace LicenseStatus
     using System.Windows.Data;
     using System.Windows.Input;
     using LicenseStatus.Properties;
-    using System.Configuration;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -313,17 +312,33 @@ namespace LicenseStatus
         }
 
         /// <summary>
-        /// Event handler for the closed main window. This saves the user's application settings.
+        /// Event handler for the initialized main window. This restores the window's last location.
         /// </summary>
         /// <param name="sender">The object where the event handler is attached.</param>
         /// <param name="e">The event data.</param>
-        private void MainWindow_Closed(object sender, EventArgs e)
+        private void MainWindow_SourceInitialized(object sender, EventArgs e)
         {
-            // Only maximized or normal window states are recorded.
-            if (Settings.Default.WindowState == WindowState.Minimized)
+            // If WindowPlacement is not set then this is either a brand new install or an upgrade from
+            // version before v3.1. If it is an upgrade then the previous settings will be accessible
+            // and we can use them to restore the last window position.
+            if (Settings.Default.WindowPlacement.length <= 0)
             {
-                Settings.Default.WindowState = WindowState.Normal;
+                this.RestoreWindowPositionFromOldSettings();
             }
+            else
+            {
+                this.SetPlacement(Settings.Default.WindowPlacement);
+            }
+        }
+
+        /// <summary>
+        /// Event handler for closing the main window. This saves the user's application settings.
+        /// </summary>
+        /// <param name="sender">The object where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Settings.Default.WindowPlacement = this.GetPlacement();
 
             this.viewModel.SaveSettings();
 
@@ -598,6 +613,65 @@ namespace LicenseStatus
                         }
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Attempt to restore the window position using settings that were used prior to v3.1.
+        /// If the old settings are used then GetPlacement followed by SetPlacement will be called
+        /// to ensure the window is visible on an active screen.
+        /// </summary>
+        /// <remarks>
+        /// This would be only be applicable after the upgrade from v3.0.
+        /// </remarks>
+        private void RestoreWindowPositionFromOldSettings()
+        {
+            try
+            {
+                object left = Settings.Default.GetPreviousVersion("WindowLeft");
+                object top = Settings.Default.GetPreviousVersion("WindowTop");
+                object width = Settings.Default.GetPreviousVersion("WindowWidth");
+                object height = Settings.Default.GetPreviousVersion("WindowHeight");
+                object state = Settings.Default.GetPreviousVersion("WindowState");
+
+                if (left != null)
+                {
+                    this.Left = (double)left;
+                }
+
+                if (top != null)
+                {
+                    this.Top = (double)top;
+                }
+
+                if (width != null)
+                {
+                    this.Width = (double)width;
+                }
+
+                if (height != null)
+                {
+                    this.Height = (double)height;
+                }
+
+                if (state != null)
+                {
+                    this.WindowState = (System.Windows.WindowState)state;
+                }
+
+                // In other words, if all the settings were null then skip the call to SetPlacement
+                // since the window is being placed at its default location.
+                if (left != null || top != null || width != null || height != null || state != null)
+                {
+                    // By calling SetPlacement with the current GetPlacement we ensure that the window
+                    // is visible on an active screen.
+                    this.SetPlacement(this.GetPlacement());
+                }
+            }
+            catch (SettingsPropertyNotFoundException)
+            {
+                // If any of the previous settings are not found then there's no need to restore
+                // the previous window location.
             }
         }
     }

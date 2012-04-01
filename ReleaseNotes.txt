@@ -1,5 +1,9 @@
 License Status Release Notes
 
+April 1, 2012 v3.1
+- Changed window position management to use native Windows window placement methods. This corrects an issue
+  where the window can be restored to a second monitor even if that monitor is disabled.
+
 March 6, 2012 v3.0
 - Updated to use .NET 4.0.
 - Changed text formatting mode from Ideal to Display. This improves the "blurry" font display seen in WPF .NET 3.5.
