@@ -1,44 +1,48 @@
-﻿using CWBozarth.LicenseManager;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
-using System.Linq;
+﻿// <copyright file="FeatureTest.cs" company="Charles W. Bozarth">
+// Copyright (C) 2009-2012 Charles W. Bozarth
+// Refer to LicenseManager's License.cs for the full copyright notice.
+// </copyright>
 
 namespace LicenseManager.Test
 {
+    using System.IO;
+    using System.Linq;
+    using CWBozarth.LicenseManager;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     /// <summary>
-    ///This is a test class for FeatureTest and is intended
-    ///to contain all FeatureTest Unit Tests
-    ///</summary>
-    [TestClass()]
+    /// This is a test class for FeatureTest and is intended
+    /// to contain all FeatureTest Unit Tests
+    /// </summary>
+    [TestClass]
     public class FeatureTest
     {
-        private TestContext testContextInstance;
-
         private static string testFilesPath;
 
+        private TestContext testContextInstance;
+
         /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
+        /// Gets or sets the test context which provides
+        /// information about and functionality for the current test run.
+        /// </summary>
         public TestContext TestContext
         {
             get
             {
-                return testContextInstance;
+                return this.testContextInstance;
             }
+
             set
             {
-                testContextInstance = value;
+                this.testContextInstance = value;
             }
         }
 
         #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        [ClassInitialize()]
+        // You can use the following additional attributes as you write your tests:
+
+        // Use ClassInitialize to run code before running the first test in the class
+        [ClassInitialize]
         public static void MyClassInitialize(TestContext testContext)
         {
             // Duplicated from UtilityProgramTest.
@@ -54,27 +58,26 @@ namespace LicenseManager.Test
             }
         }
         
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
+        //// Use ClassCleanup to run code after all tests in a class have run
+        ////[ClassCleanup]
+        ////public static void MyClassCleanup()
+        ////{
+        ////}
+
+        //// Use TestInitialize to run code before running each test
+        ////[TestInitialize]
+        ////public void MyTestInitialize()
+        ////{
+        ////}
+
+        //// Use TestCleanup to run code after each test has run
+        ////[TestCleanup]
+        ////public void MyTestCleanup()
+        ////{
+        ////}
         #endregion
 
-        [TestMethod()]
+        [TestMethod]
         public void Feature_Empty_PropertyReturnsAreCorrect()
         {
             License license = new License();
@@ -97,7 +100,7 @@ namespace LicenseManager.Test
             Assert.AreEqual(0, target.Users.Count);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Feature_Used_PropertyReturnsAreCorrect()
         {
             License license = new License();
@@ -120,7 +123,7 @@ namespace LicenseManager.Test
             Assert.AreEqual(1, target.Users.Count);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Feature_Borrowed_PropertyReturnsAreCorrect()
         {
             License license = new License();
@@ -143,7 +146,7 @@ namespace LicenseManager.Test
             Assert.AreEqual(4, target.Users.Count);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Feature_Error_PropertyReturnsAreCorrect()
         {
             License license = new License();
@@ -166,7 +169,7 @@ namespace LicenseManager.Test
             Assert.AreEqual(0, target.Users.Count);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Feature_NonWordCharacters_PropertyReturnsAreCorrect()
         {
             License license = new License();

@@ -1,46 +1,51 @@
-﻿using CWBozarth.LicenseManager;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Xml.Serialization;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Threading;
+﻿// <copyright file="LicenseTest.cs" company="Charles W. Bozarth">
+// Copyright (C) 2009-2012 Charles W. Bozarth
+// Refer to LicenseManager's License.cs for the full copyright notice.
+// </copyright>
 
 namespace LicenseManager.Test
 {
+    using System;
+    using System.IO;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Threading;
+    using System.Xml.Serialization;
+    using CWBozarth.LicenseManager;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     /// <summary>
-    ///This is a test class for LicenseTest and is intended
-    ///to contain all LicenseTest Unit Tests
-    ///</summary>
-    [TestClass()]
+    /// This is a test class for LicenseTest and is intended
+    /// to contain all LicenseTest Unit Tests
+    /// </summary>
+    [TestClass]
     public class LicenseTest
     {
-        private TestContext testContextInstance;
-
         private static string testFilesPath;
 
+        private TestContext testContextInstance;
+
         /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
+        /// Gets or sets the test context which provides
+        /// information about and functionality for the current test run.
+        /// </summary>
         public TestContext TestContext
         {
             get
             {
-                return testContextInstance;
+                return this.testContextInstance;
             }
+
             set
             {
-                testContextInstance = value;
+                this.testContextInstance = value;
             }
         }
 
         #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        [ClassInitialize()]
+        // You can use the following additional attributes as you write your tests:
+
+        // Use ClassInitialize to run code before running the first test in the class
+        [ClassInitialize]
         public static void MyClassInitialize(TestContext testContext)
         {
             // Duplicated from UtilityProgramTest.
@@ -56,27 +61,26 @@ namespace LicenseManager.Test
             }
         }
         
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
+        //// Use ClassCleanup to run code after all tests in a class have run
+        ////[ClassCleanup]
+        ////public static void MyClassCleanup()
+        ////{
+        ////}
+
+        //// Use TestInitialize to run code before running each test
+        ////[TestInitialize]
+        ////public void MyTestInitialize()
+        ////{
+        ////}
+
+        //// Use TestCleanup to run code after each test has run
+        ////[TestCleanup]
+        ////public void MyTestCleanup()
+        ////{
+        ////}
         #endregion
 
-        [TestMethod()]
+        [TestMethod]
         public void License_DefaultConfigurationPropertyValues_ValuesAreDefault()
         {
             License target = new License();
@@ -85,7 +89,7 @@ namespace LicenseManager.Test
             Assert.IsNull(target.Name, "Name property is not null.");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void License_SerializeDeserialize_SettingsRestored()
         {
             string xmlFile = "SerializedTestLicense.xml";
@@ -130,7 +134,7 @@ namespace LicenseManager.Test
             Assert.AreEqual(expectedName, binaryLicense.Name, "Name has changed after binary serialization.");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void License_GetStatusCanExecute_DefinedAsPropertiesChanged()
         {
             License target = new License();
@@ -156,7 +160,7 @@ namespace LicenseManager.Test
             Assert.IsFalse(target.GetStatusCanExecute, "GetStatusCanExecute incorrect when only Executable is invalid.");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void License_SetProperties_GetReturnsAreCorrect()
         {
             int? expectedPort = 54321;
@@ -183,7 +187,7 @@ namespace LicenseManager.Test
             Assert.AreEqual(expectedNameManual, target.ToString(), "ToString is incorrect.");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void License_Initialized_PropertyReturnsAreCorrect()
         {
             License target = new License();
@@ -203,7 +207,7 @@ namespace LicenseManager.Test
             Assert.IsNull(target.Report);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void License_GetStatusFromFile_CompletesWithoutErrors()
         {
             License target = new License();
@@ -214,7 +218,7 @@ namespace LicenseManager.Test
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void License_GetStatusFromTestFile_PropertyReturnsAreCorrect()
         {
             License target = new License();
@@ -239,7 +243,7 @@ namespace LicenseManager.Test
             Assert.AreEqual(@"C:\License Servers\Test\Test.lic", target.ServerFile);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void License_GetStatusFromFile_PropertyReturnsAreCorrect()
         {
             License target = new License();
@@ -264,7 +268,7 @@ namespace LicenseManager.Test
             Assert.AreEqual(@"C:\License Servers\UGNX\UGNX.dat", target.ServerFile);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void License_SecondGetStatusFromFile_PropertyReturnsAreCorrect()
         {
             License target = new License();
@@ -290,7 +294,7 @@ namespace LicenseManager.Test
             Assert.AreEqual(@"C:\License Servers\Autodesk\Autodesk.dat", target.ServerFile);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void License_GetStatusFromErrorsFile_PropertyReturnsAreCorrect()
         {
             License target = new License();
@@ -315,7 +319,7 @@ namespace LicenseManager.Test
             Assert.AreEqual(@"D:\License Servers\Theorem\theorem.dat", target.ServerFile);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void License_GetStatusFromConnectFile_PropertyReturnsAreCorrect()
         {
             License target = new License();
@@ -340,10 +344,10 @@ namespace LicenseManager.Test
             Assert.IsNull(target.ServerFile);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void License_GetStatusAsyncFromFile_CompletesWithoutErrors()
         {
-            // http://stackoverflow.com/questions/1174702/is-there-a-way-to-unit-test-an-async-method
+            //// http://stackoverflow.com/questions/1174702/is-there-a-way-to-unit-test-an-async-method
 
             License target = new License();
 
@@ -366,7 +370,7 @@ namespace LicenseManager.Test
             Assert.AreEqual(expectedTime, target.Time);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void License_GetStatusAsync_CompletesWithoutErrors()
         {
             License target = new License();
