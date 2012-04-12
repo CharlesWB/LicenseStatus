@@ -360,6 +360,9 @@ namespace LicenseManager.Test
 
                 target.GetStatusAsync(new FileInfo(Path.Combine(testFilesPath, "lmstat-test.log")), 2500);
 
+                Assert.IsTrue(target.IsBusy);
+                Assert.IsFalse(target.GetStatusCanExecute);
+
                 if (!waitHandle.WaitOne(5000, false))
                 {
                     Assert.Fail("Test timed out.");
@@ -387,11 +390,16 @@ namespace LicenseManager.Test
 
                 target.GetStatusAsync();
 
+                Assert.IsTrue(target.IsBusy);
+                Assert.IsFalse(target.GetStatusCanExecute);
+
                 if (!waitHandle.WaitOne(5000, false))
                 {
                     Assert.Fail("Test timed out.");
                 }
             }
+
+            Assert.AreEqual("Cannot connect to license server system. (-15,10:10061 \"WinSock: Connection refused\")", target.ErrorMessage);
         }
     }
 }
