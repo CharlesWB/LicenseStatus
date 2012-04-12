@@ -58,6 +58,10 @@
       <Project>{79BD1B1B-B2D8-4DC9-8ED8-C3676CFC1AC5}</Project>
       <Name>LicenseManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LmStatReportGenerator\LmStatReportGenerator.csproj">
+      <Project>{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}</Project>
+      <Name>LmStatReportGenerator</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

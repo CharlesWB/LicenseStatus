@@ -30,6 +30,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lmstat Files", "Lmstat File
 		lmstat-test.log = lmstat-test.log
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LmStatReportGenerator", "LmStatReportGenerator\LmStatReportGenerator.csproj", "{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -86,6 +88,16 @@ Global
 		{0FEEA0E8-9806-48FB-B4BE-183E34D67A6D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0FEEA0E8-9806-48FB-B4BE-183E34D67A6D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0FEEA0E8-9806-48FB-B4BE-183E34D67A6D}.Release|x86.ActiveCfg = Release|Any CPU
+		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Debug|x86.ActiveCfg = Debug|x86
+		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Debug|x86.Build.0 = Debug|x86
+		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Release|Any CPU.ActiveCfg = Release|x86
+		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Release|Mixed Platforms.Build.0 = Release|x86
+		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Release|x86.ActiveCfg = Release|x86
+		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

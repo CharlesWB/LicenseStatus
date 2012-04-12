@@ -48,7 +48,7 @@ namespace LicenseManager.Test
         [ClassInitialize]
         public static void MyClassInitialize(TestContext testContext)
         {
-            // Duplicated from UtilityProgramTest.
+            // Duplicated from UtilityProgramTest except for LmStatReportGenerator.
 
             // Assumes test files are in the Solution folder and assumes this is three folders above the assembly.
             testFilesPath = Path.GetDirectoryName(typeof(UtilityProgramTest).Assembly.Location);
@@ -59,6 +59,9 @@ namespace LicenseManager.Test
             {
                 throw new FileNotFoundException("The test file lmutil.exe was not found at " + testFilesPath, testFilesPath);
             }
+
+            // Ensure the test files are updated with today's date.
+            LmStatReportGenerator.LmStatGenerator.WriteAllTestFiles(testFilesPath);
         }
         
         //// Use ClassCleanup to run code after all tests in a class have run
@@ -393,7 +396,7 @@ namespace LicenseManager.Test
                 Assert.IsTrue(target.IsBusy);
                 Assert.IsFalse(target.GetStatusCanExecute);
 
-                if (!waitHandle.WaitOne(5000, false))
+                if (!waitHandle.WaitOne(10000, false))
                 {
                     Assert.Fail("Test timed out.");
                 }
