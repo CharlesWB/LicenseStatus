@@ -23,11 +23,6 @@
     
     <Window.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <!-- From http://www.grafile.com/presentation/Vista_Toolbar_library.html -->
-                <ResourceDictionary Source="Images\Error.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
             <local:TimeToTimeDayConverter x:Key="TimeToTimeDayConverter" />
             <local:DateTimeToRelativeDescriptionConverter x:Key="DateTimeToRelativeDescriptionConverter" />
             <local:MinimumDateToEmptyStringConverter x:Key="MinimumDateToEmptyStringConverter" />
