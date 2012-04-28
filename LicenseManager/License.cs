@@ -26,6 +26,10 @@
 // changed from matching a word character (\w) to matching non-white space character (\S).
 // A license was found where the feature name included a period which is not a word character.
 // It was decided that a vendor daemon name could have the same issue and was also updated.
+//
+// 2012-04-?? CWB v3.0
+// Added NonSerialized attribute to errorMessage field. I can't find a reason why this
+// wasn't done before.
 
 #region Notes
 // Event-based Asynchronous Pattern:
@@ -185,6 +189,7 @@ namespace CWBozarth.LicenseManager
         /// <summary>
         /// Stores the message.
         /// </summary>
+        [NonSerialized]
         private string errorMessage;
 
         /// <summary>
@@ -665,9 +670,9 @@ namespace CWBozarth.LicenseManager
             {
                 bool result = false;
 
-                if (String.IsNullOrEmpty(this["Port"]) &&
-                    String.IsNullOrEmpty(this["Host"]) &&
-                    String.IsNullOrEmpty(UtilityProgram.Instance["Executable"]) &&
+                if (string.IsNullOrEmpty(this["Port"]) &&
+                    string.IsNullOrEmpty(this["Host"]) &&
+                    string.IsNullOrEmpty(UtilityProgram.Instance["Executable"]) &&
                     !this.IsBusy)
                 {
                     result = true;
@@ -714,7 +719,7 @@ namespace CWBozarth.LicenseManager
 
                 if (columnName == "Host")
                 {
-                    if (String.IsNullOrEmpty(this.host) || this.host.Trim().Length == 0)
+                    if (string.IsNullOrEmpty(this.host) || this.host.Trim().Length == 0)
                     {
                         result = "Host is a required entry.";
                     }
@@ -883,14 +888,14 @@ namespace CWBozarth.LicenseManager
         /// <returns>The name of the license.</returns>
         public override string ToString()
         {
-            if (String.IsNullOrEmpty(this.name))
+            if (string.IsNullOrEmpty(this.name))
             {
-                if (this.port == null || String.IsNullOrEmpty(this.host) || this.host.Trim().Length == 0)
+                if (this.port == null || string.IsNullOrEmpty(this.host) || this.host.Trim().Length == 0)
                 {
                     return "license not specified";
                 }
 
-                return String.Format(CultureInfo.InvariantCulture, "{0}@{1}", this.port, this.host);
+                return string.Format(CultureInfo.InvariantCulture, "{0}@{1}", this.port, this.host);
             }
             else
             {
@@ -1069,14 +1074,14 @@ namespace CWBozarth.LicenseManager
                 {
                     this.VendorDaemonName = vendorDownMatch.Groups["name"].Value;
                     this.VendorDaemonStatus = vendorDownMatch.Groups["status"].Value;
-                    this.VendorDaemonVersion = String.Empty;
+                    this.VendorDaemonVersion = string.Empty;
                     this.IsVendorDaemonUp = false;
                 }
                 else
                 {
-                    this.VendorDaemonName = String.Empty;
-                    this.VendorDaemonStatus = String.Empty;
-                    this.VendorDaemonVersion = String.Empty;
+                    this.VendorDaemonName = string.Empty;
+                    this.VendorDaemonStatus = string.Empty;
+                    this.VendorDaemonVersion = string.Empty;
                     this.IsVendorDaemonUp = false;
                 }
             }
@@ -1093,7 +1098,7 @@ namespace CWBozarth.LicenseManager
             else
             {
                 this.HasError = false;
-                this.ErrorMessage = String.Empty;
+                this.ErrorMessage = string.Empty;
             }
 
             // Example:

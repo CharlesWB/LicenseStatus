@@ -134,7 +134,7 @@ namespace CWBozarth.LicenseManager
                 if (!isDateValid)
                 {
                     // Create a string with last year for parsing.
-                    string dateWithLastYear = String.Format(CultureInfo.InvariantCulture, "{0} {1}/{2} {3}", dateMatch.Groups["dayofweek"].Value, dateMatch.Groups["monthday"].Value, DateTime.Now.AddYears(-1).Year, dateMatch.Groups["time"].Value);
+                    string dateWithLastYear = string.Format(CultureInfo.InvariantCulture, "{0} {1}/{2} {3}", dateMatch.Groups["dayofweek"].Value, dateMatch.Groups["monthday"].Value, DateTime.Now.AddYears(-1).Year, dateMatch.Groups["time"].Value);
                     DateTime.TryParseExact(dateWithLastYear, "ddd M/d/yyyy H:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out this.time);
                 }
 

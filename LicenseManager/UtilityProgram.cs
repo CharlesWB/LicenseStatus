@@ -111,11 +111,11 @@ namespace CWBozarth.LicenseManager
                 if (this.executable != null && this.executable.Exists)
                 {
                     FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(this.executable.FullName);
-                    return String.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}.{3}", versionInfo.FileMajorPart, versionInfo.FileMinorPart, versionInfo.FileBuildPart, versionInfo.FilePrivatePart);
+                    return string.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}.{3}", versionInfo.FileMajorPart, versionInfo.FileMinorPart, versionInfo.FileBuildPart, versionInfo.FilePrivatePart);
                 }
                 else
                 {
-                    return String.Empty;
+                    return string.Empty;
                 }
             }
         }
