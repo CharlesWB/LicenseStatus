@@ -156,6 +156,11 @@
 // http://www.dotnetmonster.com/Uwe/Forum.aspx/dotnet-vb/58638/My-Settings-Upgrade-doesn-t-upgrade
 // http://www.vesic.org/english/blog/winforms/upgrade-of-applicationuser-settings-between-application-versions/
 //
+// Localization and Column Names
+//
+// If this application is ever localized this will affect column names which will also affect
+// the default values of HiddenColumns in application settings.
+//
 // Possible Enhancements:
 //
 // The DataGrid in .NET 4.0 may eliminate most of the ListView custom code.
