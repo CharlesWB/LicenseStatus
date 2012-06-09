@@ -10,6 +10,9 @@
 // changed from matching a word character (\w) to matching non-white space character (\S).
 // A license was found where the feature name included a period which is not a word character.
 // It was decided that a vendor daemon name and user name could have the same issue and were also updated.
+//
+// 2012-??-?? CWB v3.0
+// Added EntryIndex and EntryLength for defining the location of the feature text within the license report.
 
 namespace CWBozarth.LicenseManager
 {
@@ -71,6 +74,16 @@ namespace CWBozarth.LicenseManager
         private string report;
 
         /// <summary>
+        /// Stores the position in the full license report where the first character of the feature entry is found.
+        /// </summary>
+        private int entryIndex;
+
+        /// <summary>
+        /// Stores the length of the feature entry in the license report.
+        /// </summary>
+        private int entryLength;
+
+        /// <summary>
         /// Initializes a new instance of the Feature class.
         /// </summary>
         /// <remarks>
@@ -89,13 +102,17 @@ namespace CWBozarth.LicenseManager
         /// proper string for initialization.
         /// </remarks>
         /// <param name="featureEntry">The feature's information as read from the lmstat output.</param>
-        internal Feature(string featureEntry)
+        /// <param name="index">The position in the license report where the first character of the feature entry is found.</param>
+        internal Feature(string featureEntry, int index)
         {
             // Since this class is re-instanced each time the license file is parsed there is no need
             // to ensure all the properties are set for each 'if' statement. The properties will be
             // initialized to their default already.
             this.report = featureEntry;
-            
+
+            this.entryIndex = index;
+            this.entryLength = this.report.Length;
+
             // Example:
             // Users of Used_Feature_One_License:  (Total of 1 license issued;  Total of 1 licenses in use)
             // Note that quantity in use is not read from this. It is calculated from the number of users found.
@@ -129,7 +146,7 @@ namespace CWBozarth.LicenseManager
                 {
                     // We do not need to clear the collection first because the Feature object is created new
                     // each time the license file is parsed.
-                    this.users.Add(new User(userMatch.Value));
+                    this.users.Add(new User(userMatch.Value, this.entryIndex + userMatch.Index));
                 }
             }
             else
@@ -277,6 +294,23 @@ namespace CWBozarth.LicenseManager
         public string Report
         {
             get { return this.report; }
+        }
+
+        /// <summary>
+        /// Gets the position in the full license report where the first character of the feature entry is found.
+        /// </summary>
+        public int EntryIndex
+        {
+            get { return this.entryIndex; }
+        }
+
+        /// <summary>
+        /// Gets the length of the feature entry in the license report.
+        /// </summary>
+        /// <remarks>This is also equivalent to Report.Length.</remarks>
+        public int EntryLength
+        {
+            get { return this.entryLength; }
         }
 
         /// <summary>

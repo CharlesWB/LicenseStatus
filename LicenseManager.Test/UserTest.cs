@@ -20,6 +20,8 @@ namespace LicenseManager.Test
     {
         private static string testFilesPath;
 
+        private static int indexOffset;
+
         private TestContext testContextInstance;
 
         /// <summary>
@@ -56,6 +58,18 @@ namespace LicenseManager.Test
             if (!File.Exists(Path.Combine(testFilesPath, "lmutil.exe")))
             {
                 throw new FileNotFoundException("The test file lmutil.exe was not found at " + testFilesPath, testFilesPath);
+            }
+
+            // The EntryIndex value will change depending on whether today's month or day are one or two digits.
+            // The indexOffset is used to compensate for this.
+            if (DateTime.Today.Month > 9)
+            {
+                indexOffset++;
+            }
+
+            if (DateTime.Today.Day > 9)
+            {
+                indexOffset++;
             }
         }
         
@@ -103,6 +117,9 @@ namespace LicenseManager.Test
             Assert.AreEqual(TimeSpan.Zero, target.Linger);
             Assert.AreEqual(DateTime.MinValue, target.BorrowEndTime);
             Assert.IsFalse(target.IsBorrowed);
+
+            Assert.AreEqual(1169, target.EntryIndex);
+            Assert.AreEqual(76 + indexOffset, target.EntryLength);
         }
 
         [TestMethod]
@@ -134,6 +151,9 @@ namespace LicenseManager.Test
             Assert.AreEqual(expectedBorrowEndTime, target.BorrowEndTime);
 
             Assert.IsTrue(target.IsBorrowed);
+
+            Assert.AreEqual(1429, target.EntryIndex);
+            Assert.AreEqual(96 + indexOffset, target.EntryLength);
         }
 
         [TestMethod]
@@ -161,6 +181,9 @@ namespace LicenseManager.Test
             Assert.AreEqual(TimeSpan.Zero, target.Linger);
             Assert.AreEqual(DateTime.MinValue, target.BorrowEndTime);
             Assert.IsFalse(target.IsBorrowed);
+
+            Assert.AreEqual(4184, target.EntryIndex);
+            Assert.AreEqual(81 + indexOffset, target.EntryLength);
         }
     }
 }

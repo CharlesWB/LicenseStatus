@@ -3,8 +3,11 @@
 // Refer to LicenseManager's License.cs for the full copyright notice.
 // </copyright>
 
+// TODO Need better ways to test EntryIndex.
+
 namespace LicenseManager.Test
 {
+    using System;
     using System.IO;
     using System.Linq;
     using CWBozarth.LicenseManager;
@@ -18,6 +21,8 @@ namespace LicenseManager.Test
     public class FeatureTest
     {
         private static string testFilesPath;
+
+        private static int indexOffset;
 
         private TestContext testContextInstance;
 
@@ -55,6 +60,18 @@ namespace LicenseManager.Test
             if (!File.Exists(Path.Combine(testFilesPath, "lmutil.exe")))
             {
                 throw new FileNotFoundException("The test file lmutil.exe was not found at " + testFilesPath, testFilesPath);
+            }
+
+            // The EntryIndex value will change depending on whether today's month or day are one or two digits.
+            // The indexOffset is used to compensate for this.
+            if (DateTime.Today.Month > 9)
+            {
+                indexOffset++;
+            }
+
+            if (DateTime.Today.Day > 9)
+            {
+                indexOffset++;
             }
         }
         
@@ -98,6 +115,8 @@ namespace LicenseManager.Test
             Assert.IsFalse(target.HasError);
             Assert.IsNull(target.ErrorMessage);
             Assert.AreEqual(0, target.Users.Count);
+            Assert.AreEqual(450 + indexOffset, target.EntryIndex);
+            Assert.AreEqual(97, target.EntryLength);
         }
 
         [TestMethod]
@@ -121,6 +140,8 @@ namespace LicenseManager.Test
             Assert.IsFalse(target.HasError);
             Assert.IsNull(target.ErrorMessage);
             Assert.AreEqual(1, target.Users.Count);
+            Assert.AreEqual(547 + indexOffset, target.EntryIndex);
+            Assert.AreEqual(255+ indexOffset, target.EntryLength);
         }
 
         [TestMethod]
@@ -144,6 +165,7 @@ namespace LicenseManager.Test
             Assert.IsFalse(target.HasError);
             Assert.IsNull(target.ErrorMessage);
             Assert.AreEqual(4, target.Users.Count);
+            Assert.AreEqual(999 + indexOffset * 2, target.EntryIndex);
         }
 
         [TestMethod]
@@ -167,6 +189,8 @@ namespace LicenseManager.Test
             Assert.IsTrue(target.HasError);
             Assert.AreEqual("Cannot get users of Feature_With_Error: No such feature exists. (-5,222)", target.ErrorMessage);
             Assert.AreEqual(0, target.Users.Count);
+            Assert.AreEqual(802 + indexOffset * 2, target.EntryIndex);
+            Assert.AreEqual(105, target.EntryLength);
         }
 
         [TestMethod]
@@ -190,6 +214,7 @@ namespace LicenseManager.Test
             Assert.IsFalse(target.HasError);
             Assert.IsNull(target.ErrorMessage);
             Assert.AreEqual(6, target.Users.Count);
+            Assert.AreEqual(692 + indexOffset * 6, target.EntryLength);
         }
     }
 }

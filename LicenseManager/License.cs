@@ -27,7 +27,7 @@
 // A license was found where the feature name included a period which is not a word character.
 // It was decided that a vendor daemon name could have the same issue and was also updated.
 //
-// 2012-04-?? CWB v3.0
+// 2012-??-?? CWB v3.0
 // Added NonSerialized attribute to errorMessage field. I can't find a reason why this
 // wasn't done before.
 
@@ -1113,7 +1113,7 @@ namespace CWBozarth.LicenseManager
             MatchCollection featureMatches = featureExpression.Matches(this.report);
             foreach (Match featureMatch in featureMatches)
             {
-                this.features.Add(new Feature(featureMatch.Value));
+                this.features.Add(new Feature(featureMatch.Value, featureMatch.Index));
             }
 
             // The following properties are calculated on demand so do not have a setter to check

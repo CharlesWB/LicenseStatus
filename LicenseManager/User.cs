@@ -10,6 +10,9 @@
 // character (\w) to matching non-white space character (\S).
 // A license was found where the feature name included a period which is not a word character.
 // It was decided that a user name could have the same issue and was also updated.
+//
+// 2012-??-?? CWB v3.0
+// Added EntryIndex and EntryLength for defining the location of the user text within the license report.
 
 namespace CWBozarth.LicenseManager
 {
@@ -75,6 +78,16 @@ namespace CWBozarth.LicenseManager
         private string report;
 
         /// <summary>
+        /// Stores the position in the full license report where the first character of the user entry is found.
+        /// </summary>
+        private int entryIndex;
+
+        /// <summary>
+        /// Stores the length of the user entry in the license report.
+        /// </summary>
+        private int entryLength;
+
+        /// <summary>
         /// Initializes a new instance of the User class.
         /// </summary>
         /// <remarks>
@@ -98,9 +111,13 @@ namespace CWBozarth.LicenseManager
         /// proper string for initialization.
         /// </remarks>
         /// <param name="userEntry">The user's information as read from the lmstat output.</param>
-        internal User(string userEntry)
+        /// <param name="index">The position in the license report where the first character of the user entry is found.</param>
+        internal User(string userEntry, int index)
         {
             this.report = userEntry;
+
+            this.entryIndex = index;
+            this.entryLength = this.report.Length;
 
             // Examples:
             // user001 comp001 comp001 (v22.0) (SERVER001/27001 3861), start Tue 3/17 7:13
@@ -256,6 +273,23 @@ namespace CWBozarth.LicenseManager
         public string Report
         {
             get { return this.report; }
+        }
+
+        /// <summary>
+        /// Gets the position in the full license report where the first character of the user entry is found.
+        /// </summary>
+        public int EntryIndex
+        {
+            get { return this.entryIndex; }
+        }
+
+        /// <summary>
+        /// Gets the length of the user entry in the license report.
+        /// </summary>
+        /// <remarks>This is also equivalent to Report.Length.</remarks>
+        public int EntryLength
+        {
+            get { return this.entryLength; }
         }
 
         /// <summary>
