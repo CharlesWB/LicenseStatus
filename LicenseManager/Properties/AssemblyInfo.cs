@@ -14,7 +14,7 @@ using System;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Charles W. Bozarth")]
 [assembly: AssemblyProduct("LicenseManager")]
-[assembly: AssemblyCopyright("© 2009 Charles W. Bozarth")]
+[assembly: AssemblyCopyright("© 2009-2012 Charles W. Bozarth")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -35,5 +35,5 @@ using System;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("2.3.*")]
-[assembly: AssemblyFileVersion("2.3.0.0")]
+[assembly: AssemblyVersion("3.0.*")]
+[assembly: AssemblyFileVersion("3.0.0.0")]
