@@ -1,5 +1,9 @@
 License Status Release Notes
 
+TBD v3.2
+- Added the ability to turn on and off columns in the detail view.
+- Updated the class library, LicenseManager.dll, to use .NET 4.0.
+
 April 1, 2012 v3.1
 - Corrected issue where the window position would be restored to a second monitor even if that monitor was disabled.
 

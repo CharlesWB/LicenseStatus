@@ -504,7 +504,7 @@ namespace LicenseStatus
         }
 
         /// <summary>
-        /// Resize all columns of a list view to fit the contents.
+        /// Resize all columns of a list view to fit the contents if the width is not zero.
         /// </summary>
         /// <param name="listView">The list view whose columns are to be resized.</param>
         private void AutoSizeColumns(ListView listView)
@@ -514,8 +514,11 @@ namespace LicenseStatus
             {
                 foreach (GridViewColumn column in gridView.Columns)
                 {
-                    column.Width = column.ActualWidth;
-                    column.Width = double.NaN;
+                    if (column.Width != 0)
+                    {
+                        column.Width = column.ActualWidth;
+                        column.Width = double.NaN;
+                    }
                 }
             }
         }

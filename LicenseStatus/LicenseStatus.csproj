@@ -101,6 +101,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GridViewColumnMenu.cs" />
+    <Compile Include="ValueConverters\ColumnWidthToBooleanConverter.cs" />
     <Compile Include="WindowPlacement.cs" />
     <Page Include="AboutWindow.xaml">
       <SubType>Designer</SubType>
@@ -175,6 +177,7 @@
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>

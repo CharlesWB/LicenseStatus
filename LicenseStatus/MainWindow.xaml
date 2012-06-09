@@ -623,12 +623,17 @@
                             </ListView.GroupStyle>
 
                             <ListView.View>
-                                <GridView AllowsColumnReorder="False">
+                                <GridView AllowsColumnReorder="False" local:GridViewColumnMenu.IsEnabled="True" local:GridViewColumnMenu.HiddenColumns="{Binding Source={x:Static appSettings:Settings.Default}, Path=HiddenColumns, Mode=TwoWay}">
+                                    <local:GridViewColumnMenu.RequiredColumns>
+                                        <sys:String>User name</sys:String>
+                                        <sys:String>Feature name</sys:String>
+                                    </local:GridViewColumnMenu.RequiredColumns>
+                                            
                                     <local:SortGridViewColumn Header="User name" SortProperty="User.Name" SecondarySort="True" CellTemplate="{StaticResource UserNameCellTemplate}" GroupTemplate="UserNameGroupTemplate" GroupConverter="{StaticResource EmptyStringToNoneConverter}" />
                                     <local:SortGridViewColumn Header="Host" SortProperty="User.Host" DisplayMemberBinding="{Binding User.Host}" GroupTemplate="GenericGroupTemplate" GroupConverter="{StaticResource EmptyStringToNoneConverter}" />
                                     <local:SortGridViewColumn Header="Checkout time" SortProperty="User.Time" DisplayMemberBinding="{Binding User.Time, Converter={StaticResource TimeToTimeDayConverter}}" GroupTemplate="UserNameGroupTemplate" GroupConverter="{StaticResource DateTimeToRelativeDescriptionConverter}" />
                                     <local:SortGridViewColumn Header="Borrow ends" SortProperty="User.BorrowEndTime" DisplayMemberBinding="{Binding User.BorrowEndTime, Converter={StaticResource TimeToTimeDayConverter}}" GroupTemplate="UserNameGroupTemplate" GroupConverter="{StaticResource DateTimeToRelativeDescriptionConverter}" />
-                                    <local:SortGridViewColumn Header="Version" SortProperty="User.Version" DisplayMemberBinding="{Binding User.Version}" GroupTemplate="GenericGroupTemplate" GroupConverter="{StaticResource EmptyStringToNoneConverter}" />
+                                    <local:SortGridViewColumn Header="Version used" SortProperty="User.Version" DisplayMemberBinding="{Binding User.Version}" GroupTemplate="GenericGroupTemplate" GroupConverter="{StaticResource EmptyStringToNoneConverter}" />
                                     <local:SortGridViewColumn Header="Handle" SortProperty="User.Handle" DisplayMemberBinding="{Binding User.Handle, Converter={StaticResource ZeroToEmptyStringConverter}}" GroupTemplate="GenericGroupTemplate" GroupConverter="{StaticResource ZeroGroupNameToNoneConverter}" />
                                     <local:SortGridViewColumn Header="Display" SortProperty="User.Display" DisplayMemberBinding="{Binding User.Display}" GroupTemplate="GenericGroupTemplate" GroupConverter="{StaticResource EmptyStringToNoneConverter}" />
                                     <local:SortGridViewColumn Header="Port" SortProperty="User.Port" DisplayMemberBinding="{Binding User.Port, Converter={StaticResource ZeroToEmptyStringConverter}}" GroupTemplate="GenericGroupTemplate" GroupConverter="{StaticResource ZeroGroupNameToNoneConverter}" />

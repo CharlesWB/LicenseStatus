@@ -29,8 +29,21 @@
     <Setting Name="ReportPanelWidth" Type="System.Double" Scope="User">
       <Value Profile="(Default)">200</Value>
     </Setting>
-    <Setting Name="WindowPlacement" Type="System.String" Scope="User">
+    <Setting Name="WindowPlacement" Type="LicenseStatus.WINDOWPLACEMENT" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="HiddenColumns" Type="System.Collections.Generic.List`1[System.String]" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+      &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+        &lt;string&gt;Handle&lt;/string&gt;
+        &lt;string&gt;Display&lt;/string&gt;
+        &lt;string&gt;Port&lt;/string&gt;
+        &lt;string&gt;Server&lt;/string&gt;
+        &lt;string&gt;Vendor&lt;/string&gt;
+        &lt;string&gt;Type&lt;/string&gt;
+        &lt;string&gt;Used&lt;/string&gt;
+        &lt;string&gt;Borrowed&lt;/string&gt;
+      &lt;/ArrayOfString&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>
