@@ -40,7 +40,7 @@ namespace CWBozarth.LicenseManager
         private string display;
 
         /// <summary>
-        /// Stores the version.
+        /// Stores the version used.
         /// </summary>
         private string version;
 
@@ -174,7 +174,7 @@ namespace CWBozarth.LicenseManager
         }
 
         /// <summary>
-        /// Gets the version.
+        /// Gets the version used.
         /// </summary>
         public string Version
         {
