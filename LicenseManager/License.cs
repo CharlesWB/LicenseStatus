@@ -30,6 +30,9 @@
 // 2012-??-?? CWB v3.0
 // Added NonSerialized attribute to errorMessage field. I can't find a reason why this
 // wasn't done before.
+//
+// Updated IsFeatureError, UserCount, InUse and InUseCount with LINQ queries replacing the
+// foreach loops. For the most part this is an improvement in performance, but not consistently.
 
 #region Notes
 // Event-based Asynchronous Pattern:
@@ -101,6 +104,7 @@ namespace CWBozarth.LicenseManager
     using System.ComponentModel;
     using System.Globalization;
     using System.IO;
+    using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Xml.Serialization;
@@ -493,17 +497,7 @@ namespace CWBozarth.LicenseManager
         {
             get
             {
-                bool result = false;
-
-                foreach (Feature feature in this.features)
-                {
-                    if (feature.HasError)
-                    {
-                        result = true;
-                    }
-                }
-
-                return result;
+                return this.features.Any(f => f.HasError);
             }
         }
 
@@ -515,29 +509,9 @@ namespace CWBozarth.LicenseManager
         {
             get
             {
-                List<User> uniqueUsers = new List<User>();
-                foreach (Feature feature in this.features)
-                {
-                    foreach (User featureUser in feature.Users)
-                    {
-                        bool userFound = false;
-
-                        foreach (User user in uniqueUsers)
-                        {
-                            if (featureUser.Name == user.Name)
-                            {
-                                userFound = true;
-                            }
-                        }
-
-                        if (!userFound)
-                        {
-                            uniqueUsers.Add(featureUser);
-                        }
-                    }
-                }
-
-                return uniqueUsers.Count;
+                return (from f in this.features
+                        from u in f.Users
+                        select u.Name).Distinct().Count();
             }
         }
 
@@ -548,17 +522,7 @@ namespace CWBozarth.LicenseManager
         {
             get
             {
-                bool result = false;
-
-                foreach (Feature feature in this.features)
-                {
-                    if (feature.InUse)
-                    {
-                        result = true;
-                    }
-                }
-
-                return result;
+                return this.features.Any(f => f.InUse);
             }
         }
 
@@ -569,17 +533,7 @@ namespace CWBozarth.LicenseManager
         {
             get
             {
-                int inUseCount = 0;
-
-                foreach (Feature feature in this.features)
-                {
-                    if (feature.InUse)
-                    {
-                        inUseCount++;
-                    }
-                }
-
-                return inUseCount;
+                return this.features.Count(f => f.InUse);
             }
         }
 

@@ -13,6 +13,9 @@
 //
 // 2012-??-?? CWB v3.0
 // Added EntryIndex and EntryLength for defining the location of the feature text within the license report.
+//
+// Updated QuantityBorrowed with LINQ queries replacing the foreach loops. For the most part this is an
+// improvement in performance, but not consistently.
 
 namespace CWBozarth.LicenseManager
 {
@@ -20,6 +23,7 @@ namespace CWBozarth.LicenseManager
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Globalization;
+    using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
 
@@ -218,17 +222,7 @@ namespace CWBozarth.LicenseManager
         {
             get
             {
-                int count = 0;
-
-                foreach (User user in this.users)
-                {
-                    if (user.IsBorrowed)
-                    {
-                        count++;
-                    }
-                }
-
-                return count;
+                return this.users.Count(u => u.IsBorrowed);
             }
         }
 
