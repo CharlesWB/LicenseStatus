@@ -20,7 +20,7 @@ namespace LicenseManager.Test
     [TestClass]
     public class LicenseTest
     {
-        private static string testFilesPath;
+        private static TestFiles testFiles = new TestFiles();
 
         private TestContext testContextInstance;
 
@@ -44,25 +44,11 @@ namespace LicenseManager.Test
         #region Additional test attributes
         // You can use the following additional attributes as you write your tests:
 
-        // Use ClassInitialize to run code before running the first test in the class
-        [ClassInitialize]
-        public static void MyClassInitialize(TestContext testContext)
-        {
-            // Duplicated from UtilityProgramTest except for LmStatReportGenerator.
-
-            // Assumes test files are in the Solution folder and assumes this is three folders above the assembly.
-            testFilesPath = Path.GetDirectoryName(typeof(UtilityProgramTest).Assembly.Location);
-            testFilesPath = Path.GetFullPath(testFilesPath + @"\..\..\..\");
-
-            // lmutil.exe is not included in the solution by default. It must be manually placed in the Solution folder.
-            if (!File.Exists(Path.Combine(testFilesPath, "lmutil.exe")))
-            {
-                throw new FileNotFoundException("The test file lmutil.exe was not found at " + testFilesPath, testFilesPath);
-            }
-
-            // Ensure the test files are updated with today's date.
-            LmStatReportGenerator.LmStatGenerator.WriteAllTestFiles(testFilesPath);
-        }
+        //// Use ClassInitialize to run code before running the first test in the class
+        ////[ClassInitialize]
+        ////public static void MyClassInitialize(TestContext testContext)
+        ////{
+        ////}
         
         //// Use ClassCleanup to run code after all tests in a class have run
         ////[ClassCleanup]
@@ -152,14 +138,14 @@ namespace LicenseManager.Test
             Assert.IsFalse(target.GetStatusCanExecute, "GetStatusCanExecute incorrect when only Host is valid.");
 
             target.Host = null;
-            UtilityProgram.Instance.Executable = new FileInfo(Path.Combine(testFilesPath, "lmutil.exe"));
+            UtilityProgram.Instance.Executable = new FileInfo(Path.Combine(testFiles.Path, "lmutil.exe"));
             Assert.IsFalse(target.GetStatusCanExecute, "GetStatusCanExecute incorrect when only Executable is valid.");
 
             target.Port = 1;
             target.Host = "localhost";
             Assert.IsTrue(target.GetStatusCanExecute, "GetStatusCanExecute incorrect when all properties are valid.");
 
-            UtilityProgram.Instance.Executable = new FileInfo(Path.Combine(testFilesPath, "Abc123_lmutil.exe"));
+            UtilityProgram.Instance.Executable = new FileInfo(Path.Combine(testFiles.Path, "Abc123_lmutil.exe"));
             Assert.IsFalse(target.GetStatusCanExecute, "GetStatusCanExecute incorrect when only Executable is invalid.");
         }
 
@@ -215,7 +201,7 @@ namespace LicenseManager.Test
         {
             License target = new License();
 
-            foreach (var file in Directory.EnumerateFiles(testFilesPath, "lmstat-*.log", SearchOption.TopDirectoryOnly))
+            foreach (var file in Directory.EnumerateFiles(testFiles.Path, "lmstat-*.log", SearchOption.TopDirectoryOnly))
             {
                 target.GetStatus(new FileInfo(file));
             }
@@ -225,7 +211,7 @@ namespace LicenseManager.Test
         public void License_GetStatusFromTestFile_PropertyReturnsAreCorrect()
         {
             License target = new License();
-            target.GetStatus(new FileInfo(Path.Combine(testFilesPath, "lmstat-test.log")));
+            target.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
 
             DateTime expectedTime = DateTime.Today.AddHours(10).AddMinutes(43);
             Assert.AreEqual(expectedTime, target.Time);
@@ -250,7 +236,7 @@ namespace LicenseManager.Test
         public void License_GetStatusFromFile_PropertyReturnsAreCorrect()
         {
             License target = new License();
-            target.GetStatus(new FileInfo(Path.Combine(testFilesPath, "lmstat-nx.log")));
+            target.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-nx.log")));
 
             DateTime expectedTime = DateTime.Today.AddHours(10).AddMinutes(43);
             Assert.AreEqual(expectedTime, target.Time);
@@ -275,8 +261,8 @@ namespace LicenseManager.Test
         public void License_SecondGetStatusFromFile_PropertyReturnsAreCorrect()
         {
             License target = new License();
-            target.GetStatus(new FileInfo(Path.Combine(testFilesPath, "lmstat-nx.log")));
-            target.GetStatus(new FileInfo(Path.Combine(testFilesPath, "lmstat-acad.log")));
+            target.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-nx.log")));
+            target.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-acad.log")));
 
             DateTime expectedTime = DateTime.Today.AddHours(10).AddMinutes(43);
             Assert.AreEqual(expectedTime, target.Time);
@@ -301,7 +287,7 @@ namespace LicenseManager.Test
         public void License_GetStatusFromErrorsFile_PropertyReturnsAreCorrect()
         {
             License target = new License();
-            target.GetStatus(new FileInfo(Path.Combine(testFilesPath, "lmstat-errors.log")));
+            target.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-errors.log")));
 
             DateTime expectedTime = new DateTime(2008, 11, 20, 15, 42, 0);
             Assert.AreEqual(expectedTime, target.Time);
@@ -326,7 +312,7 @@ namespace LicenseManager.Test
         public void License_GetStatusFromConnectFile_PropertyReturnsAreCorrect()
         {
             License target = new License();
-            target.GetStatus(new FileInfo(Path.Combine(testFilesPath, "lmstat-connect.log")));
+            target.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-connect.log")));
 
             DateTime expectedTime = DateTime.Today.AddHours(14).AddMinutes(25);
             Assert.AreEqual(expectedTime, target.Time);
@@ -361,7 +347,7 @@ namespace LicenseManager.Test
                     waitHandle.Set();
                 };
 
-                target.GetStatusAsync(new FileInfo(Path.Combine(testFilesPath, "lmstat-test.log")), 2500);
+                target.GetStatusAsync(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")), 2500);
 
                 Assert.IsTrue(target.IsBusy);
                 Assert.IsFalse(target.GetStatusCanExecute);
@@ -382,7 +368,7 @@ namespace LicenseManager.Test
             License target = new License();
             target.Port = 27000;
             target.Host = "localhost";
-            UtilityProgram.Instance.Executable = new FileInfo(Path.Combine(testFilesPath, "lmutil.exe"));
+            UtilityProgram.Instance.Executable = new FileInfo(Path.Combine(testFiles.Path, "lmutil.exe"));
 
             using (AutoResetEvent waitHandle = new AutoResetEvent(false))
             {

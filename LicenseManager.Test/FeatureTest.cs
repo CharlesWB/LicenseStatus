@@ -20,7 +20,7 @@ namespace LicenseManager.Test
     [TestClass]
     public class FeatureTest
     {
-        private static string testFilesPath;
+        private static TestFiles testFiles = new TestFiles();
 
         private static int indexOffset;
 
@@ -50,18 +50,6 @@ namespace LicenseManager.Test
         [ClassInitialize]
         public static void MyClassInitialize(TestContext testContext)
         {
-            // Duplicated from UtilityProgramTest.
-
-            // Assumes test files are in the Solution folder and assumes this is three folders above the assembly.
-            testFilesPath = Path.GetDirectoryName(typeof(UtilityProgramTest).Assembly.Location);
-            testFilesPath = Path.GetFullPath(testFilesPath + @"\..\..\..\");
-
-            // lmutil.exe is not included in the solution by default. It must be manually placed in the Solution folder.
-            if (!File.Exists(Path.Combine(testFilesPath, "lmutil.exe")))
-            {
-                throw new FileNotFoundException("The test file lmutil.exe was not found at " + testFilesPath, testFilesPath);
-            }
-
             // The EntryIndex value will change depending on whether today's month or day are one or two digits.
             // The indexOffset is used to compensate for this.
             if (DateTime.Today.Month > 9)
@@ -98,7 +86,7 @@ namespace LicenseManager.Test
         public void Feature_Empty_PropertyReturnsAreCorrect()
         {
             License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFilesPath, "lmstat-test.log")));
+            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
 
             string expectedName = "Empty_Feature_One_License";
             Feature target = license.Features.First(f => f.Name == expectedName);
@@ -123,7 +111,7 @@ namespace LicenseManager.Test
         public void Feature_Used_PropertyReturnsAreCorrect()
         {
             License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFilesPath, "lmstat-test.log")));
+            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
 
             string expectedName = "Used_Feature_One_License";
             Feature target = license.Features.First(f => f.Name == expectedName);
@@ -148,7 +136,7 @@ namespace LicenseManager.Test
         public void Feature_Borrowed_PropertyReturnsAreCorrect()
         {
             License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFilesPath, "lmstat-test.log")));
+            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
 
             string expectedName = "Feature_With_Borrow";
             Feature target = license.Features.First(f => f.Name == expectedName);
@@ -172,7 +160,7 @@ namespace LicenseManager.Test
         public void Feature_Error_PropertyReturnsAreCorrect()
         {
             License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFilesPath, "lmstat-test.log")));
+            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
 
             string expectedName = "Feature_With_Error";
             Feature target = license.Features.First(f => f.Name == expectedName);
@@ -197,7 +185,7 @@ namespace LicenseManager.Test
         public void Feature_NonWordCharacters_PropertyReturnsAreCorrect()
         {
             License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFilesPath, "lmstat-test.log")));
+            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
 
             string expectedName = "Feature_Non-Word.Characters";
             Feature target = license.Features.First(f => f.Name == expectedName);

@@ -18,7 +18,7 @@ namespace LicenseManager.Test
     [TestClass]
     public class UserTest
     {
-        private static string testFilesPath;
+        private static TestFiles testFiles = new TestFiles();
 
         private static int indexOffset;
 
@@ -48,18 +48,6 @@ namespace LicenseManager.Test
         [ClassInitialize]
         public static void MyClassInitialize(TestContext testContext)
         {
-            // Duplicated from UtilityProgramTest.
-
-            // Assumes test files are in the Solution folder and assumes this is three folders above the assembly.
-            testFilesPath = Path.GetDirectoryName(typeof(UtilityProgramTest).Assembly.Location);
-            testFilesPath = Path.GetFullPath(testFilesPath + @"\..\..\..\");
-
-            // lmutil.exe is not included in the solution by default. It must be manually placed in the Solution folder.
-            if (!File.Exists(Path.Combine(testFilesPath, "lmutil.exe")))
-            {
-                throw new FileNotFoundException("The test file lmutil.exe was not found at " + testFilesPath, testFilesPath);
-            }
-
             // The EntryIndex value will change depending on whether today's month or day are one or two digits.
             // The indexOffset is used to compensate for this.
             if (DateTime.Today.Month > 9)
@@ -96,7 +84,7 @@ namespace LicenseManager.Test
         public void User_Typical_PropertyReturnsAreCorrect()
         {
             License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFilesPath, "lmstat-test.log")));
+            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
 
             Feature feature = license.Features.First(f => f.Name == "Feature_With_Borrow");
 
@@ -118,7 +106,7 @@ namespace LicenseManager.Test
             Assert.AreEqual(DateTime.MinValue, target.BorrowEndTime);
             Assert.IsFalse(target.IsBorrowed);
 
-            Assert.AreEqual(1169, target.EntryIndex);
+            Assert.AreEqual(1169 + indexOffset * 2, target.EntryIndex);
             Assert.AreEqual(76 + indexOffset, target.EntryLength);
         }
 
@@ -126,7 +114,7 @@ namespace LicenseManager.Test
         public void User_Borrowed_PropertyReturnsAreCorrect()
         {
             License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFilesPath, "lmstat-test.log")));
+            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
 
             Feature feature = license.Features.First(f => f.Name == "Feature_With_Borrow");
 
@@ -152,15 +140,14 @@ namespace LicenseManager.Test
 
             Assert.IsTrue(target.IsBorrowed);
 
-            Assert.AreEqual(1429, target.EntryIndex);
-            Assert.AreEqual(96 + indexOffset, target.EntryLength);
+            Assert.AreEqual(1429 + indexOffset * 5, target.EntryIndex);
         }
 
         [TestMethod]
         public void User_NonWordCharacters_PropertyReturnsAreCorrect()
         {
             License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFilesPath, "lmstat-test.log")));
+            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
 
             Feature feature = license.Features.First(f => f.Name == "Feature_Non-Word.Characters");
 
@@ -182,7 +169,6 @@ namespace LicenseManager.Test
             Assert.AreEqual(DateTime.MinValue, target.BorrowEndTime);
             Assert.IsFalse(target.IsBorrowed);
 
-            Assert.AreEqual(4184, target.EntryIndex);
             Assert.AreEqual(81 + indexOffset, target.EntryLength);
         }
     }

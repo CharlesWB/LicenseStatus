@@ -16,7 +16,7 @@ namespace LicenseManager.Test
     [TestClass]
     public class UtilityProgramTest
     {
-        private static string testFilesPath;
+        private static TestFiles testFiles = new TestFiles();
 
         private TestContext testContextInstance;
 
@@ -40,20 +40,11 @@ namespace LicenseManager.Test
         #region Additional test attributes
         // You can use the following additional attributes as you write your tests:
 
-        // Use ClassInitialize to run code before running the first test in the class
-        [ClassInitialize]
-        public static void MyClassInitialize(TestContext testContext)
-        {
-            // Assumes test files are in the Solution folder and assumes this is three folders above the assembly.
-            testFilesPath = Path.GetDirectoryName(typeof(UtilityProgramTest).Assembly.Location);
-            testFilesPath = Path.GetFullPath(testFilesPath + @"\..\..\..\");
-
-            // lmutil.exe is not included in the solution by default. It must be manually placed in the Solution folder.
-            if (!File.Exists(Path.Combine(testFilesPath, "lmutil.exe")))
-            {
-                throw new FileNotFoundException("The test file lmutil.exe was not found at " + testFilesPath, testFilesPath);
-            }
-        }
+        //// Use ClassInitialize to run code before running the first test in the class
+        ////[ClassInitialize]
+        ////public static void MyClassInitialize(TestContext testContext)
+        ////{
+        ////}
         
         //// Use ClassCleanup to run code after all tests in a class have run
         ////[ClassCleanup]
@@ -77,7 +68,7 @@ namespace LicenseManager.Test
         [TestMethod]
         public void Executable_SetToValidFile_VersionIsAvailable()
         {
-            UtilityProgram.Instance.Executable = new FileInfo(Path.Combine(testFilesPath, "lmutil.exe"));
+            UtilityProgram.Instance.Executable = new FileInfo(Path.Combine(testFiles.Path, "lmutil.exe"));
 
             string expected = "11.4.100.0";
             string actual = UtilityProgram.Instance.Version;
@@ -87,7 +78,7 @@ namespace LicenseManager.Test
         [TestMethod]
         public void Executable_SetToInvalidFile_VersionIsEmpty()
         {
-            UtilityProgram.Instance.Executable = new FileInfo(Path.Combine(testFilesPath, "Abc123_lmutil.exe"));
+            UtilityProgram.Instance.Executable = new FileInfo(Path.Combine(testFiles.Path, "Abc123_lmutil.exe"));
 
             string expected = string.Empty;
             string actual = UtilityProgram.Instance.Version;
@@ -107,10 +98,10 @@ namespace LicenseManager.Test
         [TestMethod]
         public void Executable_Set_CauseDataErrorChanges()
         {
-            UtilityProgram.Instance.Executable = new FileInfo(Path.Combine(testFilesPath, "lmutil.exe"));
+            UtilityProgram.Instance.Executable = new FileInfo(Path.Combine(testFiles.Path, "lmutil.exe"));
             Assert.IsTrue(string.IsNullOrEmpty(UtilityProgram.Instance["Executable"]), "A valid Executable caused an error.");
 
-            UtilityProgram.Instance.Executable = new FileInfo(Path.Combine(testFilesPath, "Abc123_lmutil.exe"));
+            UtilityProgram.Instance.Executable = new FileInfo(Path.Combine(testFiles.Path, "Abc123_lmutil.exe"));
             Assert.IsFalse(string.IsNullOrEmpty(UtilityProgram.Instance["Executable"]), "An invalid Executable did not cause an error.");
 
             UtilityProgram.Instance.Executable = null;

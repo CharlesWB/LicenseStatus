@@ -50,6 +50,7 @@
     <Compile Include="FeatureTest.cs" />
     <Compile Include="LicenseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestFiles.cs" />
     <Compile Include="UserTest.cs" />
     <Compile Include="UtilityProgramTest.cs" />
   </ItemGroup>
