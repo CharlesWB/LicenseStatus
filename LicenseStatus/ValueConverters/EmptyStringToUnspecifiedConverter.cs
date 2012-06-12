@@ -24,7 +24,7 @@ namespace LicenseStatus
         /// <returns>The string "Unspecified" if the value is empty, otherwise the original value.</returns>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (String.IsNullOrEmpty(value as string))
+            if (string.IsNullOrEmpty(value as string))
             {
                 return "Unspecified";
             }

@@ -29,7 +29,7 @@ namespace LicenseStatus
         /// <returns>The integer followed by the descriptive phrase.</returns>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            string result = String.Empty;
+            string result = string.Empty;
 
             if (value is int)
             {
@@ -56,7 +56,7 @@ namespace LicenseStatus
                         break;
                 }
 
-                result = String.Format(CultureInfo.InvariantCulture, "{0} {1}", count, description);
+                result = string.Format(CultureInfo.InvariantCulture, "{0} {1}", count, description);
             }
 
             return result;

@@ -30,7 +30,7 @@ namespace LicenseStatus
         /// <returns>The time and a descriptive day if not today.</returns>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            string result = String.Empty;
+            string result = string.Empty;
 
             if (value is DateTime)
             {
@@ -45,15 +45,15 @@ namespace LicenseStatus
                         }
                         else if (time.Date == DateTime.Today.Date.AddDays(1))
                         {
-                            result = String.Format(CultureInfo.InvariantCulture, "{0} Tomorrow", time.ToShortTimeString());
+                            result = string.Format(CultureInfo.InvariantCulture, "{0} Tomorrow", time.ToShortTimeString());
                         }
                         else if (time.Date == DateTime.Today.Date.AddDays(-1))
                         {
-                            result = String.Format(CultureInfo.InvariantCulture, "{0} Yesterday", time.ToShortTimeString());
+                            result = string.Format(CultureInfo.InvariantCulture, "{0} Yesterday", time.ToShortTimeString());
                         }
                         else
                         {
-                            result = String.Format(CultureInfo.InvariantCulture, "{0} on {1}", time.ToShortTimeString(), time.Date.ToShortDateString());
+                            result = string.Format(CultureInfo.InvariantCulture, "{0} on {1}", time.ToShortTimeString(), time.Date.ToShortDateString());
                         }
                     }
                 }

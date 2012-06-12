@@ -167,7 +167,7 @@ namespace LicenseStatus
             // Handle the event when a header is clicked.
             this.AddHandler(GridViewColumnHeader.ClickEvent, new RoutedEventHandler(this.OnHeaderClicked));
 
-            if (this.SortProperty != null && !String.IsNullOrEmpty(this.SortProperty))
+            if (this.SortProperty != null && !string.IsNullOrEmpty(this.SortProperty))
             {
                 GridView gridView = this.View as GridView;
                 if (gridView != null)

@@ -33,7 +33,7 @@ namespace LmStatReportGenerator
         public override void CreateReport()
         {
             this.WriteLine("lmutil - Copyright (c) 1989-2005 Macrovision Europe Ltd. and/or Macrovision Corporation. All Rights Reserved.");
-            this.WriteLine("Flexible License Manager status on {0:ddd M/d/yyyy} 15:42", ReportDate);
+            this.WriteLine("Flexible License Manager status on {0:ddd M/d/yyyy} 15:42", this.ReportDate);
             this.WriteLine();
             this.WriteLine("[Detecting lmgrd processes...]");
             this.WriteLine("License server status: {0}@{1},{0}@SERVER002,{0}@SERVER003", this.ServerPort, this.ServerName);

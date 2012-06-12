@@ -38,7 +38,6 @@ namespace LicenseManager.Test
             {
                 LmStatReportGenerator.LmStatGenerator.WriteAllTestFiles(this.Path);
             }
-
         }
 
         public string Path { get; private set; }

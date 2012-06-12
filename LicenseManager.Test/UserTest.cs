@@ -106,7 +106,7 @@ namespace LicenseManager.Test
             Assert.AreEqual(DateTime.MinValue, target.BorrowEndTime);
             Assert.IsFalse(target.IsBorrowed);
 
-            Assert.AreEqual(1169 + indexOffset * 2, target.EntryIndex);
+            Assert.AreEqual(1169 + (indexOffset * 2), target.EntryIndex);
             Assert.AreEqual(76 + indexOffset, target.EntryLength);
         }
 
@@ -140,7 +140,7 @@ namespace LicenseManager.Test
 
             Assert.IsTrue(target.IsBorrowed);
 
-            Assert.AreEqual(1429 + indexOffset * 5, target.EntryIndex);
+            Assert.AreEqual(1429 + (indexOffset * 5), target.EntryIndex);
         }
 
         [TestMethod]

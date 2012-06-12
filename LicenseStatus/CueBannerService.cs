@@ -41,7 +41,7 @@ namespace LicenseStatus
         /// Defines the CueBanner attached property.
         /// </summary>
         public static readonly DependencyProperty CueBannerProperty =
-            DependencyProperty.RegisterAttached("CueBanner", typeof(object), typeof(CueBannerService), new FrameworkPropertyMetadata(String.Empty, CueBanner_PropertyChanged));
+            DependencyProperty.RegisterAttached("CueBanner", typeof(object), typeof(CueBannerService), new FrameworkPropertyMetadata(string.Empty, CueBanner_PropertyChanged));
 
         /// <summary>
         /// Gets the CueBanner property.
@@ -141,7 +141,7 @@ namespace LicenseStatus
 
             if (textBox != null)
             {
-                result = !String.IsNullOrEmpty(textBox.Text);
+                result = !string.IsNullOrEmpty(textBox.Text);
 
                 // This is only here so that the cue banner can be seen at design time in Visual Studio.
                 // The TextBox at design time receives a space as its text.

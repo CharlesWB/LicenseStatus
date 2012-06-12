@@ -28,7 +28,7 @@ namespace LicenseStatus
             {
                 if ((int)value == 0)
                 {
-                    return String.Empty;
+                    return string.Empty;
                 }
             }
 

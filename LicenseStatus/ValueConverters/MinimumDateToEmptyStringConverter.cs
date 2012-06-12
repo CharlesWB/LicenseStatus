@@ -28,7 +28,7 @@ namespace LicenseStatus
             {
                 if ((DateTime)value == DateTime.MinValue)
                 {
-                    return String.Empty;
+                    return string.Empty;
                 }
             }
 

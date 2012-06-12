@@ -143,7 +143,7 @@ namespace LicenseStatus
         {
             if (CWBozarth.LicenseManager.UtilityProgram.Instance.Executable == null)
             {
-                Settings.Default.UtilityProgramExecutable = String.Empty;
+                Settings.Default.UtilityProgramExecutable = string.Empty;
             }
             else
             {
@@ -161,7 +161,7 @@ namespace LicenseStatus
             Settings.Default.Licenses.Clear();
             foreach (LicenseViewModel license in this.Licenses)
             {
-                if (String.IsNullOrEmpty(license.License["Port"]) && String.IsNullOrEmpty(license.License["Host"]))
+                if (string.IsNullOrEmpty(license.License["Port"]) && String.IsNullOrEmpty(license.License["Host"]))
                 {
                     Settings.Default.Licenses.Add(license.License);
                 }
@@ -173,7 +173,7 @@ namespace LicenseStatus
         /// </summary>
         private void RestoreSettings()
         {
-            if (!String.IsNullOrEmpty(Settings.Default.UtilityProgramExecutable))
+            if (!string.IsNullOrEmpty(Settings.Default.UtilityProgramExecutable))
             {
                 CWBozarth.LicenseManager.UtilityProgram.Instance.Executable = new FileInfo(Settings.Default.UtilityProgramExecutable);
             }

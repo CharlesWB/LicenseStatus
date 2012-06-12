@@ -129,7 +129,7 @@ namespace LicenseManager.Test
             Assert.IsNull(target.ErrorMessage);
             Assert.AreEqual(1, target.Users.Count);
             Assert.AreEqual(547 + indexOffset, target.EntryIndex);
-            Assert.AreEqual(255+ indexOffset, target.EntryLength);
+            Assert.AreEqual(255 + indexOffset, target.EntryLength);
         }
 
         [TestMethod]
@@ -153,7 +153,7 @@ namespace LicenseManager.Test
             Assert.IsFalse(target.HasError);
             Assert.IsNull(target.ErrorMessage);
             Assert.AreEqual(4, target.Users.Count);
-            Assert.AreEqual(999 + indexOffset * 2, target.EntryIndex);
+            Assert.AreEqual(999 + (indexOffset * 2), target.EntryIndex);
         }
 
         [TestMethod]
@@ -177,7 +177,7 @@ namespace LicenseManager.Test
             Assert.IsTrue(target.HasError);
             Assert.AreEqual("Cannot get users of Feature_With_Error: No such feature exists. (-5,222)", target.ErrorMessage);
             Assert.AreEqual(0, target.Users.Count);
-            Assert.AreEqual(802 + indexOffset * 2, target.EntryIndex);
+            Assert.AreEqual(802 + (indexOffset * 2), target.EntryIndex);
             Assert.AreEqual(105, target.EntryLength);
         }
 
@@ -202,7 +202,7 @@ namespace LicenseManager.Test
             Assert.IsFalse(target.HasError);
             Assert.IsNull(target.ErrorMessage);
             Assert.AreEqual(6, target.Users.Count);
-            Assert.AreEqual(692 + indexOffset * 6, target.EntryLength);
+            Assert.AreEqual(692 + (indexOffset * 6), target.EntryLength);
         }
     }
 }

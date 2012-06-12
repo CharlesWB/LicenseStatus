@@ -24,7 +24,7 @@ namespace LicenseStatus
         /// <returns>A Yes or No string value.</returns>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            string result = String.Empty;
+            string result = string.Empty;
 
             if (value is bool)
             {

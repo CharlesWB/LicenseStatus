@@ -53,7 +53,7 @@ namespace LicenseStatus
 
             if (text != null)
             {
-                if (!String.IsNullOrEmpty(text) && text.Trim().Length != 0)
+                if (!string.IsNullOrEmpty(text) && text.Trim().Length != 0)
                 {
                     result = new FileInfo(text);
                 }

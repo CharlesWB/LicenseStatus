@@ -262,7 +262,7 @@ namespace LicenseStatus
             System.IO.FileInfo lmstatFile = new System.IO.FileInfo(testFilesPath + this.License.Host + ".log");
             if (lmstatFile.Exists)
             {
-                Random delay = new Random((int)(DateTime.Now.Ticks % Int32.MaxValue));
+                Random delay = new Random((int)(DateTime.Now.Ticks % int.MaxValue));
                 this.License.GetStatusAsync(lmstatFile, delay.Next(100, 5000));
             }
             else
@@ -296,7 +296,7 @@ namespace LicenseStatus
                     this.Port = this.License.Port.ToString();
                 }
 
-                if (String.IsNullOrEmpty(this.License.Name))
+                if (string.IsNullOrEmpty(this.License.Name))
                 {
                     this.NotifyPropertyChanged("Name");
                 }
@@ -304,7 +304,7 @@ namespace LicenseStatus
 
             if (e.PropertyName == "Host")
             {
-                if (String.IsNullOrEmpty(this.License.Name))
+                if (string.IsNullOrEmpty(this.License.Name))
                 {
                     this.NotifyPropertyChanged("Name");
                 }
