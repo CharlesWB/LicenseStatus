@@ -31,7 +31,7 @@ namespace LicenseManager.Test
                 throw new FileNotFoundException("The test file lmutil.exe was not found at " + this.Path, this.Path);
             }
 
-            // Ensure the test files are updated with today's date.
+            // Ensure the test files are updated with today's date. Assumes License.Time works. Probably should use a different technique.
             License checkDateLicense = new License();
             checkDateLicense.GetStatus(new FileInfo(System.IO.Path.Combine(this.Path, "lmstat-test.log")));
             if (checkDateLicense.Time.Date != DateTime.Today)
