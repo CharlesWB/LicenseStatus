@@ -11,6 +11,12 @@
 // 
 // This code behind file was intended to be empty, but there was a problem with setting up
 // the MethodParameters for GetCustomAttribute in XAML. Instead these were implemented as properties.
+//
+// When Application.ico was changed to add a 256x256 RGB/A format with PNG compression an error occurred
+// in Windows XP. The error displayed as a generic Microsoft Error Report, but internally the exception
+// was an invalid image format. This error only showed up when the AboutWindow was shown. For some
+// reason it did not occur on the MainWindow. The solution is to turn off PNG compression.
+// https://connect.microsoft.com/VisualStudio/feedback/details/321285/wpf-application-fails-if-window-icon-is-a-vista-ico-file
 
 namespace LicenseStatus
 {
