@@ -11,7 +11,7 @@
 // A license was found where the feature name included a period which is not a word character.
 // It was decided that a user name could have the same issue and was also updated.
 //
-// 2012-??-?? CWB v3.0
+// 2012-06-14 CWB v3.0
 // Added EntryIndex and EntryLength for defining the location of the user text within the license report.
 
 namespace CWBozarth.LicenseManager

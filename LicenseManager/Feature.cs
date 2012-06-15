@@ -11,7 +11,7 @@
 // A license was found where the feature name included a period which is not a word character.
 // It was decided that a vendor daemon name and user name could have the same issue and were also updated.
 //
-// 2012-??-?? CWB v3.0
+// 2012-06-14 CWB v3.0
 // Added EntryIndex and EntryLength for defining the location of the feature text within the license report.
 //
 // Updated QuantityBorrowed with LINQ queries replacing the foreach loops. For the most part this is an
