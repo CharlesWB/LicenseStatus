@@ -6,6 +6,7 @@
 namespace LicenseManager.Test
 {
     using System;
+    using System.Globalization;
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Threading;
@@ -21,6 +22,8 @@ namespace LicenseManager.Test
     public class LicenseTest
     {
         private static TestFiles testFiles = new TestFiles();
+
+        private static CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
 
         private TestContext testContextInstance;
 
@@ -56,17 +59,19 @@ namespace LicenseManager.Test
         ////{
         ////}
 
-        //// Use TestInitialize to run code before running each test
-        ////[TestInitialize]
-        ////public void MyTestInitialize()
-        ////{
-        ////}
+        // Use TestInitialize to run code before running each test
+        [TestInitialize]
+        public void MyTestInitialize()
+        {
+            Thread.CurrentThread.CurrentCulture = originalCulture;
+        }
 
-        //// Use TestCleanup to run code after each test has run
-        ////[TestCleanup]
-        ////public void MyTestCleanup()
-        ////{
-        ////}
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup]
+        public void MyTestCleanup()
+        {
+            Thread.CurrentThread.CurrentCulture = originalCulture;
+        }
         #endregion
 
         [TestMethod]
@@ -204,6 +209,18 @@ namespace LicenseManager.Test
             foreach (var file in Directory.EnumerateFiles(testFiles.Path, "lmstat-*.log", SearchOption.TopDirectoryOnly))
             {
                 target.GetStatus(new FileInfo(file));
+            }
+        }
+
+        [TestMethod]
+        public void License_GetStatusFromTestFileUsingDifferentCultures_CompletesWithoutErrors()
+        {
+            foreach (CultureInfo culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+            {
+                Thread.CurrentThread.CurrentCulture = culture;
+
+                License target = new License();
+                target.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
             }
         }
 
