@@ -1,5 +1,8 @@
 License Status Release Notes
 
+July 27, 2012 v3.4
+- Corrected issue where the checkout time was missing for most locales other than basic English.
+
 July 26, 2012 v3.3
 - Corrected issue where reading the status would cause a crash for most locales other than basic English.
 

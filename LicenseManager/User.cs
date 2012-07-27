@@ -147,7 +147,7 @@ namespace CWBozarth.LicenseManager
                 Regex dateExpression = new Regex(@"(?<dayofweek>\w+) (?<monthday>\d+/\d+) (?<time>\d+:\d+)");
                 Match dateMatch = dateExpression.Match(match.Groups["time"].Value);
 
-                bool isDateValid = DateTime.TryParseExact(match.Groups["time"].Value, "ddd M/d H:mm", null, DateTimeStyles.None, out this.time);
+                bool isDateValid = DateTime.TryParseExact(match.Groups["time"].Value, "ddd M/d H:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out this.time);
                 if (!isDateValid)
                 {
                     // Create a string with last year for parsing.
