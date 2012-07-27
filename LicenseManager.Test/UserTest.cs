@@ -6,8 +6,10 @@
 namespace LicenseManager.Test
 {
     using System;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
+    using System.Threading;
     using CWBozarth.LicenseManager;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -19,6 +21,8 @@ namespace LicenseManager.Test
     public class UserTest
     {
         private static TestFiles testFiles = new TestFiles();
+
+        private static CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
 
         private static int indexOffset;
 
@@ -67,17 +71,19 @@ namespace LicenseManager.Test
         ////{
         ////}
 
-        //// Use TestInitialize to run code before running each test
-        ////[TestInitialize]
-        ////public void MyTestInitialize()
-        ////{
-        ////}
+        // Use TestInitialize to run code before running each test
+        [TestInitialize]
+        public void MyTestInitialize()
+        {
+            Thread.CurrentThread.CurrentCulture = originalCulture;
+        }
 
-        //// Use TestCleanup to run code after each test has run
-        ////[TestCleanup]
-        ////public void MyTestCleanup()
-        ////{
-        ////}
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup]
+        public void MyTestCleanup()
+        {
+            Thread.CurrentThread.CurrentCulture = originalCulture;
+        }
         #endregion
 
         [TestMethod]
@@ -108,6 +114,41 @@ namespace LicenseManager.Test
 
             Assert.AreEqual(1169 + (indexOffset * 2), target.EntryIndex);
             Assert.AreEqual(76 + indexOffset, target.EntryLength);
+        }
+
+        [TestMethod]
+        public void User_TypicalUsingDifferentCultures_PropertyReturnsAreCorrect()
+        {
+            foreach (CultureInfo culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+            {
+                Thread.CurrentThread.CurrentCulture = culture;
+
+                License license = new License();
+                license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+
+                Feature feature = license.Features.First(f => f.Name == "Feature_With_Borrow");
+
+                string expectedName = "user003";
+                User target = feature.Users.First(u => u.Name == expectedName);
+
+                Assert.AreEqual(expectedName, target.Name);
+                Assert.AreEqual("comp003", target.Host);
+                Assert.AreEqual("comp003", target.Display);
+                Assert.AreEqual("v22.0", target.Version);
+                Assert.AreEqual("SERVER001", target.Server);
+                Assert.AreEqual(27001, target.Port);
+                Assert.AreEqual(2009, target.Handle);
+
+                DateTime expectedTime = DateTime.Today.AddHours(10).AddMinutes(21);
+                Assert.AreEqual(expectedTime, target.Time);
+
+                Assert.AreEqual(TimeSpan.Zero, target.Linger);
+                Assert.AreEqual(DateTime.MinValue, target.BorrowEndTime);
+                Assert.IsFalse(target.IsBorrowed);
+
+                Assert.AreEqual(1169 + (indexOffset * 2), target.EntryIndex);
+                Assert.AreEqual(76 + indexOffset, target.EntryLength);
+            }
         }
 
         [TestMethod]

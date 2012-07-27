@@ -3,6 +3,12 @@
 // Refer to LicenseManager's License.cs for the full copyright notice.
 // </copyright>
 
+// Possible Enhancements
+//
+// Is there a better way to test all cultures?
+//
+// When testing cultures can the result say which culture failed?
+
 namespace LicenseManager.Test
 {
     using System;
@@ -247,6 +253,36 @@ namespace LicenseManager.Test
             Assert.IsTrue(target.IsFeatureError);
             Assert.IsTrue(target.IsVendorDaemonUp);
             Assert.AreEqual(@"C:\License Servers\Test\Test.lic", target.ServerFile);
+        }
+
+        [TestMethod]
+        public void License_GetStatusFromTestFileUsingDifferentCultures_PropertyReturnsAreCorrect()
+        {
+            foreach (CultureInfo culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+            {
+                Thread.CurrentThread.CurrentCulture = culture;
+
+                License target = new License();
+                target.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+
+                DateTime expectedTime = DateTime.Today.AddHours(10).AddMinutes(43);
+                Assert.AreEqual(expectedTime, target.Time);
+
+                Assert.IsTrue(target.InUse);
+                Assert.AreEqual(7, target.Features.Count);
+                Assert.AreEqual(4, target.InUseCount);
+                Assert.AreEqual(35, target.UserCount);
+                Assert.IsTrue(target.IsVendorDaemonUp);
+                Assert.AreEqual("testdaemon", target.VendorDaemonName);
+                Assert.AreEqual("UP", target.VendorDaemonStatus);
+                Assert.AreEqual("v10.1", target.VendorDaemonVersion);
+                Assert.AreEqual(string.Empty, target.ErrorMessage);
+                Assert.IsFalse(target.HasError);
+                Assert.IsFalse(target.IsBusy);
+                Assert.IsTrue(target.IsFeatureError);
+                Assert.IsTrue(target.IsVendorDaemonUp);
+                Assert.AreEqual(@"C:\License Servers\Test\Test.lic", target.ServerFile);
+            }
         }
 
         [TestMethod]
