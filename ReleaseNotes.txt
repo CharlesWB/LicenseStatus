@@ -1,5 +1,8 @@
 License Status Release Notes
 
+July 26, 2012 v3.3
+- Corrected issue where reading the status would cause a crash for most locales other than basic English.
+
 June 14, 2012 v3.2
 - Added the ability to turn on and off columns in the detail view.
 - Changed the application icon.

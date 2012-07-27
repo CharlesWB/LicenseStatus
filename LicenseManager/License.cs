@@ -987,7 +987,17 @@ namespace CWBozarth.LicenseManager
             Match timeMatch = timeExpression.Match(this.report);
             if (timeMatch.Success)
             {
-                this.Time = DateTime.ParseExact(timeMatch.Groups["time"].Value, "ddd M/d/yyyy HH:mm", null);
+                DateTime statusTime;
+
+                if (!DateTime.TryParseExact(timeMatch.Groups["time"].Value, "ddd M/d/yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out statusTime))
+                {
+                    // If the report time exists yet fails to parse then we'll default to DateTime.Now.
+                    // This time would only be incorrect when reading from an existing file.
+                    // A situation where the time does not parse has not been found.
+                    statusTime = DateTime.Now;
+                }
+
+                this.Time = statusTime;
             }
             else
             {
