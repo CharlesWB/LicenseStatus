@@ -2,9 +2,11 @@
 <!--
   Copyright (C) 2009-2012 Charles W. Bozarth
   Refer to MainWindow.xaml.cs for the full copyright notice.
+  
+  Change Product Id and Version for each release.
 -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
-  <Product Id="{3CD1B22F-AC32-42F0-BCB3-711FFB954C59}" Name="License Status" Manufacturer="Charles W. Bozarth" Version="3.4.0" UpgradeCode="{99B04D07-358A-4273-B2AE-0FE6A229D73F}" Language="1033" Codepage="1252">
+  <Product Id="{EF5D9A98-D6B7-4E12-89B6-752E76858FB5}" Name="License Status" Manufacturer="Charles W. Bozarth" Version="3.5.0" UpgradeCode="{99B04D07-358A-4273-B2AE-0FE6A229D73F}" Language="1033" Codepage="1252">
 
     <Package Id="*" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Manufacturer="Charles W. Bozarth" Comments="Display the status of FlexLM licenses" />
 
