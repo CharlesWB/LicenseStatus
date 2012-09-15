@@ -9,7 +9,7 @@ namespace LicenseStatus
     using System.Windows.Data;
 
     /// <summary>
-    /// Takes an integer and conerts it to "None" if the value is zero. Otherwise it returns the value.
+    /// Takes an integer and converts it to "None" if the value is zero. Otherwise it returns the value.
     /// </summary>
     /// <remarks>This is used by License Status to create a group name.</remarks>
     [ValueConversion(typeof(int), typeof(string))]

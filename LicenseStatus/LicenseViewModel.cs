@@ -133,7 +133,7 @@ namespace LicenseStatus
         /// <summary>
         /// Gets the collection of the combined feature and user items.
         /// </summary>
-        /// <remarks>This might be something that Linq could be used for.</remarks>
+        /// <remarks>This might be something that LINQ could be used for.</remarks>
         public ObservableCollection<FeatureUserItem> FeaturesUsers
         {
             get { return this.featuresUsers; }

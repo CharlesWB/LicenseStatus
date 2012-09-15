@@ -47,7 +47,7 @@ namespace LicenseStatus
         /// <param name="targetType">The type of the binding target property.</param>
         /// <param name="parameter">The converter parameter to use.</param>
         /// <param name="culture">The culture to use in the converter.</param>
-        /// <returns>Returns double.NaN if value is true, otherwise zero. If the value is not a bool then Binding.DoNothing is returned.</returns>
+        /// <returns>Returns double.NaN if value is true, otherwise zero. If the value is not a boolean then Binding.DoNothing is returned.</returns>
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (value is bool)

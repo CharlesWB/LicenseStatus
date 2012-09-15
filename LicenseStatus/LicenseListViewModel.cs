@@ -161,7 +161,7 @@ namespace LicenseStatus
             Settings.Default.Licenses.Clear();
             foreach (LicenseViewModel license in this.Licenses)
             {
-                if (string.IsNullOrEmpty(license.License["Port"]) && String.IsNullOrEmpty(license.License["Host"]))
+                if (string.IsNullOrEmpty(license.License["Port"]) && string.IsNullOrEmpty(license.License["Host"]))
                 {
                     Settings.Default.Licenses.Add(license.License);
                 }

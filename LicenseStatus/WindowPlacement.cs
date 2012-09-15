@@ -27,7 +27,7 @@ namespace LicenseStatus
     using System.Windows.Interop;
 
     /// <summary>
-    /// Stucture required by the WINDOWPLACEMENT structure.
+    /// Structure required by the WINDOWPLACEMENT structure.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
         Justification = "Not going to re-document native Windows structures.")]

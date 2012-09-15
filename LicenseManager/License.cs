@@ -507,7 +507,7 @@ namespace CWBozarth.LicenseManager
         /// <summary>
         /// Gets a count of users of all features within the license file.
         /// </summary>
-        /// <remarks>A user in mulitple features or hosts is only counted once.</remarks>
+        /// <remarks>A user in multiple features or hosts is only counted once.</remarks>
         public int UserCount
         {
             get
