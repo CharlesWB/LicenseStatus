@@ -17,7 +17,7 @@
 // Updated QuantityBorrowed with LINQ queries replacing the foreach loops. For the most part this is an
 // improvement in performance, but not consistently.
 //
-// TBD CWB v3.5
+// 2012-09-15 v3.5
 // Changed QuantityUsed to be defined by the lmstat report instead of by the quantity of Users.
 // This is to compensate for situations where a single user/display has multiple licenses.
 // This is identified by the user line ending with "2 licenses".

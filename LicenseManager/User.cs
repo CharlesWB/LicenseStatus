@@ -16,6 +16,10 @@
 //
 // 2012-07-27 v3.4
 // Corrected the checkout time parsing. Previously the parsing failed with languages using a different format.
+//
+// 2012-09-15 v3.5
+// Added QuantityUsed property. This is used when the user entry includes the number of licenses
+// checked out.
 
 namespace CWBozarth.LicenseManager
 {
@@ -69,6 +73,11 @@ namespace CWBozarth.LicenseManager
         /// Stores the checkout time.
         /// </summary>
         private DateTime time;
+
+        /// <summary>
+        /// Stores the quantity of licenses in use by this user.
+        /// </summary>
+        private int quantityUsed;
 
         /// <summary>
         /// Stores the linger time.
@@ -125,7 +134,8 @@ namespace CWBozarth.LicenseManager
             // Examples:
             // user001 comp001 comp001 (v22.0) (SERVER001/27001 3861), start Tue 3/17 7:13
             // user005 comp005 comp005 (v22.0) (SERVER001/27001 601), start Tue 3/17 10:18 (linger: 14437140)
-            Regex userExpression = new Regex(@"(?<name>\S+) (?<host>\S+) (?<display>\S+) \((?<version>\S+)\) \((?<server>\S+)/(?<port>\d+) (?<handle>\d+)\), start (?<time>\w+ \d+/\d+ \d+:\d+)( \(linger: (?<linger>\d+))?", RegexOptions.Multiline);
+            // user011 comp011 comp011 (v22.0) (SERVER001/27001 2209), start Fri 3/17 13:21, 2 licenses
+            Regex userExpression = new Regex(@"(?<name>\S+) (?<host>\S+) (?<display>\S+) \((?<version>\S+)\) \((?<server>\S+)/(?<port>\d+) (?<handle>\d+)\), start (?<time>\w+ \d+/\d+ \d+:\d+)(, (?<inuse>\d+) licenses)?( \(linger: (?<linger>\d+))?", RegexOptions.Multiline);
             Match match = userExpression.Match(this.report);
             if (match.Success)
             {
@@ -156,6 +166,15 @@ namespace CWBozarth.LicenseManager
                     // Create a string with last year for parsing.
                     string dateWithLastYear = string.Format(CultureInfo.InvariantCulture, "{0} {1}/{2} {3}", dateMatch.Groups["dayofweek"].Value, dateMatch.Groups["monthday"].Value, DateTime.Now.AddYears(-1).Year, dateMatch.Groups["time"].Value);
                     DateTime.TryParseExact(dateWithLastYear, "ddd M/d/yyyy H:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out this.time);
+                }
+
+                if (match.Groups["inuse"].Success)
+                {
+                    this.quantityUsed = int.Parse(match.Groups["inuse"].Value, CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    this.quantityUsed = 1;
                 }
 
                 if (match.Groups["linger"].Success)
@@ -232,6 +251,14 @@ namespace CWBozarth.LicenseManager
         public DateTime Time
         {
             get { return this.time; }
+        }
+
+        /// <summary>
+        /// Gets the quantity of licenses in use by this user.
+        /// </summary>
+        public int QuantityUsed
+        {
+            get { return this.quantityUsed; }
         }
 
         /// <summary>

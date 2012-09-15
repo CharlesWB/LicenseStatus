@@ -240,9 +240,9 @@ namespace LicenseManager.Test
             Assert.AreEqual(expectedTime, target.Time);
 
             Assert.IsTrue(target.InUse);
-            Assert.AreEqual(7, target.Features.Count);
-            Assert.AreEqual(4, target.InUseCount);
-            Assert.AreEqual(35, target.UserCount);
+            Assert.AreEqual(8, target.Features.Count);
+            Assert.AreEqual(5, target.InUseCount);
+            Assert.AreEqual(39, target.UserCount);
             Assert.IsTrue(target.IsVendorDaemonUp);
             Assert.AreEqual("testdaemon", target.VendorDaemonName);
             Assert.AreEqual("UP", target.VendorDaemonStatus);
@@ -269,9 +269,9 @@ namespace LicenseManager.Test
                 Assert.AreEqual(expectedTime, target.Time);
 
                 Assert.IsTrue(target.InUse);
-                Assert.AreEqual(7, target.Features.Count);
-                Assert.AreEqual(4, target.InUseCount);
-                Assert.AreEqual(35, target.UserCount);
+                Assert.AreEqual(8, target.Features.Count);
+                Assert.AreEqual(5, target.InUseCount);
+                Assert.AreEqual(39, target.UserCount);
                 Assert.IsTrue(target.IsVendorDaemonUp);
                 Assert.AreEqual("testdaemon", target.VendorDaemonName);
                 Assert.AreEqual("UP", target.VendorDaemonStatus);

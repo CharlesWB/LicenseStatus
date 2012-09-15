@@ -109,6 +109,17 @@ namespace LmStatReportGenerator
             this.WriteLine("    user-001 comp-004 comp-004 (v1.000) (SERVER.001/{0} 2004), start {1:ddd M/d} 10:12", this.ServerPort, this.ReportDate);
             this.WriteUser("user.005 comp.005 comp.005", 662, "10:10");
             this.WriteUser("user.004 comp.004 comp.004", 6101, "9:52");
+            this.WriteLine();
+
+            // An example was reported where the user ended with ", 2 licenses". This text also appears
+            // in lmutil.exe. Based on the text within lmutil.exe the word "licenses" is always plural.
+            // This is also an example where the quantity used does not match the unique user/display count.
+            // I'm assuming multiple licenses can be borrowed this way.
+            this.WriteFeature("Feature_Other_User_Formats", 9, 8);
+            this.WriteLine("    user011 comp011 comp011 (v22.0) (SERVER001/{0} 2209), start {1:ddd M/d} 13:21, 2 licenses", this.ServerPort, this.ReportDate);
+            this.WriteLine("    user012 comp012 comp012 (v22.0) (SERVER001/{0} 2201), start {1:ddd M/d} 9:31", this.ServerPort, this.ReportDate);
+            this.WriteLine("    user013 comp013 comp013 (v22.0) (SERVER001/{0} 2200), start {1:ddd M/d} 11:23, 3 licenses", this.ServerPort, this.ReportDate);
+            this.WriteLine("    user014 comp014 comp014 (v22.0) (SERVER001/{0} 2219), start {1:ddd M/d} 10:15, 2 licenses (linger: 14437140)", this.ServerPort, this.ReportDate);
         }
 
         /// <summary>

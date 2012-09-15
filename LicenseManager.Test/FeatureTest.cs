@@ -202,7 +202,31 @@ namespace LicenseManager.Test
             Assert.IsFalse(target.HasError);
             Assert.IsNull(target.ErrorMessage);
             Assert.AreEqual(6, target.Users.Count);
-            Assert.AreEqual(692 + (indexOffset * 6), target.EntryLength);
+            Assert.AreEqual(694 + (indexOffset * 6), target.EntryLength);
+        }
+
+        [TestMethod]
+        public void Feature_Other_User_Formats_PropertyReturnsAreCorrect()
+        {
+            License license = new License();
+            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+
+            string expectedName = "Feature_Other_User_Formats";
+            Feature target = license.Features.First(f => f.Name == expectedName);
+
+            Assert.AreEqual(expectedName, target.Name);
+            Assert.AreEqual(1, target.QuantityAvailable);
+            Assert.AreEqual(9, target.QuantityIssued);
+            Assert.AreEqual(8, target.QuantityUsed);
+            Assert.AreEqual(1, target.QuantityBorrowed);
+            Assert.IsTrue(target.InUse);
+            Assert.AreEqual("floating license", target.Type);
+            Assert.AreEqual("testdaemon", target.Vendor);
+            Assert.AreEqual("v22.0", target.Version);
+            Assert.IsFalse(target.HasError);
+            Assert.IsNull(target.ErrorMessage);
+            Assert.AreEqual(4, target.Users.Count);
+            Assert.AreEqual(558 + (indexOffset * 3), target.EntryLength);
         }
     }
 }

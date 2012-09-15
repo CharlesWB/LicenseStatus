@@ -108,6 +108,8 @@ namespace LicenseManager.Test
             DateTime expectedTime = DateTime.Today.AddHours(10).AddMinutes(21);
             Assert.AreEqual(expectedTime, target.Time);
 
+            Assert.AreEqual(1, target.QuantityUsed);
+
             Assert.AreEqual(TimeSpan.Zero, target.Linger);
             Assert.AreEqual(DateTime.MinValue, target.BorrowEndTime);
             Assert.IsFalse(target.IsBorrowed);
@@ -142,6 +144,8 @@ namespace LicenseManager.Test
                 DateTime expectedTime = DateTime.Today.AddHours(10).AddMinutes(21);
                 Assert.AreEqual(expectedTime, target.Time);
 
+                Assert.AreEqual(1, target.QuantityUsed);
+
                 Assert.AreEqual(TimeSpan.Zero, target.Linger);
                 Assert.AreEqual(DateTime.MinValue, target.BorrowEndTime);
                 Assert.IsFalse(target.IsBorrowed);
@@ -172,6 +176,8 @@ namespace LicenseManager.Test
 
             DateTime expectedTime = DateTime.Today.AddDays(-15).AddHours(11).AddMinutes(28);
             Assert.AreEqual(expectedTime, target.Time);
+
+            Assert.AreEqual(1, target.QuantityUsed);
 
             TimeSpan expectedLinger = TimeSpan.FromSeconds(14437140);
             Assert.AreEqual(expectedLinger, target.Linger);
@@ -206,11 +212,44 @@ namespace LicenseManager.Test
             DateTime expectedTime = DateTime.Today.AddHours(10).AddMinutes(21);
             Assert.AreEqual(expectedTime, target.Time);
 
+            Assert.AreEqual(1, target.QuantityUsed);
+
             Assert.AreEqual(TimeSpan.Zero, target.Linger);
             Assert.AreEqual(DateTime.MinValue, target.BorrowEndTime);
             Assert.IsFalse(target.IsBorrowed);
 
             Assert.AreEqual(81 + indexOffset, target.EntryLength);
+        }
+
+        [TestMethod]
+        public void User_OtherFormats_PropertyReturnsAreCorrect()
+        {
+            License license = new License();
+            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+
+            Feature feature = license.Features.First(f => f.Name == "Feature_Other_User_Formats");
+
+            string expectedName = "user011";
+            User target = feature.Users.First(u => u.Name == expectedName);
+
+            Assert.AreEqual(expectedName, target.Name);
+            Assert.AreEqual("comp011", target.Host);
+            Assert.AreEqual("comp011", target.Display);
+            Assert.AreEqual("v22.0", target.Version);
+            Assert.AreEqual("SERVER001", target.Server);
+            Assert.AreEqual(27001, target.Port);
+            Assert.AreEqual(2209, target.Handle);
+
+            DateTime expectedTime = DateTime.Today.AddHours(13).AddMinutes(21);
+            Assert.AreEqual(expectedTime, target.Time);
+
+            Assert.AreEqual(2, target.QuantityUsed);
+
+            Assert.AreEqual(TimeSpan.Zero, target.Linger);
+            Assert.AreEqual(DateTime.MinValue, target.BorrowEndTime);
+            Assert.IsFalse(target.IsBorrowed);
+
+            Assert.AreEqual(88 + indexOffset, target.EntryLength);
         }
     }
 }
