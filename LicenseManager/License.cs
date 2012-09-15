@@ -33,6 +33,9 @@
 //
 // Updated IsFeatureError, UserCount, InUse and InUseCount with LINQ queries replacing the
 // foreach loops. For the most part this is an improvement in performance, but not consistently.
+//
+// 2012-07-26 v3.3
+// Corrected the time parsing. Previously the parsing failed with languages using a different format.
 
 #region Notes
 // Event-based Asynchronous Pattern:

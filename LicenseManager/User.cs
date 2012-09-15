@@ -13,6 +13,9 @@
 //
 // 2012-06-14 CWB v3.0
 // Added EntryIndex and EntryLength for defining the location of the user text within the license report.
+//
+// 2012-07-27 v3.4
+// Corrected the checkout time parsing. Previously the parsing failed with languages using a different format.
 
 namespace CWBozarth.LicenseManager
 {
