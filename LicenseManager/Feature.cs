@@ -16,6 +16,13 @@
 //
 // Updated QuantityBorrowed with LINQ queries replacing the foreach loops. For the most part this is an
 // improvement in performance, but not consistently.
+//
+// TBD CWB v3.5
+// Changed QuantityUsed to be defined by the lmstat report instead of by the quantity of Users.
+// This is to compensate for situations where a single user/display has multiple licenses.
+// This is identified by the user line ending with "2 licenses".
+// This also ensures that the quantity used always matched the lmstat output in case there are
+// other unknown situations.
 
 namespace CWBozarth.LicenseManager
 {
@@ -41,6 +48,11 @@ namespace CWBozarth.LicenseManager
         /// Stores the quantity issued.
         /// </summary>
         private int quantityIssued;
+
+        /// <summary>
+        /// Stores the quantity in use.
+        /// </summary>
+        private int quantityUsed;
 
         /// <summary>
         /// Stores the users of the feature.
@@ -119,13 +131,13 @@ namespace CWBozarth.LicenseManager
 
             // Example:
             // Users of Used_Feature_One_License:  (Total of 1 license issued;  Total of 1 licenses in use)
-            // Note that quantity in use is not read from this. It is calculated from the number of users found.
-            Regex featureExpression = new Regex(@"^Users of (?<name>\S+):\s+\(Total of (?<qty>\d+) \w+ issued[^\r]+", RegexOptions.Multiline);
+            Regex featureExpression = new Regex(@"^Users of (?<name>\S+):\s+\(Total of (?<qty>\d+) \w+ issued;\s+Total of (?<inuse>\d+) \w+ in use[^\r]+", RegexOptions.Multiline);
             Match featureMatch = featureExpression.Match(this.report);
             if (featureMatch.Success)
             {
                 this.name = featureMatch.Groups["name"].Value;
                 this.quantityIssued = int.Parse(featureMatch.Groups["qty"].Value, CultureInfo.InvariantCulture);
+                this.quantityUsed = int.Parse(featureMatch.Groups["inuse"].Value, CultureInfo.InvariantCulture);
 
                 // Example:
                 // Users of Used_Feature_One_License:  (Total of 1 license issued;  Total of 1 licenses in use)
@@ -203,7 +215,7 @@ namespace CWBozarth.LicenseManager
         /// </summary>
         public int QuantityUsed
         {
-            get { return this.users.Count; }
+            get { return this.quantityUsed; }
         }
 
         /// <summary>
@@ -263,7 +275,7 @@ namespace CWBozarth.LicenseManager
         /// </summary>
         public bool InUse
         {
-            get { return this.users.Count != 0; }
+            get { return this.QuantityUsed != 0; }
         }
 
         /// <summary>
