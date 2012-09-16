@@ -206,7 +206,7 @@ namespace LicenseManager.Test
         }
 
         [TestMethod]
-        public void Feature_Other_User_Formats_PropertyReturnsAreCorrect()
+        public void Feature_OtherUserFormats_PropertyReturnsAreCorrect()
         {
             License license = new License();
             license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
