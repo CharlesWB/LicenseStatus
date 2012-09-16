@@ -218,7 +218,7 @@ namespace LicenseManager.Test
             Assert.AreEqual(1, target.QuantityAvailable);
             Assert.AreEqual(9, target.QuantityIssued);
             Assert.AreEqual(8, target.QuantityUsed);
-            Assert.AreEqual(1, target.QuantityBorrowed);
+            Assert.AreEqual(2, target.QuantityBorrowed);
             Assert.IsTrue(target.InUse);
             Assert.AreEqual("floating license", target.Type);
             Assert.AreEqual("testdaemon", target.Vendor);

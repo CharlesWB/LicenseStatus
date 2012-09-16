@@ -234,7 +234,7 @@ namespace CWBozarth.LicenseManager
         {
             get
             {
-                return this.users.Count(u => u.IsBorrowed);
+                return this.users.Where(u => u.IsBorrowed).Sum(u => u.QuantityUsed);
             }
         }
 

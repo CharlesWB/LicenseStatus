@@ -369,7 +369,7 @@
                     <DockPanel>
                         <TextBlock Text="{Binding Name}" Margin="0,0,8,0" Style="{StaticResource GroupHeaderNameStyle}" />
                         <TextBlock Text="(" />
-                        <TextBlock Text="{Binding Items[0].Feature.QuantityUsed, Converter={StaticResource CountToCountPhraseConverter}, ConverterParameter=User}" />
+                        <TextBlock Text="{Binding Items[0].Feature.Users.Count, Converter={StaticResource CountToCountPhraseConverter}, ConverterParameter=User}" />
                         <TextBlock Text=")" />
                         <Line X2="1" Stretch="Fill" Stroke="{StaticResource GroupHeaderSecondaryBrush}" SnapsToDevicePixels="True" Margin="5,0,5,0" />
                     </DockPanel>
