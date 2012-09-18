@@ -156,10 +156,27 @@
 // http://www.dotnetmonster.com/Uwe/Forum.aspx/dotnet-vb/58638/My-Settings-Upgrade-doesn-t-upgrade
 // http://www.vesic.org/english/blog/winforms/upgrade-of-applicationuser-settings-between-application-versions/
 //
-// Localization and Column Names
+// Localization and Column Names:
 //
 // If this application is ever localized this will affect column names which will also affect
 // the default values of HiddenColumns in application settings.
+//
+// SettingsVersion:
+//
+// The SettingsVersion property was added in v3.5. It is used to check the "version" of the
+// settings. This way changes can be made to the settings only when appropriate.
+//
+// Prior to v3.5 the SettingsVersion did not exist and, in effect, has a value of zero.
+// At v3.5 the value is 1. This value is only changed when needed.
+// 
+// The first time this was used was to add a new value to HiddenColumn. The new value would
+// not be added during an automatic upgrade so SettingsVersion was used. If the version was
+// older then the new entry was added to HiddenColumn. Once the version is updated then the
+// new entry is no longer added.
+//
+// An alternative was to set a boolean indicating that the HiddenColumn change had been done
+// and no longer needed to be done. This would have meant a new boolean would be needed each
+// time a similar changed happened.
 //
 // Possible Enhancements:
 //
@@ -231,6 +248,19 @@ namespace LicenseStatus
                 {
                     this.UpgradeSettingsFromOldVersion();
                 }
+
+                // At SettingsVersion 1 (v3.5) a new HiddenColumn entry, 'Checked out', was added.
+                // If the user upgrades, this column would be visible as the default. To compensate for
+                // that check for the previous SettingsVersion and manually add the column.
+                if (Settings.Default.SettingsVersion == 0)
+                {
+                    if (!Settings.Default.HiddenColumns.Contains("Checked out"))
+                    {
+                        Settings.Default.HiddenColumns.Add("Checked out");
+                    }
+                }
+
+                Settings.Default.SettingsVersion = 1;
 
                 Settings.Default.UpgradeSettings = false;
             }
