@@ -1,5 +1,8 @@
 License Status Release Notes
 
+TBD v3.6
+- Changed background color from a gradient to a solid faint gray color.
+
 September 18, 2012 v3.5
 - Added support for situations where the same user/host/display can check out more than one license.
 - Added a column 'Checked out' to display the number of licenses a user has checked out. This column is turned off by default.
