@@ -110,7 +110,7 @@ namespace CWBozarth.LicenseManager
     /// </para>
     /// </remarks>
     [Serializable]
-    public class License : INotifyPropertyChanged, IDataErrorInfo
+    public class License : ObservableObject, IDataErrorInfo
     {
         /// <summary>
         /// Stores the name.
@@ -235,12 +235,6 @@ namespace CWBozarth.LicenseManager
         /// <remarks>This event will be raised on the thread of the calling application.</remarks>
         [field: NonSerialized]
         public event AsyncCompletedEventHandler GetStatusCompleted;
-
-        /// <summary>
-        /// Raised when a property on this object has a new value.
-        /// </summary>
-        [field: NonSerialized]
-        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Gets or sets the port number.
@@ -921,19 +915,6 @@ namespace CWBozarth.LicenseManager
             if (e.PropertyName == "Executable" && this.IsBusy)
             {
                 this.GetStatusAsyncCancel();
-            }
-        }
-
-        /// <summary>
-        /// Raises this object's PropertyChanged event.
-        /// </summary>
-        /// <param name="propertyName">The property that has a new value.</param>
-        private void NotifyPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = this.PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
