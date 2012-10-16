@@ -3,24 +3,6 @@
 // Refer to License.cs for the full copyright notice.
 // </copyright>
 
-// Revisions:
-//
-// 2009-09-10 CWB
-// The regular expression for finding the user name has been changed from matching a word
-// character (\w) to matching non-white space character (\S).
-// A license was found where the feature name included a period which is not a word character.
-// It was decided that a user name could have the same issue and was also updated.
-//
-// 2012-06-14 CWB v3.0
-// Added EntryIndex and EntryLength for defining the location of the user text within the license report.
-//
-// 2012-07-27 v3.4
-// Corrected the checkout time parsing. Previously the parsing failed with languages using a different format.
-//
-// 2012-09-15 v3.5
-// Added QuantityUsed property. This is used when the user entry includes the number of licenses
-// checked out.
-
 namespace CWBozarth.LicenseManager
 {
     using System;

@@ -19,24 +19,6 @@
 // <site>http://licensestatus.sourceforge.net</site>
 // <summary>Provides access to FlexLM license information.</summary>
 
-// Revisions:
-//
-// 2009-09-10 CWB
-// The regular expressions for finding the feature name and the vendor daemon name have been
-// changed from matching a word character (\w) to matching non-white space character (\S).
-// A license was found where the feature name included a period which is not a word character.
-// It was decided that a vendor daemon name could have the same issue and was also updated.
-//
-// 2012-06-14 CWB v3.0
-// Added NonSerialized attribute to errorMessage field. I can't find a reason why this
-// wasn't done before.
-//
-// Updated IsFeatureError, UserCount, InUse and InUseCount with LINQ queries replacing the
-// foreach loops. For the most part this is an improvement in performance, but not consistently.
-//
-// 2012-07-26 v3.3
-// Corrected the time parsing. Previously the parsing failed with languages using a different format.
-
 #region Notes
 // Event-based Asynchronous Pattern:
 //

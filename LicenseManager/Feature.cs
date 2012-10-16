@@ -3,27 +3,6 @@
 // Refer to License.cs for the full copyright notice.
 // </copyright>
 
-// Revisions:
-//
-// 2009-09-10 CWB
-// The regular expressions for finding the feature name, vendor daemon name and user name have been
-// changed from matching a word character (\w) to matching non-white space character (\S).
-// A license was found where the feature name included a period which is not a word character.
-// It was decided that a vendor daemon name and user name could have the same issue and were also updated.
-//
-// 2012-06-14 CWB v3.0
-// Added EntryIndex and EntryLength for defining the location of the feature text within the license report.
-//
-// Updated QuantityBorrowed with LINQ queries replacing the foreach loops. For the most part this is an
-// improvement in performance, but not consistently.
-//
-// 2012-09-15 v3.5
-// Changed QuantityUsed to be defined by the lmstat report instead of by the quantity of Users.
-// This is to compensate for situations where a single user/display has multiple licenses.
-// This is identified by the user line ending with "2 licenses".
-// This also ensures that the quantity used always matched the lmstat output in case there are
-// other unknown situations.
-
 namespace CWBozarth.LicenseManager
 {
     using System;
