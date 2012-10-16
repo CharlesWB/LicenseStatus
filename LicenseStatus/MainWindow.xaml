@@ -188,15 +188,8 @@
                 </Setter>
             </Style>
 
-            <!-- Used as the ending color of the detail area's background gradient. -->
-            <Color x:Key="DetailBackgroundEndColor">#E9ECFA</Color>
-            <!--<Color x:Key="DetailBackgroundEndColor">#BDBDBD</Color>-->
-
             <!-- Used for the background of the details areas. -->
-            <LinearGradientBrush x:Key="DetailBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
-                <GradientStop Color="Transparent" Offset="0" />
-                <GradientStop Color="{StaticResource DetailBackgroundEndColor}" Offset="1" />
-            </LinearGradientBrush>
+            <SolidColorBrush x:Key="DetailBackgroundBrush" Color="#F6F6F6" />
 
             <!-- Used as the primary color of the group header. -->
             <SolidColorBrush x:Key="GroupHeaderPrimaryBrush" Color="DimGray" />
