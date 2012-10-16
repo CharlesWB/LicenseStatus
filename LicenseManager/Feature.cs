@@ -129,69 +129,7 @@ namespace CWBozarth.LicenseManager
             this.entryIndex = index;
             this.entryLength = this.report.Length;
 
-            // Example:
-            // Users of Used_Feature_One_License:  (Total of 1 license issued;  Total of 1 licenses in use)
-            Regex featureExpression = new Regex(@"^Users of (?<name>\S+):\s+\(Total of (?<qty>\d+) \w+ issued;\s+Total of (?<inuse>\d+) \w+ in use[^\r]+", RegexOptions.Multiline);
-            Match featureMatch = featureExpression.Match(this.report);
-            if (featureMatch.Success)
-            {
-                this.name = featureMatch.Groups["name"].Value;
-                this.quantityIssued = int.Parse(featureMatch.Groups["qty"].Value, CultureInfo.InvariantCulture);
-                this.quantityUsed = int.Parse(featureMatch.Groups["inuse"].Value, CultureInfo.InvariantCulture);
-
-                // Example:
-                // Users of Used_Feature_One_License:  (Total of 1 license issued;  Total of 1 licenses in use)
-                //
-                //   "Used_Feature_One_License" v22.0, vendor: testdaemon
-                //   floating license
-                Regex detailExpression = new Regex(@"^Users of (?<name>\S+):.*\""\k<name>\"" (?<version>v[0-9.]+), vendor: (?<vendor>\S+)[\r\n\s]*(?<type>[^\r]*)", RegexOptions.Multiline | RegexOptions.Singleline);
-                Match detailMatch = detailExpression.Match(this.report);
-                if (detailMatch.Success)
-                {
-                    this.version = detailMatch.Groups["version"].Value;
-                    this.vendor = detailMatch.Groups["vendor"].Value;
-                    this.type = detailMatch.Groups["type"].Value;
-                }
-
-                // Examples:
-                // user001 comp001 comp001 (v22.0) (SERVER001/27001 3861), start Tue 3/17 7:13
-                // user005 comp005 comp005 (v22.0) (SERVER001/27001 601), start Tue 3/17 10:18 (linger: 14437140)
-                Regex userExpression = new Regex(@"\S+ \S+ \S+ \(\S+\) \(\S+/\d+ \d+\), start.+", RegexOptions.Multiline);
-                MatchCollection matches = userExpression.Matches(this.report);
-                foreach (Match userMatch in matches)
-                {
-                    // We do not need to clear the collection first because the Feature object is created new
-                    // each time the license file is parsed.
-                    this.users.Add(new User(userMatch.Value, this.entryIndex + userMatch.Index));
-                }
-            }
-            else
-            {
-                // Example:
-                // Users of Feature_With_Other_Error:  (Error: 21 licenses, unsupported by licensed server)
-                Regex unsupportedExpression = new Regex(@"^Users of (?<name>\S+):\s+\((?<message>Error: (?<qty>\d+) licenses,[^\r]+)\)", RegexOptions.Multiline);
-                Match unsupportedMatch = unsupportedExpression.Match(this.report);
-                if (unsupportedMatch.Success)
-                {
-                    this.name = unsupportedMatch.Groups["name"].Value;
-                    this.quantityIssued = int.Parse(unsupportedMatch.Groups["qty"].Value, CultureInfo.InvariantCulture);
-                    this.errorMessage = unsupportedMatch.Groups["message"].Value;
-                    this.hasError = true;
-                }
-                else
-                {
-                    // Example:
-                    // Users of Feature_With_Error: Cannot get users of Feature_With_Error: No such feature exists. (-5,222)
-                    Regex errorExpression = new Regex(@"^Users of (?<name>\S+):\s+(?<message>[^\r]+)", RegexOptions.Multiline);
-                    Match errorMatch = errorExpression.Match(this.report);
-                    if (errorMatch.Success)
-                    {
-                        this.name = errorMatch.Groups["name"].Value;
-                        this.errorMessage = errorMatch.Groups["message"].Value;
-                        this.hasError = true;
-                    }
-                }
-            }
+            this.ParseReport();
         }
 
         /// <summary>
@@ -326,6 +264,76 @@ namespace CWBozarth.LicenseManager
         public override string ToString()
         {
             return this.name;
+        }
+
+        /// <summary>
+        /// Parses the output of lmstat to populate the fields with the feature's status.
+        /// </summary>
+        private void ParseReport()
+        {
+            // Example:
+            // Users of Used_Feature_One_License:  (Total of 1 license issued;  Total of 1 licenses in use)
+            Regex featureExpression = new Regex(@"^Users of (?<name>\S+):\s+\(Total of (?<qty>\d+) \w+ issued;\s+Total of (?<inuse>\d+) \w+ in use[^\r]+", RegexOptions.Multiline);
+            Match featureMatch = featureExpression.Match(this.report);
+            if (featureMatch.Success)
+            {
+                this.name = featureMatch.Groups["name"].Value;
+                this.quantityIssued = int.Parse(featureMatch.Groups["qty"].Value, CultureInfo.InvariantCulture);
+                this.quantityUsed = int.Parse(featureMatch.Groups["inuse"].Value, CultureInfo.InvariantCulture);
+
+                // Example:
+                // Users of Used_Feature_One_License:  (Total of 1 license issued;  Total of 1 licenses in use)
+                //
+                //   "Used_Feature_One_License" v22.0, vendor: testdaemon
+                //   floating license
+                Regex detailExpression = new Regex(@"^Users of (?<name>\S+):.*\""\k<name>\"" (?<version>v[0-9.]+), vendor: (?<vendor>\S+)[\r\n\s]*(?<type>[^\r]*)", RegexOptions.Multiline | RegexOptions.Singleline);
+                Match detailMatch = detailExpression.Match(this.report);
+                if (detailMatch.Success)
+                {
+                    this.version = detailMatch.Groups["version"].Value;
+                    this.vendor = detailMatch.Groups["vendor"].Value;
+                    this.type = detailMatch.Groups["type"].Value;
+                }
+
+                // Examples:
+                // user001 comp001 comp001 (v22.0) (SERVER001/27001 3861), start Tue 3/17 7:13
+                // user005 comp005 comp005 (v22.0) (SERVER001/27001 601), start Tue 3/17 10:18 (linger: 14437140)
+                Regex userExpression = new Regex(@"\S+ \S+ \S+ \(\S+\) \(\S+/\d+ \d+\), start.+", RegexOptions.Multiline);
+                MatchCollection matches = userExpression.Matches(this.report);
+                foreach (Match userMatch in matches)
+                {
+                    // We do not need to clear the collection first because the Feature object is created new
+                    // each time the license file is parsed.
+                    this.users.Add(new User(userMatch.Value, this.entryIndex + userMatch.Index));
+                }
+            }
+            else
+            {
+                // Example:
+                // Users of Feature_With_Other_Error:  (Error: 21 licenses, unsupported by licensed server)
+                Regex unsupportedExpression = new Regex(@"^Users of (?<name>\S+):\s+\((?<message>Error: (?<qty>\d+) licenses,[^\r]+)\)", RegexOptions.Multiline);
+                Match unsupportedMatch = unsupportedExpression.Match(this.report);
+                if (unsupportedMatch.Success)
+                {
+                    this.name = unsupportedMatch.Groups["name"].Value;
+                    this.quantityIssued = int.Parse(unsupportedMatch.Groups["qty"].Value, CultureInfo.InvariantCulture);
+                    this.errorMessage = unsupportedMatch.Groups["message"].Value;
+                    this.hasError = true;
+                }
+                else
+                {
+                    // Example:
+                    // Users of Feature_With_Error: Cannot get users of Feature_With_Error: No such feature exists. (-5,222)
+                    Regex errorExpression = new Regex(@"^Users of (?<name>\S+):\s+(?<message>[^\r]+)", RegexOptions.Multiline);
+                    Match errorMatch = errorExpression.Match(this.report);
+                    if (errorMatch.Success)
+                    {
+                        this.name = errorMatch.Groups["name"].Value;
+                        this.errorMessage = errorMatch.Groups["message"].Value;
+                        this.hasError = true;
+                    }
+                }
+            }
         }
     }
 }

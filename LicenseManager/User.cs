@@ -131,61 +131,7 @@ namespace CWBozarth.LicenseManager
             this.entryIndex = index;
             this.entryLength = this.report.Length;
 
-            // Examples:
-            // user001 comp001 comp001 (v22.0) (SERVER001/27001 3861), start Tue 3/17 7:13
-            // user005 comp005 comp005 (v22.0) (SERVER001/27001 601), start Tue 3/17 10:18 (linger: 14437140)
-            // user011 comp011 comp011 (v22.0) (SERVER001/27001 2209), start Fri 3/17 13:21, 2 licenses
-            Regex userExpression = new Regex(@"(?<name>\S+) (?<host>\S+) (?<display>\S+) \((?<version>\S+)\) \((?<server>\S+)/(?<port>\d+) (?<handle>\d+)\), start (?<time>\w+ \d+/\d+ \d+:\d+)(, (?<inuse>\d+) licenses)?( \(linger: (?<linger>\d+))?", RegexOptions.Multiline);
-            Match match = userExpression.Match(this.report);
-            if (match.Success)
-            {
-                this.name = match.Groups["name"].Value;
-                this.host = match.Groups["host"].Value;
-                this.display = match.Groups["display"].Value;
-                this.version = match.Groups["version"].Value;
-                this.server = match.Groups["server"].Value;
-                this.port = int.Parse(match.Groups["port"].Value, CultureInfo.InvariantCulture);
-                this.handle = int.Parse(match.Groups["handle"].Value, CultureInfo.InvariantCulture);
-
-                // The check out date and time does not include the year. Because the day of the week is included
-                // this can cause the date to be invalid when the checkout occurred in the previous year.
-                // This is usually seen with borrowed licenses but can occur with a normal checkout before January 1.
-                // Rather than checking the year of the lmutil report this will assume the report was made at
-                // the current year. This is only an issue if this class is used to parse older reports.
-                // If the day of the week, date and time are invalid for this year then they will be checked
-                // against last year. If this is also invalid then the minimum date is returned.
-                // This assumes that a check out will not be more than a year old.
-                // It may be possible for the day of the week, date and time would be valid for both years.
-                // This situation has not been tested or determined if possible.
-                Regex dateExpression = new Regex(@"(?<dayofweek>\w+) (?<monthday>\d+/\d+) (?<time>\d+:\d+)");
-                Match dateMatch = dateExpression.Match(match.Groups["time"].Value);
-
-                bool isDateValid = DateTime.TryParseExact(match.Groups["time"].Value, "ddd M/d H:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out this.time);
-                if (!isDateValid)
-                {
-                    // Create a string with last year for parsing.
-                    string dateWithLastYear = string.Format(CultureInfo.InvariantCulture, "{0} {1}/{2} {3}", dateMatch.Groups["dayofweek"].Value, dateMatch.Groups["monthday"].Value, DateTime.Now.AddYears(-1).Year, dateMatch.Groups["time"].Value);
-                    DateTime.TryParseExact(dateWithLastYear, "ddd M/d/yyyy H:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out this.time);
-                }
-
-                if (match.Groups["inuse"].Success)
-                {
-                    this.quantityUsed = int.Parse(match.Groups["inuse"].Value, CultureInfo.InvariantCulture);
-                }
-                else
-                {
-                    this.quantityUsed = 1;
-                }
-
-                if (match.Groups["linger"].Success)
-                {
-                    this.linger = TimeSpan.FromSeconds(int.Parse(match.Groups["linger"].Value, CultureInfo.InvariantCulture));
-                }
-                else
-                {
-                    this.linger = TimeSpan.Zero;
-                }
-            }
+            this.ParseReport();
         }
 
         /// <summary>
@@ -329,6 +275,68 @@ namespace CWBozarth.LicenseManager
         public override string ToString()
         {
             return this.name;
+        }
+
+        /// <summary>
+        /// Parses the output of lmstat to populate the fields with the user's status.
+        /// </summary>
+        private void ParseReport()
+        {
+            // Examples:
+            // user001 comp001 comp001 (v22.0) (SERVER001/27001 3861), start Tue 3/17 7:13
+            // user005 comp005 comp005 (v22.0) (SERVER001/27001 601), start Tue 3/17 10:18 (linger: 14437140)
+            // user011 comp011 comp011 (v22.0) (SERVER001/27001 2209), start Fri 3/17 13:21, 2 licenses
+            Regex userExpression = new Regex(@"(?<name>\S+) (?<host>\S+) (?<display>\S+) \((?<version>\S+)\) \((?<server>\S+)/(?<port>\d+) (?<handle>\d+)\), start (?<time>\w+ \d+/\d+ \d+:\d+)(, (?<inuse>\d+) licenses)?( \(linger: (?<linger>\d+))?", RegexOptions.Multiline);
+            Match match = userExpression.Match(this.report);
+            if (match.Success)
+            {
+                this.name = match.Groups["name"].Value;
+                this.host = match.Groups["host"].Value;
+                this.display = match.Groups["display"].Value;
+                this.version = match.Groups["version"].Value;
+                this.server = match.Groups["server"].Value;
+                this.port = int.Parse(match.Groups["port"].Value, CultureInfo.InvariantCulture);
+                this.handle = int.Parse(match.Groups["handle"].Value, CultureInfo.InvariantCulture);
+
+                // The check out date and time does not include the year. Because the day of the week is included
+                // this can cause the date to be invalid when the checkout occurred in the previous year.
+                // This is usually seen with borrowed licenses but can occur with a normal checkout before January 1.
+                // Rather than checking the year of the lmutil report this will assume the report was made at
+                // the current year. This is only an issue if this class is used to parse older reports.
+                // If the day of the week, date and time are invalid for this year then they will be checked
+                // against last year. If this is also invalid then the minimum date is returned.
+                // This assumes that a check out will not be more than a year old.
+                // It may be possible for the day of the week, date and time would be valid for both years.
+                // This situation has not been tested or determined if possible.
+                Regex dateExpression = new Regex(@"(?<dayofweek>\w+) (?<monthday>\d+/\d+) (?<time>\d+:\d+)");
+                Match dateMatch = dateExpression.Match(match.Groups["time"].Value);
+
+                bool isDateValid = DateTime.TryParseExact(match.Groups["time"].Value, "ddd M/d H:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out this.time);
+                if (!isDateValid)
+                {
+                    // Create a string with last year for parsing.
+                    string dateWithLastYear = string.Format(CultureInfo.InvariantCulture, "{0} {1}/{2} {3}", dateMatch.Groups["dayofweek"].Value, dateMatch.Groups["monthday"].Value, DateTime.Now.AddYears(-1).Year, dateMatch.Groups["time"].Value);
+                    DateTime.TryParseExact(dateWithLastYear, "ddd M/d/yyyy H:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out this.time);
+                }
+
+                if (match.Groups["inuse"].Success)
+                {
+                    this.quantityUsed = int.Parse(match.Groups["inuse"].Value, CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    this.quantityUsed = 1;
+                }
+
+                if (match.Groups["linger"].Success)
+                {
+                    this.linger = TimeSpan.FromSeconds(int.Parse(match.Groups["linger"].Value, CultureInfo.InvariantCulture));
+                }
+                else
+                {
+                    this.linger = TimeSpan.Zero;
+                }
+            }
         }
     }
 }
