@@ -3,6 +3,11 @@
 // Refer to LicenseManager's License.cs for the full copyright notice.
 // </copyright>
 
+// Possible Enhancements:
+//
+// Create a custom lmutil.exe which outputs these test files. One of the
+// test files could be dynamic, changing the output in some way.
+
 namespace LmStatReportGenerator
 {
     using System;
@@ -26,6 +31,7 @@ namespace LmStatReportGenerator
             WriteReportToFile(new LmStatLarge(), Path.Combine(outputFolder, "lmstat-large.log"));
             WriteReportToFile(new LmStatNX(), Path.Combine(outputFolder, "lmstat-nx.log"));
             WriteReportToFile(new LmStatAcad(), Path.Combine(outputFolder, "lmstat-acad.log"));
+            WriteReportToFile(new LmStatCombined(), Path.Combine(outputFolder, "lmstat-combined.log"));
         }
 
         /// <summary>

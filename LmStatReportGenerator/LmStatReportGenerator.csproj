@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LmStatAcad.cs" />
+    <Compile Include="LmStatCombined.cs" />
     <Compile Include="LmStatConnect.cs" />
     <Compile Include="LmStatErrors.cs" />
     <Compile Include="LmStatGenerator.cs" />
