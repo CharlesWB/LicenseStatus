@@ -3,9 +3,24 @@
 // Refer to LicenseManager's License.cs for the full copyright notice.
 // </copyright>
 
+#region Notes
+// Clearing KnownHostSet:
+//
+// User_IdentityChangesWhenNewHostAdded_IdentityChangesAreCorrect requires that the
+// NX host not be in KnownHostSet. But other tests will read an NX license so the host
+// will already be added. Code using PrivateObject and PrivateType will clear the
+// set for the test. Technically this should probably be in MyTestInitialize,
+// but I'm not convinced this is the best option. For now it's left as is to make
+// a test that works.
+//
+// This also required adding [assembly: InternalsVisibleTo("LicenseManager.Test")] to
+// LicenseManager's AssemblyInfo.cs to allow the unit test access to the internal class.
+#endregion
+
 namespace LicenseManager.Test
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -227,7 +242,7 @@ namespace LicenseManager.Test
             License license = new License();
             license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
 
-            Feature feature = license.Features.First(f => f.Name == "Feature_Other_User_Formats");
+            Feature feature = license.Features.First(f => f.Name == "User_Multiple_Checkouts");
 
             string expectedName = "user011";
             User target = feature.Users.First(u => u.Name == expectedName);
@@ -250,6 +265,168 @@ namespace LicenseManager.Test
             Assert.IsFalse(target.IsBorrowed);
 
             Assert.AreEqual(88 + indexOffset, target.EntryLength);
+        }
+
+        [TestMethod]
+        public void User_NameDisplayWithSpaces_PropertyReturnsAreCorrect()
+        {
+            License license = new License();
+            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+
+            Feature feature = license.Features.First(f => f.Name == "Users_With_Spaces_Auto");
+
+            foreach (User user in feature.Users)
+            {
+                bool expectedIdentity = user.Name.First() == 'u' && user.Host.First() == 'h' && user.Display.First() == 'd';
+                Assert.IsTrue(expectedIdentity);
+
+                Assert.AreEqual("v22.0", user.Version);
+                Assert.AreEqual("SERVER001", user.Server);
+                Assert.AreEqual(27001, user.Port);
+                Assert.AreEqual(100, user.Handle);
+
+                DateTime expectedTime = DateTime.Today.AddHours(10).AddMinutes(21);
+                Assert.AreEqual(expectedTime, user.Time);
+
+                Assert.AreEqual(1, user.QuantityUsed);
+
+                Assert.AreEqual(TimeSpan.Zero, user.Linger);
+                Assert.AreEqual(DateTime.MinValue, user.BorrowEndTime);
+                Assert.IsFalse(user.IsBorrowed);
+            }
+        }
+
+        [TestMethod]
+        public void User_NameDisplayWithSpacesOther_PropertyReturnsAreCorrect()
+        {
+            License license = new License();
+            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+
+            Feature feature = license.Features.First(f => f.Name == "Users_With_Spaces_Other");
+
+            Assert.AreEqual(feature.Users.Count, 8);
+
+            Assert.AreEqual(feature.Users[0].Name, "user300");
+            Assert.AreEqual(feature.Users[0].Host, "host300");
+            Assert.AreEqual(feature.Users[0].Display, "host300");
+
+            Assert.AreEqual(feature.Users[1].Name, "user 301");
+            Assert.AreEqual(feature.Users[1].Host, "host300");
+            Assert.AreEqual(feature.Users[1].Display, "host300");
+
+            Assert.AreEqual(feature.Users[2].Name, "user 302");
+            Assert.AreEqual(feature.Users[2].Host, "host300");
+            Assert.AreEqual(feature.Users[2].Display, "host3000.0");
+
+            Assert.AreEqual(feature.Users[3].Name, "user 303");
+            Assert.AreEqual(feature.Users[3].Host, "host303");
+            Assert.AreEqual(feature.Users[3].Display, "host300");
+
+            Assert.AreEqual(feature.Users[4].Name, "host300");
+            Assert.AreEqual(feature.Users[4].Host, "host304");
+            Assert.AreEqual(feature.Users[4].Display, "host 304");
+
+            Assert.AreEqual(feature.Users[5].Name, "host300");
+            Assert.AreEqual(feature.Users[5].Host, "host300");
+            Assert.AreEqual(feature.Users[5].Display, "host 305");
+
+            Assert.AreEqual(feature.Users[6].Name, "host300 A");
+            Assert.AreEqual(feature.Users[6].Host, "host300");
+            Assert.AreEqual(feature.Users[6].Display, "B host300");
+
+            Assert.AreEqual(feature.Users[7].Name, "host300 host300");
+            Assert.AreEqual(feature.Users[7].Host, "host300");
+            Assert.AreEqual(feature.Users[7].Display, "host300");
+        }
+
+        [TestMethod]
+        public void User_NameDisplayWithSpacesFail_PropertyReturnsAreCorrect()
+        {
+            License license = new License();
+            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+
+            Feature feature = license.Features.First(f => f.Name == "Users_With_Spaces_Fail");
+
+            Assert.AreEqual(feature.Users.Count, 1);
+
+            Assert.AreEqual(feature.Users[0].Name, "user 400 host400");
+            Assert.AreEqual(feature.Users[0].Host, "display");
+            Assert.AreEqual(feature.Users[0].Display, "AB400");
+        }
+
+        [TestMethod]
+        public void User_IdentityChangedAfterFirstParse_PropertyReturnsAreCorrect()
+        {
+            // Currently the threading is such that by the time GetStatus returns
+            // the identity will be correct. This may not be true in the future.
+
+            License license = new License();
+            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+
+            Feature feature = license.Features.First(f => f.Name == "Users_With_Spaces_ChangedEvent");
+
+            foreach (User user in feature.Users)
+            {
+                bool expectedIdentity = user.Name.First() == 'u' && user.Host.First() == 'h' && user.Display.First() == 'd';
+                Assert.IsTrue(expectedIdentity);
+            }
+        }
+
+        [TestMethod]
+        public void User_IdentityChangesWhenNewHostAdded_IdentityChangesAreCorrect()
+        {
+            // Clear the KnownHostSet.
+            PrivateType privateKnownHostSet = new PrivateType(typeof(KnownHostSet));
+            PrivateObject privateInstance = new PrivateObject(privateKnownHostSet.GetStaticProperty("Instance", null));
+            ((HashSet<string>)privateInstance.GetField("knownHosts")).Clear();
+
+            License testLicense = new License();
+
+            // Using GetStatusAsync may be overkill for testing the property changes, but it
+            // throws in some threading.
+            using (AutoResetEvent waitHandle = new AutoResetEvent(false))
+            {
+                testLicense.GetStatusCompleted += (s, e) => waitHandle.Set();
+
+                testLicense.GetStatusAsync(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")), 500);
+
+                if (!waitHandle.WaitOne(5000, false))
+                {
+                    Assert.Fail("Test timed out.");
+                }
+            }
+
+            Feature testFeature = testLicense.Features.First(f => f.Name == "Users_With_Spaces_ChangedEvent_Other");
+            User target = testFeature.Users.First();
+
+            Assert.AreEqual(target.Name, "user 504 CAD9695D");
+            Assert.AreEqual(target.Host, "display");
+            Assert.AreEqual(target.Display, "A504");
+
+            List<string> propertiesChanged = new List<string>();
+            target.PropertyChanged += (s, e) => propertiesChanged.Add(e.PropertyName);
+
+            License nxLicense = new License();
+
+            using (AutoResetEvent waitHandle = new AutoResetEvent(false))
+            {
+                nxLicense.GetStatusCompleted += (s, e) => waitHandle.Set();
+
+                nxLicense.GetStatusAsync(new FileInfo(Path.Combine(testFiles.Path, "lmstat-nx.log")), 500);
+
+                if (!waitHandle.WaitOne(5000, false))
+                {
+                    Assert.Fail("Test timed out.");
+                }
+            }
+
+            Assert.IsTrue(propertiesChanged.Contains("Name"));
+            Assert.IsTrue(propertiesChanged.Contains("Host"));
+            Assert.IsTrue(propertiesChanged.Contains("Display"));
+
+            Assert.AreEqual(target.Name, "user 504");
+            Assert.AreEqual(target.Host, "CAD9695D");
+            Assert.AreEqual(target.Display, "display A504");
         }
     }
 }

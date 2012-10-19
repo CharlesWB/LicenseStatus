@@ -206,12 +206,12 @@ namespace LicenseManager.Test
         }
 
         [TestMethod]
-        public void Feature_OtherUserFormats_PropertyReturnsAreCorrect()
+        public void Feature_UserMultipleCheckouts_PropertyReturnsAreCorrect()
         {
             License license = new License();
             license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
 
-            string expectedName = "Feature_Other_User_Formats";
+            string expectedName = "User_Multiple_Checkouts";
             Feature target = license.Features.First(f => f.Name == expectedName);
 
             Assert.AreEqual(expectedName, target.Name);
@@ -226,7 +226,7 @@ namespace LicenseManager.Test
             Assert.IsFalse(target.HasError);
             Assert.IsNull(target.ErrorMessage);
             Assert.AreEqual(4, target.Users.Count);
-            Assert.AreEqual(558 + (indexOffset * 3), target.EntryLength);
+            Assert.AreEqual(553 + (indexOffset * 4), target.EntryLength);
         }
     }
 }

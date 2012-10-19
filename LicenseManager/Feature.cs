@@ -277,7 +277,7 @@ namespace CWBozarth.LicenseManager
                 // Examples:
                 // user001 comp001 comp001 (v22.0) (SERVER001/27001 3861), start Tue 3/17 7:13
                 // user005 comp005 comp005 (v22.0) (SERVER001/27001 601), start Tue 3/17 10:18 (linger: 14437140)
-                Regex userExpression = new Regex(@"\S+ \S+ \S+ \(\S+\) \(\S+/\d+ \d+\), start.+", RegexOptions.Multiline);
+                Regex userExpression = new Regex(@"\S+ .+ \(\S+\) \(\S+/\d+ \d+\), start.+", RegexOptions.Multiline);
                 MatchCollection matches = userExpression.Matches(this.report);
                 foreach (Match userMatch in matches)
                 {

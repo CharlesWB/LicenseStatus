@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Feature.cs" />
+    <Compile Include="HostAddedEventArgs.cs" />
     <Compile Include="KnownHostSet.cs" />
     <Compile Include="License.cs" />
     <Compile Include="ObservableObject.cs" />

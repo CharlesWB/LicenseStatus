@@ -240,9 +240,9 @@ namespace LicenseManager.Test
             Assert.AreEqual(expectedTime, target.Time);
 
             Assert.IsTrue(target.InUse);
-            Assert.AreEqual(8, target.Features.Count);
-            Assert.AreEqual(5, target.InUseCount);
-            Assert.AreEqual(39, target.UserCount);
+            Assert.AreEqual(13, target.Features.Count);
+            Assert.AreEqual(10, target.InUseCount);
+            Assert.AreEqual(67, target.UserCount);
             Assert.IsTrue(target.IsVendorDaemonUp);
             Assert.AreEqual("testdaemon", target.VendorDaemonName);
             Assert.AreEqual("UP", target.VendorDaemonStatus);
@@ -269,9 +269,9 @@ namespace LicenseManager.Test
                 Assert.AreEqual(expectedTime, target.Time);
 
                 Assert.IsTrue(target.InUse);
-                Assert.AreEqual(8, target.Features.Count);
-                Assert.AreEqual(5, target.InUseCount);
-                Assert.AreEqual(39, target.UserCount);
+                Assert.AreEqual(13, target.Features.Count);
+                Assert.AreEqual(10, target.InUseCount);
+                Assert.AreEqual(67, target.UserCount);
                 Assert.IsTrue(target.IsVendorDaemonUp);
                 Assert.AreEqual("testdaemon", target.VendorDaemonName);
                 Assert.AreEqual("UP", target.VendorDaemonStatus);
@@ -395,10 +395,7 @@ namespace LicenseManager.Test
 
             using (AutoResetEvent waitHandle = new AutoResetEvent(false))
             {
-                target.GetStatusCompleted += (s, e) =>
-                {
-                    waitHandle.Set();
-                };
+                target.GetStatusCompleted += (s, e) => waitHandle.Set();
 
                 target.GetStatusAsync(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")), 2500);
 
@@ -425,10 +422,7 @@ namespace LicenseManager.Test
 
             using (AutoResetEvent waitHandle = new AutoResetEvent(false))
             {
-                target.GetStatusCompleted += (s, e) =>
-                {
-                    waitHandle.Set();
-                };
+                target.GetStatusCompleted += (s, e) => waitHandle.Set();
 
                 target.GetStatusAsync();
 

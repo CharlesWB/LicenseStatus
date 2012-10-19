@@ -3,18 +3,42 @@
 // Refer to License.cs for the full copyright notice.
 // </copyright>
 
+#region Notes
+// Name Host Display Phrase:
+//
+// The part of the user information which is the host, name and display will
+// internally be referred to as the user's identity.
+// The reason for doing this is because I was tired of naming things nameHostDisplay.
+//
+// Spaces in Name, Host, Display:
+//
+// When spaces are in name, host, or display then there is no definite way to
+// determine which words belong to which parts. DetermineIdentityPattern
+// contains the rules which attempt to parse the words in this situation.
+// One rule is the assumption that the host will never contain a space. While
+// probably true, it may not be technically true.
+//
+// Possible Enhancements
+//
+// The pattern for a known host is essentially repeated in DetermineIdentityPattern
+// and KnownHostSet_HostAdded.
+//
+// The Where query is very similar in DetermineIdentityPattern and KnownHostSet_HostAdded.
+#endregion
+
 namespace CWBozarth.LicenseManager
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
 
     /// <summary>
     /// Represents a user of a feature.
     /// </summary>
-    public class User
+    public class User : ObservableObject
     {
         /// <summary>
         /// Stores the name.
@@ -82,6 +106,16 @@ namespace CWBozarth.LicenseManager
         private int entryLength;
 
         /// <summary>
+        /// Stores the identity text.
+        /// </summary>
+        private string identity;
+
+        /// <summary>
+        /// Stores <see cref="identity"/> as an array of words.
+        /// </summary>
+        private string[] identityWords;
+
+        /// <summary>
         /// Initializes a new instance of the User class.
         /// </summary>
         /// <remarks>
@@ -122,6 +156,15 @@ namespace CWBozarth.LicenseManager
         public string Name
         {
             get { return this.name; }
+
+            private set
+            {
+                if (value != this.name)
+                {
+                    this.name = value;
+                    this.NotifyPropertyChanged("Name");
+                }
+            }
         }
 
         /// <summary>
@@ -130,6 +173,15 @@ namespace CWBozarth.LicenseManager
         public string Host
         {
             get { return this.host; }
+
+            private set
+            {
+                if (value != this.host)
+                {
+                    this.host = value;
+                    this.NotifyPropertyChanged("Host");
+                }
+            }
          }
 
         /// <summary>
@@ -138,6 +190,15 @@ namespace CWBozarth.LicenseManager
         public string Display
         {
             get { return this.display; }
+
+            private set
+            {
+                if (value != this.display)
+                {
+                    this.display = value;
+                    this.NotifyPropertyChanged("Display");
+                }
+            }
         }
 
         /// <summary>
@@ -268,13 +329,10 @@ namespace CWBozarth.LicenseManager
             // user001 comp001 comp001 (v22.0) (SERVER001/27001 3861), start Tue 3/17 7:13
             // user005 comp005 comp005 (v22.0) (SERVER001/27001 601), start Tue 3/17 10:18 (linger: 14437140)
             // user011 comp011 comp011 (v22.0) (SERVER001/27001 2209), start Fri 3/17 13:21, 2 licenses
-            Regex userExpression = new Regex(@"(?<name>\S+) (?<host>\S+) (?<display>\S+) \((?<version>\S+)\) \((?<server>\S+)/(?<port>\d+) (?<handle>\d+)\), start (?<time>\w+ \d+/\d+ \d+:\d+)(, (?<inuse>\d+) licenses)?( \(linger: (?<linger>\d+))?", RegexOptions.Multiline);
+            Regex userExpression = new Regex(@"(?<identity>.+) \((?<version>\S+)\) \((?<server>\S+)/(?<port>\d+) (?<handle>\d+)\), start (?<time>\w+ \d+/\d+ \d+:\d+)(, (?<inuse>\d+) licenses)?( \(linger: (?<linger>\d+))?", RegexOptions.Multiline);
             Match match = userExpression.Match(this.report);
             if (match.Success)
             {
-                this.name = match.Groups["name"].Value;
-                this.host = match.Groups["host"].Value;
-                this.display = match.Groups["display"].Value;
                 this.version = match.Groups["version"].Value;
                 this.server = match.Groups["server"].Value;
                 this.port = int.Parse(match.Groups["port"].Value, CultureInfo.InvariantCulture);
@@ -318,6 +376,126 @@ namespace CWBozarth.LicenseManager
                 {
                     this.linger = TimeSpan.Zero;
                 }
+
+                // The following is inside the Success just so that it only parses if the overall is success.
+
+                this.identity = match.Groups["identity"].Value;
+
+                // If this has already been populated then there is no need to do it again
+                // since the identity does not change once set.
+                if (this.identityWords == null)
+                {
+                    this.identityWords = this.identity.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                }
+
+                this.ParseIdentity(this.DetermineIdentityPattern());
+            }
+        }
+
+        /// <summary>
+        /// Parses the user's identity into name, host and display.
+        /// </summary>
+        /// <param name="pattern">The Regex pattern to match against.</param>
+        private void ParseIdentity(string pattern)
+        {
+            Regex identityExpression = new Regex(pattern);
+            Match match = identityExpression.Match(this.identity);
+            if (match.Success)
+            {
+                this.Name = match.Groups["name"].Value;
+                this.Host = match.Groups["host"].Value;
+                this.Display = match.Groups["display"].Value;
+            }
+        }
+
+        /// <summary>
+        /// Determine the Regex pattern used to parse the name, host, and display
+        /// parts of the user report.
+        /// </summary>
+        /// <remarks>
+        /// The pattern contains match groups named, "name", "host" and "display".
+        /// </remarks>
+        /// <returns>The Regex pattern for the name, host and display.</returns>
+        private string DetermineIdentityPattern()
+        {
+            // The default pattern is simply three words.
+            string namePattern = @"\S+";
+            string hostPattern = @"\S+";
+            string displayPattern = @"\S+";
+
+            if (this.identityWords.Length == 3)
+            {
+                KnownHostSet.Instance.Add(this.identityWords[1]);
+            }
+
+            if (this.identityWords.Length > 3)
+            {
+                // Determine if a known host is one of the identity words. But only if the
+                // host is not the first or last word which has to be name and display.
+                string knownHost = this.identityWords.Where((w, index) =>
+                    KnownHostSet.Instance.IsKnown(w) && index != 0 && index != this.identityWords.Length - 1).FirstOrDefault();
+
+                if (!string.IsNullOrEmpty(knownHost))
+                {
+                    // When a known host is found in the words then assume everything before it is
+                    // the user and everything after is the display, regardless of spaces.
+                    // This pattern is repeated in KnownHostSet_HostAdded.
+                    namePattern = ".+";
+                    hostPattern = knownHost;
+                    displayPattern = ".+";
+                }
+                else
+                {
+                    // When the host is not known then choose an alternate arrangement of words.
+
+                    // Assumes the host never contains a space.
+
+                    // When the last word begins with a digit or when it is a single character
+                    // assume that it belongs with the previous word to define the display.
+                    // Also assume that the name may be multiple words in this case.
+                    if (char.IsDigit(this.identityWords.Last().First()) || this.identityWords.Last().Length == 1)
+                    {
+                        namePattern = ".+";
+                        displayPattern = string.Format(@"\S+ {0}", this.identityWords.Last());
+                    }
+                    else
+                    {
+                        // When no other alternate arrangement is found then assume the extra words
+                        // belong to the user name.
+                        namePattern = ".+";
+                    }
+
+                    // We only need to listen for new hosts if the host could not be determined
+                    // for certain.
+                    KnownHostSet.Instance.HostAdded += this.KnownHostSet_HostAdded;
+                }
+            }
+
+            return string.Format(@"(?<name>{0}) (?<host>{1}) (?<display>{2})", namePattern, hostPattern, displayPattern);
+        }
+
+        /// <summary>
+        /// Occurs when a new host has been added to the known host collection.
+        /// </summary>
+        /// <param name="sender">The object where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void KnownHostSet_HostAdded(object sender, HostAddedEventArgs e)
+        {
+            // Determine if the new host is one of the identity words. But only if the
+            // host is not the first or last word which has to be name and display.
+            string knownHost = this.identityWords.Where((w, index) =>
+                w == e.Host && index != 0 && index != this.identityWords.Length - 1).FirstOrDefault();
+
+            if (!string.IsNullOrEmpty(knownHost))
+            {
+                // If the host is known then we do not need to listen for new hosts.
+                //// If this is the first time the user was parsed then this will do nothing.
+                //// This will have an effect only when this is the second pass and a new host
+                //// was reported that is in the words.
+                KnownHostSet.Instance.HostAdded -= this.KnownHostSet_HostAdded;
+
+                // This pattern is repeated in DetermineIdentityPattern.
+                this.ParseIdentity(string.Format(@"(?<name>.+) (?<host>{0}) (?<display>.+)", knownHost));
             }
         }
     }

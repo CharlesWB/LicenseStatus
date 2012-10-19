@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System;
 
+[assembly: InternalsVisibleTo("LicenseManager.Test")]
 [assembly: CLSCompliantAttribute(true)]
 
 // General Information about an assembly is controlled through the following 

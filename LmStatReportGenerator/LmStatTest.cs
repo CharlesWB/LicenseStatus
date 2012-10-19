@@ -115,11 +115,68 @@ namespace LmStatReportGenerator
             // in lmutil.exe. Based on the text within lmutil.exe the word "licenses" is always plural.
             // This is also an example where the quantity used does not match the unique user/display count.
             // I'm assuming multiple licenses can be borrowed this way.
-            this.WriteFeature("Feature_Other_User_Formats", 9, 8);
+            this.WriteFeature("User_Multiple_Checkouts", 9, 8);
             this.WriteLine("    user011 comp011 comp011 (v22.0) (SERVER001/{0} 2209), start {1:ddd M/d} 13:21, 2 licenses", this.ServerPort, this.ReportDate);
             this.WriteLine("    user012 comp012 comp012 (v22.0) (SERVER001/{0} 2201), start {1:ddd M/d} 9:31", this.ServerPort, this.ReportDate);
             this.WriteLine("    user013 comp013 comp013 (v22.0) (SERVER001/{0} 2200), start {1:ddd M/d} 11:23, 3 licenses", this.ServerPort, this.ReportDate);
             this.WriteLine("    user014 comp014 comp014 (v22.0) (SERVER001/{0} 2219), start {1:ddd M/d} 10:15, 2 licenses (linger: 14437140)", this.ServerPort, this.ReportDate);
+            this.WriteLine();
+
+            // Users and/or displays that contain spaces. All of these would be parsed
+            // correctly during the first attempt.
+            // Unit testing is done by expecting the first letter to be u, h or d.
+            this.WriteFeature("Users_With_Spaces_Auto", 15, 15);
+            this.WriteUser("user100 host100 display100", 100, "10:21");
+            this.WriteUser("user101 host100 display101", 100, "10:21");
+
+            this.WriteUser("user 110 host110 display110", 100, "10:21");
+            this.WriteUser("user111 host111 display 111", 100, "10:21");
+            this.WriteUser("user112 host112 display112 A", 100, "10:21");
+            this.WriteUser("user 113 host113 display113 A", 100, "10:21");
+            this.WriteUser("user 114 host114 display 114A", 100, "10:21");
+            this.WriteUser("user A B 115 host115 display115", 100, "10:21");
+
+            this.WriteUser("user200 host200 display200", 100, "10:21");
+            this.WriteUser("user201 host200 display201", 100, "10:21");
+            this.WriteUser("user 202 host200 display202", 100, "10:21");
+            this.WriteUser("user203 host200 display A203", 100, "10:21");
+            this.WriteUser("user 204 host200 display A204", 100, "10:21");
+            this.WriteUser("user A B205 host200 display A B205", 100, "10:21");
+            this.WriteUser("user  ABC  DE F206 host206 display206", 100, "10:21");
+            this.WriteLine();
+
+            // Additional user identities with spaces that will all parse correctly
+            // but cannot easily be automatically tested.
+            this.WriteFeature("Users_With_Spaces_Other", 8, 8);
+            this.WriteUser("user300 host300 host300", 100, "10:21");
+            this.WriteUser("user 301 host300 host300", 100, "10:21");
+            this.WriteUser("user 302 host300 host3000.0", 100, "10:21");
+            this.WriteUser("user 303 host303 host300", 100, "10:21");
+            this.WriteUser("host300 host304 host 304", 100, "10:21");
+            this.WriteUser("host300 host300 host 305", 100, "10:21");
+            this.WriteUser("host300 A host300 B host300", 100, "10:21");
+            this.WriteUser("host300 host300 host300 host300", 100, "10:21");
+            this.WriteLine();
+
+            // User identities which are known to not parse correctly.
+            this.WriteFeature("Users_With_Spaces_Fail", 1, 1);
+            this.WriteUser("user 400 host400 display AB400", 100, "10:21");
+            this.WriteLine();
+
+            // Users identities which will originally be incorrect, but will
+            // become correct when the host becomes known.
+            this.WriteFeature("Users_With_Spaces_ChangedEvent", 4, 4);
+            this.WriteUser("user 500 host500 display500", 100, "10:21");
+            this.WriteUser("user501 host500 display A501", 100, "10:21");
+            this.WriteUser("user 502 host500 display A502", 100, "10:21");
+            this.WriteUser("user503 host500 display503", 100, "10:21");
+            this.WriteLine();
+            
+            // User identity which is originally incorrect, but then changed when
+            // lmstat-nx is parsed. The host is from lmstat-nx.
+            this.WriteFeature("Users_With_Spaces_ChangedEvent_Other", 1, 1);
+            this.WriteUser("user 504 CAD9695D display A504", 100, "10:21");
+            this.WriteLine();
         }
 
         /// <summary>
