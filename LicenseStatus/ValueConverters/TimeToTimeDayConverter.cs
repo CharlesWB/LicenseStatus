@@ -34,27 +34,25 @@ namespace LicenseStatus
 
             if (value is DateTime)
             {
-                DateTime time;
-                if (DateTime.TryParse(value.ToString(), out time))
+                DateTime time = (DateTime)value;
+
+                if (time != DateTime.MinValue)
                 {
-                    if (time != DateTime.MinValue)
+                    if (time.Date == DateTime.Today.Date)
                     {
-                        if (time.Date == DateTime.Today.Date)
-                        {
-                            result = time.ToShortTimeString();
-                        }
-                        else if (time.Date == DateTime.Today.Date.AddDays(1))
-                        {
-                            result = string.Format(CultureInfo.InvariantCulture, "{0} Tomorrow", time.ToShortTimeString());
-                        }
-                        else if (time.Date == DateTime.Today.Date.AddDays(-1))
-                        {
-                            result = string.Format(CultureInfo.InvariantCulture, "{0} Yesterday", time.ToShortTimeString());
-                        }
-                        else
-                        {
-                            result = string.Format(CultureInfo.InvariantCulture, "{0} on {1}", time.ToShortTimeString(), time.Date.ToShortDateString());
-                        }
+                        result = time.ToShortTimeString();
+                    }
+                    else if (time.Date == DateTime.Today.Date.AddDays(1))
+                    {
+                        result = string.Format(CultureInfo.InvariantCulture, "{0} Tomorrow", time.ToShortTimeString());
+                    }
+                    else if (time.Date == DateTime.Today.Date.AddDays(-1))
+                    {
+                        result = string.Format(CultureInfo.InvariantCulture, "{0} Yesterday", time.ToShortTimeString());
+                    }
+                    else
+                    {
+                        result = string.Format(CultureInfo.InvariantCulture, "{0} on {1}", time.ToShortTimeString(), time.Date.ToShortDateString());
                     }
                 }
             }

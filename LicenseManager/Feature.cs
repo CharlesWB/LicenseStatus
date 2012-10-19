@@ -151,7 +151,16 @@ namespace CWBozarth.LicenseManager
         {
             get
             {
-                return this.users.Where(u => u.IsBorrowed).Sum(u => u.QuantityUsed);
+                int result = 0;
+                foreach (User user in this.users)
+                {
+                    if (user.IsBorrowed)
+                    {
+                        result += user.QuantityUsed;
+                    }
+                }
+
+                return result;
             }
         }
 

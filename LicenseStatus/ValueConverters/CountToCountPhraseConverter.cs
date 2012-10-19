@@ -56,7 +56,7 @@ namespace LicenseStatus
                         break;
                 }
 
-                result = string.Format(CultureInfo.InvariantCulture, "{0} {1}", count, description);
+                result = count.ToString() + " " + description;
             }
 
             return result;

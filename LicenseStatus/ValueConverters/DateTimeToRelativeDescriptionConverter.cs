@@ -28,80 +28,78 @@ namespace LicenseStatus
 
             if (value is DateTime)
             {
-                DateTime time;
-                if (DateTime.TryParse(value.ToString(), out time))
+                DateTime time = (DateTime)value;
+
+                if (time != DateTime.MinValue)
                 {
-                    if (time != DateTime.MinValue)
+                    DateTime currentDate = DateTime.Today;
+
+                    //// Used for testing relative dates using the test status file.
+                    //// currentDate = new DateTime(2009, 03, 17, 11, 15, 0);
+
+                    if (time < currentDate)
                     {
-                        DateTime currentDate = DateTime.Today;
+                        result = "A long time ago";
+                    }
 
-                        //// Used for testing relative dates using the test status file.
-                        //// currentDate = new DateTime(2009, 03, 17, 11, 15, 0);
+                    if (time > currentDate)
+                    {
+                        result = "Sometime in the future";
+                    }
 
-                        if (time < currentDate)
-                        {
-                            result = "A long time ago";
-                        }
+                    if (time.Year == currentDate.Year && time.Date > currentDate)
+                    {
+                        result = "Later this year";
+                    }
 
-                        if (time > currentDate)
-                        {
-                            result = "Sometime in the future";
-                        }
+                    if (time.Year == currentDate.Year && time.Date < currentDate)
+                    {
+                        result = "Earlier this year";
+                    }
 
-                        if (time.Year == currentDate.Year && time.Date > currentDate)
-                        {
-                            result = "Later this year";
-                        }
+                    if (DateTimeToRelativeDescriptionConverter.BeginningOfMonth(time) == DateTimeToRelativeDescriptionConverter.BeginningOfMonth(currentDate) && time.Date > currentDate)
+                    {
+                        result = "Later this month";
+                    }
 
-                        if (time.Year == currentDate.Year && time.Date < currentDate)
-                        {
-                            result = "Earlier this year";
-                        }
+                    if (DateTimeToRelativeDescriptionConverter.BeginningOfMonth(time) == DateTimeToRelativeDescriptionConverter.BeginningOfMonth(currentDate) && time.Date < currentDate)
+                    {
+                        result = "Earlier this month";
+                    }
 
-                        if (DateTimeToRelativeDescriptionConverter.BeginningOfMonth(time) == DateTimeToRelativeDescriptionConverter.BeginningOfMonth(currentDate) && time.Date > currentDate)
-                        {
-                            result = "Later this month";
-                        }
+                    if (DateTimeToRelativeDescriptionConverter.BeginningOfWeek(time) == DateTimeToRelativeDescriptionConverter.BeginningOfWeek(currentDate).AddDays(7))
+                    {
+                        result = "Next week";
+                    }
 
-                        if (DateTimeToRelativeDescriptionConverter.BeginningOfMonth(time) == DateTimeToRelativeDescriptionConverter.BeginningOfMonth(currentDate) && time.Date < currentDate)
-                        {
-                            result = "Earlier this month";
-                        }
+                    if (DateTimeToRelativeDescriptionConverter.BeginningOfWeek(time) == DateTimeToRelativeDescriptionConverter.BeginningOfWeek(currentDate).AddDays(-7))
+                    {
+                        result = "Last week";
+                    }
 
-                        if (DateTimeToRelativeDescriptionConverter.BeginningOfWeek(time) == DateTimeToRelativeDescriptionConverter.BeginningOfWeek(currentDate).AddDays(7))
-                        {
-                            result = "Next week";
-                        }
+                    if (DateTimeToRelativeDescriptionConverter.BeginningOfWeek(time) == DateTimeToRelativeDescriptionConverter.BeginningOfWeek(currentDate) && time.Date > currentDate)
+                    {
+                        result = "Later this week";
+                    }
 
-                        if (DateTimeToRelativeDescriptionConverter.BeginningOfWeek(time) == DateTimeToRelativeDescriptionConverter.BeginningOfWeek(currentDate).AddDays(-7))
-                        {
-                            result = "Last week";
-                        }
+                    if (DateTimeToRelativeDescriptionConverter.BeginningOfWeek(time) == DateTimeToRelativeDescriptionConverter.BeginningOfWeek(currentDate) && time.Date < currentDate)
+                    {
+                        result = "Earlier this week";
+                    }
 
-                        if (DateTimeToRelativeDescriptionConverter.BeginningOfWeek(time) == DateTimeToRelativeDescriptionConverter.BeginningOfWeek(currentDate) && time.Date > currentDate)
-                        {
-                            result = "Later this week";
-                        }
+                    if (time.Date == currentDate.Date.AddDays(1))
+                    {
+                        result = "Tomorrow";
+                    }
 
-                        if (DateTimeToRelativeDescriptionConverter.BeginningOfWeek(time) == DateTimeToRelativeDescriptionConverter.BeginningOfWeek(currentDate) && time.Date < currentDate)
-                        {
-                            result = "Earlier this week";
-                        }
+                    if (time.Date == currentDate.Date.AddDays(-1))
+                    {
+                        result = "Yesterday";
+                    }
 
-                        if (time.Date == currentDate.Date.AddDays(1))
-                        {
-                            result = "Tomorrow";
-                        }
-
-                        if (time.Date == currentDate.Date.AddDays(-1))
-                        {
-                            result = "Yesterday";
-                        }
-
-                        if (time.Date == currentDate.Date)
-                        {
-                            result = "Today";
-                        }
+                    if (time.Date == currentDate.Date)
+                    {
+                        result = "Today";
                     }
                 }
             }
