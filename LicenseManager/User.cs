@@ -155,7 +155,10 @@ namespace CWBozarth.LicenseManager
         /// </summary>
         public string Name
         {
-            get { return this.name; }
+            get
+            {
+                return this.name;
+            }
 
             private set
             {
@@ -172,7 +175,10 @@ namespace CWBozarth.LicenseManager
         /// </summary>
         public string Host
         {
-            get { return this.host; }
+            get
+            {
+                return this.host;
+            }
 
             private set
             {
@@ -189,7 +195,10 @@ namespace CWBozarth.LicenseManager
         /// </summary>
         public string Display
         {
-            get { return this.display; }
+            get
+            { 
+                return this.display;
+            }
 
             private set
             {
@@ -377,7 +386,8 @@ namespace CWBozarth.LicenseManager
                     this.linger = TimeSpan.Zero;
                 }
 
-                // The following is inside the Success just so that it only parses if the overall is success.
+                //// The following section is inside the Success just so that it only parses
+                //// if the overall is success. It does not have to be inside.
 
                 this.identity = match.Groups["identity"].Value;
 
@@ -395,7 +405,7 @@ namespace CWBozarth.LicenseManager
         /// <summary>
         /// Parses the user's identity into name, host and display.
         /// </summary>
-        /// <param name="pattern">The Regex pattern to match against.</param>
+        /// <param name="pattern">The regular expression pattern to match against.</param>
         private void ParseIdentity(string pattern)
         {
             Regex identityExpression = new Regex(pattern);
@@ -409,13 +419,13 @@ namespace CWBozarth.LicenseManager
         }
 
         /// <summary>
-        /// Determine the Regex pattern used to parse the name, host, and display
+        /// Determine the regular expression pattern used to parse the name, host, and display
         /// parts of the user report.
         /// </summary>
         /// <remarks>
         /// The pattern contains match groups named, "name", "host" and "display".
         /// </remarks>
-        /// <returns>The Regex pattern for the name, host and display.</returns>
+        /// <returns>The regular expression pattern for the name, host and display.</returns>
         private string DetermineIdentityPattern()
         {
             // The default pattern is simply three words.
