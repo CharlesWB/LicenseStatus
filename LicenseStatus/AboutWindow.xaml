@@ -17,6 +17,8 @@
     </Window.CommandBindings>
     
     <Window.Resources>
+        <local:VersionFormatConverter x:Key="VersionFormatConverter" />
+
         <!-- Used to access the LicenseStatus assembly's information. -->
         <!-- Using GetExecutingAssembly returns PresentationFramework.dll instead of the application's assembly. -->
         <ObjectDataProvider x:Key="ApplicationAssembly" ObjectType="{x:Type sys:Reflection.Assembly}" MethodName="GetAssembly">
@@ -45,10 +47,7 @@
         </LinearGradientBrush>
 
         <!-- Used as the background of the information area. -->
-        <LinearGradientBrush x:Key="InformationBackground" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#CDF" Offset="0" />
-            <GradientStop Color="Transparent" Offset="1" />
-        </LinearGradientBrush>
+        <SolidColorBrush x:Key="InformationBackground" Color="#F6F6F6" />
 
     </Window.Resources>
     
@@ -67,10 +66,9 @@
 
         <Border Padding="10" Background="{StaticResource InformationBackground}" Grid.Row="1">
             <StackPanel>
-                <TextBlock Text="{Binding Source={StaticResource ApplicationAssembly}, Path=ManifestModule.Name}" />
                 <TextBlock>
-                    <TextBlock Text="Version" />
-                    <TextBlock Text="{Binding Source={StaticResource ApplicationAssemblyName}, Path=Version}" />
+                    <TextBlock Text="{Binding Source={x:Static local:AboutWindow.AssemblyTitle}}" />
+                    <TextBlock Text="{Binding Source={StaticResource ApplicationAssemblyName}, Path=Version, Converter={StaticResource VersionFormatConverter}, StringFormat={}v{0}}" />
                 </TextBlock>
                 
                 <TextBlock Text="{Binding Source={x:Static local:AboutWindow.AssemblyCompany}}" Margin="0,5,0,0" />
@@ -82,15 +80,24 @@
                     <Hyperlink NavigateUri="http://licensestatus.sourceforge.net" RequestNavigate="Hyperlink_RequestNavigate">http://licensestatus.sourceforge.net</Hyperlink>
                 </TextBlock>
                 
-                <!-- Display the LicenseManager assembly's information. -->
+                <!-- Display the assembly's component information. -->
                 <TextBlock Margin="0,15,0,0" Text="Components:" />
-                <TextBlock Margin="10,0,0,0">
-                    <TextBlock Text="{Binding Source={StaticResource LicenseManagerAssembly}, Path=ManifestModule.Name}" />
-                    <TextBlock>
-                        <TextBlock Text="Version" />
-                        <TextBlock Text="{Binding Source={StaticResource LicenseManagerAssemblyName}, Path=Version}" />
-                    </TextBlock>
-                </TextBlock>
+                <Grid Margin="10,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Text="{Binding Source={StaticResource ApplicationAssembly}, Path=ManifestModule.Name}" />
+                    <TextBlock Grid.Column="1" Margin="7,0,0,0" Text="{Binding Source={StaticResource ApplicationAssemblyName}, Path=Version, StringFormat={}Version {0}}" />
+                    
+                    <TextBlock Grid.Row="1" Text="{Binding Source={StaticResource LicenseManagerAssembly}, Path=ManifestModule.Name}" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Margin="7,0,0,0" Text="{Binding Source={StaticResource LicenseManagerAssemblyName}, Path=Version, StringFormat={}Version {0}}" />
+                </Grid>
                 
                 <Button Content="OK" IsDefault="True" IsCancel="True" HorizontalAlignment="Right" Width="72" Command="ApplicationCommands.Close" Margin="0,20,0,0" />
             </StackPanel>
