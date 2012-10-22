@@ -3,11 +3,6 @@
 // Refer to LicenseManager's License.cs for the full copyright notice.
 // </copyright>
 
-//Note: The license file was setup with ugslmd using gateway and assemblies.
-//uglmd used gateway and drafting. Yet this report shows assemblies and
-//drafting on both. Possibly because both NX versions use same name?
-//combine.log and combine.lic show other info.
-
 // In the test there was no blank line between daemon UP and "Feature usage info:".
 // The vendor daemon UP began with different number of spaces.
 // The server UP began with a space.
