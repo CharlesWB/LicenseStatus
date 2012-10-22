@@ -48,7 +48,7 @@ namespace CWBozarth.LicenseManager
     /// The utility program is defined as a singleton because there is currently no need for
     /// a different program for each license.
     /// </remarks>
-    public sealed class UtilityProgram : INotifyPropertyChanged, IDataErrorInfo
+    public sealed class UtilityProgram : ObservableObject, IDataErrorInfo
     {
         /// <summary>
         /// Stores the instance of this singleton class.
@@ -66,11 +66,6 @@ namespace CWBozarth.LicenseManager
         private UtilityProgram()
         {
         }
-
-        /// <summary>
-        /// Raised when a property on this object has a new value.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Gets the instance of this singleton class.
@@ -157,18 +152,6 @@ namespace CWBozarth.LicenseManager
                 }
 
                 return result;
-            }
-        }
-
-        /// <summary>
-        /// Raises this object's PropertyChanged event.
-        /// </summary>
-        /// <param name="propertyName">The property that has a new value.</param>
-        private void NotifyPropertyChanged(string propertyName)
-        {
-            if (this.PropertyChanged != null)
-            {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }
