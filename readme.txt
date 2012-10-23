@@ -1,7 +1,9 @@
 License Status Release Notes
 
-TBD v3.6
-- Changed background color from a gradient to a solid faint gray color.
+October 23, 2012 v3.6
+- Add support for user names and display that have spaces.
+- Change About window to display the program version in major.minor format.
+- Change background color from a gradient to a solid faint gray color.
 
 September 18, 2012 v3.5
 - Added support for situations where the same user/host/display can check out more than one license.
