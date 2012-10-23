@@ -1,7 +1,7 @@
 License Status Release Notes
 
 October 23, 2012 v3.6
-- Add support for user names and display that have spaces.
+- Add support for spaces within a user's name or display.
 - Change About window to display the program version in major.minor format.
 - Change background color from a gradient to a solid faint gray color.
 
