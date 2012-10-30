@@ -20,8 +20,6 @@ namespace LicenseManager.Test
     [TestClass]
     public class FeatureTest
     {
-        private static TestFiles testFiles = new TestFiles();
-
         private static int indexOffset;
 
         private TestContext testContextInstance;
@@ -85,8 +83,9 @@ namespace LicenseManager.Test
         [TestMethod]
         public void Feature_Empty_PropertyReturnsAreCorrect()
         {
-            License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License license = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
+            license.GetStatus();
 
             string expectedName = "Empty_Feature_One_License";
             Feature target = license.Features.First(f => f.Name == expectedName);
@@ -110,8 +109,9 @@ namespace LicenseManager.Test
         [TestMethod]
         public void Feature_Used_PropertyReturnsAreCorrect()
         {
-            License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License license = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
+            license.GetStatus();
 
             string expectedName = "Used_Feature_One_License";
             Feature target = license.Features.First(f => f.Name == expectedName);
@@ -135,8 +135,9 @@ namespace LicenseManager.Test
         [TestMethod]
         public void Feature_Borrowed_PropertyReturnsAreCorrect()
         {
-            License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License license = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
+            license.GetStatus();
 
             string expectedName = "Feature_With_Borrow";
             Feature target = license.Features.First(f => f.Name == expectedName);
@@ -159,8 +160,9 @@ namespace LicenseManager.Test
         [TestMethod]
         public void Feature_Error_PropertyReturnsAreCorrect()
         {
-            License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License license = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
+            license.GetStatus();
 
             string expectedName = "Feature_With_Error";
             Feature target = license.Features.First(f => f.Name == expectedName);
@@ -184,8 +186,9 @@ namespace LicenseManager.Test
         [TestMethod]
         public void Feature_NonWordCharacters_PropertyReturnsAreCorrect()
         {
-            License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License license = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
+            license.GetStatus();
 
             string expectedName = "Feature_Non-Word.Characters";
             Feature target = license.Features.First(f => f.Name == expectedName);
@@ -208,8 +211,9 @@ namespace LicenseManager.Test
         [TestMethod]
         public void Feature_UserMultipleCheckouts_PropertyReturnsAreCorrect()
         {
-            License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License license = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
+            license.GetStatus();
 
             string expectedName = "User_Multiple_Checkouts";
             Feature target = license.Features.First(f => f.Name == expectedName);

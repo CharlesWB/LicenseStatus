@@ -27,8 +27,6 @@ namespace LicenseManager.Test
     [TestClass]
     public class LicenseTest
     {
-        private static TestFiles testFiles = new TestFiles();
-
         private static CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
 
         private TestContext testContextInstance;
@@ -149,14 +147,14 @@ namespace LicenseManager.Test
             Assert.IsFalse(target.GetStatusCanExecute, "GetStatusCanExecute incorrect when only Host is valid.");
 
             target.Host = null;
-            UtilityProgram.Instance.Executable = new FileInfo(Path.Combine(testFiles.Path, "lmutil.exe"));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
             Assert.IsFalse(target.GetStatusCanExecute, "GetStatusCanExecute incorrect when only Executable is valid.");
 
             target.Port = 1;
             target.Host = "localhost";
             Assert.IsTrue(target.GetStatusCanExecute, "GetStatusCanExecute incorrect when all properties are valid.");
 
-            UtilityProgram.Instance.Executable = new FileInfo(Path.Combine(testFiles.Path, "Abc123_lmutil.exe"));
+            UtilityProgram.Instance.Executable = new FileInfo("Abc123_lmutil.exe");
             Assert.IsFalse(target.GetStatusCanExecute, "GetStatusCanExecute incorrect when only Executable is invalid.");
         }
 
@@ -208,33 +206,25 @@ namespace LicenseManager.Test
         }
 
         [TestMethod]
-        public void License_GetStatusFromFile_CompletesWithoutErrors()
+        public void License_GetStatusFromTestUsingDifferentCultures_CompletesWithoutErrors()
         {
-            License target = new License();
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
 
-            foreach (var file in Directory.EnumerateFiles(testFiles.Path, "lmstat-*.log", SearchOption.TopDirectoryOnly))
-            {
-                target.GetStatus(new FileInfo(file));
-            }
-        }
-
-        [TestMethod]
-        public void License_GetStatusFromTestFileUsingDifferentCultures_CompletesWithoutErrors()
-        {
             foreach (CultureInfo culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
             {
                 Thread.CurrentThread.CurrentCulture = culture;
 
-                License target = new License();
-                target.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+                License target = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
+                target.GetStatus();
             }
         }
 
         [TestMethod]
-        public void License_GetStatusFromTestFile_PropertyReturnsAreCorrect()
+        public void License_GetStatusFromTest_PropertyReturnsAreCorrect()
         {
-            License target = new License();
-            target.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License target = new License() { Port = 27001, Host = "LmStatTest" };
+            target.GetStatus();
 
             DateTime expectedTime = DateTime.Today.AddHours(10).AddMinutes(43);
             Assert.AreEqual(expectedTime, target.Time);
@@ -256,14 +246,16 @@ namespace LicenseManager.Test
         }
 
         [TestMethod]
-        public void License_GetStatusFromTestFileUsingDifferentCultures_PropertyReturnsAreCorrect()
+        public void License_GetStatusFromTestUsingDifferentCultures_PropertyReturnsAreCorrect()
         {
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+
             foreach (CultureInfo culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
             {
                 Thread.CurrentThread.CurrentCulture = culture;
 
-                License target = new License();
-                target.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+                License target = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
+                target.GetStatus();
 
                 DateTime expectedTime = DateTime.Today.AddHours(10).AddMinutes(43);
                 Assert.AreEqual(expectedTime, target.Time);
@@ -286,10 +278,11 @@ namespace LicenseManager.Test
         }
 
         [TestMethod]
-        public void License_GetStatusFromFile_PropertyReturnsAreCorrect()
+        public void License_GetStatusFromNX_PropertyReturnsAreCorrect()
         {
-            License target = new License();
-            target.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-nx.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License target = new License() { Port = 27001, Host = "LmStatNX" };
+            target.GetStatus();
 
             DateTime expectedTime = DateTime.Today.AddHours(10).AddMinutes(43);
             Assert.AreEqual(expectedTime, target.Time);
@@ -311,11 +304,14 @@ namespace LicenseManager.Test
         }
 
         [TestMethod]
-        public void License_SecondGetStatusFromFile_PropertyReturnsAreCorrect()
+        public void License_SecondGetStatus_PropertyReturnsAreCorrect()
         {
-            License target = new License();
-            target.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-nx.log")));
-            target.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-acad.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License target = new License() { Port = 27001, Host = "LmStatNX" };
+            target.GetStatus();
+            target.Port = 27005;
+            target.Host = "LmStatAcad";
+            target.GetStatus();
 
             DateTime expectedTime = DateTime.Today.AddHours(10).AddMinutes(43);
             Assert.AreEqual(expectedTime, target.Time);
@@ -337,10 +333,11 @@ namespace LicenseManager.Test
         }
 
         [TestMethod]
-        public void License_GetStatusFromErrorsFile_PropertyReturnsAreCorrect()
+        public void License_GetStatusFromErrors_PropertyReturnsAreCorrect()
         {
-            License target = new License();
-            target.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-errors.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License target = new License() { Port = 7601, Host = "LmStatErrors" };
+            target.GetStatus();
 
             DateTime expectedTime = new DateTime(2008, 11, 20, 15, 42, 0);
             Assert.AreEqual(expectedTime, target.Time);
@@ -362,10 +359,11 @@ namespace LicenseManager.Test
         }
 
         [TestMethod]
-        public void License_GetStatusFromConnectFile_PropertyReturnsAreCorrect()
+        public void License_GetStatusFromConnect_PropertyReturnsAreCorrect()
         {
-            License target = new License();
-            target.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-connect.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License target = new License() { Port = 7601, Host = "LmStatConnect" };
+            target.GetStatus();
 
             DateTime expectedTime = DateTime.Today.AddHours(14).AddMinutes(25);
             Assert.AreEqual(expectedTime, target.Time);
@@ -387,22 +385,23 @@ namespace LicenseManager.Test
         }
 
         [TestMethod]
-        public void License_GetStatusAsyncFromFile_CompletesWithoutErrors()
+        public void License_GetStatusAsyncMock_CompletesWithoutErrors()
         {
             //// http://stackoverflow.com/questions/1174702/is-there-a-way-to-unit-test-an-async-method
 
-            License target = new License();
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License target = new License() { Port = 27001, Host = "LmStatTest" };
 
             using (AutoResetEvent waitHandle = new AutoResetEvent(false))
             {
                 target.GetStatusCompleted += (s, e) => waitHandle.Set();
 
-                target.GetStatusAsync(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")), 2500);
+                target.GetStatusAsync();
 
                 Assert.IsTrue(target.IsBusy);
                 Assert.IsFalse(target.GetStatusCanExecute);
 
-                if (!waitHandle.WaitOne(5000, false))
+                if (!waitHandle.WaitOne(5100, false))
                 {
                     Assert.Fail("Test timed out.");
                 }
@@ -415,10 +414,16 @@ namespace LicenseManager.Test
         [TestMethod]
         public void License_GetStatusAsync_CompletesWithoutErrors()
         {
+            // This code also exists in UtilityProgramtest.MyClassInitialize.
+            // Assumes the lmutil is in the Solution folder and assumes this is three folders above the assembly.
+            // lmutil.exe is not included in the solution by default. It must be manually placed in the Solution folder.
+            string path = System.IO.Path.GetDirectoryName(typeof(UtilityProgramTest).Assembly.Location);
+            path = System.IO.Path.GetFullPath(path + @"\..\..\..\");
+            UtilityProgram.Instance.Executable = new FileInfo(System.IO.Path.Combine(path, "lmutil.exe"));
+
             License target = new License();
             target.Port = 27000;
             target.Host = "localhost";
-            UtilityProgram.Instance.Executable = new FileInfo(Path.Combine(testFiles.Path, "lmutil.exe"));
 
             using (AutoResetEvent waitHandle = new AutoResetEvent(false))
             {

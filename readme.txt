@@ -1,5 +1,8 @@
 License Status Release Notes
 
+TBD v3.7
+- TODO Update to use MockUtil for design time and debug data.
+
 October 23, 2012 v3.6
 - Add support for spaces within a user's name or display.
 - Change About window to display the program version in major.minor format.

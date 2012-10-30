@@ -5,9 +5,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		License Status.FxCop = License Status.FxCop
 		License.txt = License.txt
-		Local.testsettings = Local.testsettings
 		readme.txt = readme.txt
-		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseStatus", "LicenseStatus\LicenseStatus.csproj", "{46C70832-B7BC-49E5-BAC1-32B8D7F0AE45}"
@@ -18,19 +16,7 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup_WiX", "Setup_WiX\Setu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseManager.Test", "LicenseManager.Test\LicenseManager.Test.csproj", "{0FEEA0E8-9806-48FB-B4BE-183E34D67A6D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lmstat Files", "Lmstat Files", "{8D8F6AF2-0705-45F9-A669-C1E208E51BEC}"
-	ProjectSection(SolutionItems) = preProject
-		lmstat-acad.log = lmstat-acad.log
-		lmstat-combined.log = lmstat-combined.log
-		lmstat-connect.log = lmstat-connect.log
-		lmstat-errors.log = lmstat-errors.log
-		lmstat-invalid.log = lmstat-invalid.log
-		lmstat-large.log = lmstat-large.log
-		lmstat-nx.log = lmstat-nx.log
-		lmstat-test.log = lmstat-test.log
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LmStatReportGenerator", "LmStatReportGenerator\LmStatReportGenerator.csproj", "{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockUtil", "MockUtil\MockUtil.csproj", "{707BF6AE-8737-406E-B2C7-4DA6C99947BA}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -85,16 +71,16 @@ Global
 		{0FEEA0E8-9806-48FB-B4BE-183E34D67A6D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0FEEA0E8-9806-48FB-B4BE-183E34D67A6D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0FEEA0E8-9806-48FB-B4BE-183E34D67A6D}.Release|x86.ActiveCfg = Release|Any CPU
-		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{2B937C7D-5A2B-4400-9A1D-E5ACFA4BB884}.Release|x86.ActiveCfg = Release|Any CPU
+		{707BF6AE-8737-406E-B2C7-4DA6C99947BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{707BF6AE-8737-406E-B2C7-4DA6C99947BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{707BF6AE-8737-406E-B2C7-4DA6C99947BA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{707BF6AE-8737-406E-B2C7-4DA6C99947BA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{707BF6AE-8737-406E-B2C7-4DA6C99947BA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{707BF6AE-8737-406E-B2C7-4DA6C99947BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{707BF6AE-8737-406E-B2C7-4DA6C99947BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{707BF6AE-8737-406E-B2C7-4DA6C99947BA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{707BF6AE-8737-406E-B2C7-4DA6C99947BA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{707BF6AE-8737-406E-B2C7-4DA6C99947BA}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

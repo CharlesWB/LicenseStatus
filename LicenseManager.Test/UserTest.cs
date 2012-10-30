@@ -35,8 +35,6 @@ namespace LicenseManager.Test
     [TestClass]
     public class UserTest
     {
-        private static TestFiles testFiles = new TestFiles();
-
         private static CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
 
         private static int indexOffset;
@@ -104,8 +102,9 @@ namespace LicenseManager.Test
         [TestMethod]
         public void User_Typical_PropertyReturnsAreCorrect()
         {
-            License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License license = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
+            license.GetStatus();
 
             Feature feature = license.Features.First(f => f.Name == "Feature_With_Borrow");
 
@@ -136,12 +135,14 @@ namespace LicenseManager.Test
         [TestMethod]
         public void User_TypicalUsingDifferentCultures_PropertyReturnsAreCorrect()
         {
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+
             foreach (CultureInfo culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
             {
                 Thread.CurrentThread.CurrentCulture = culture;
 
-                License license = new License();
-                license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+                License license = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
+                license.GetStatus();
 
                 Feature feature = license.Features.First(f => f.Name == "Feature_With_Borrow");
 
@@ -173,8 +174,9 @@ namespace LicenseManager.Test
         [TestMethod]
         public void User_Borrowed_PropertyReturnsAreCorrect()
         {
-            License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License license = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
+            license.GetStatus();
 
             Feature feature = license.Features.First(f => f.Name == "Feature_With_Borrow");
 
@@ -208,8 +210,9 @@ namespace LicenseManager.Test
         [TestMethod]
         public void User_NonWordCharacters_PropertyReturnsAreCorrect()
         {
-            License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License license = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
+            license.GetStatus();
 
             Feature feature = license.Features.First(f => f.Name == "Feature_Non-Word.Characters");
 
@@ -239,8 +242,9 @@ namespace LicenseManager.Test
         [TestMethod]
         public void User_OtherFormats_PropertyReturnsAreCorrect()
         {
-            License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License license = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
+            license.GetStatus();
 
             Feature feature = license.Features.First(f => f.Name == "User_Multiple_Checkouts");
 
@@ -270,8 +274,9 @@ namespace LicenseManager.Test
         [TestMethod]
         public void User_NameDisplayWithSpaces_PropertyReturnsAreCorrect()
         {
-            License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License license = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
+            license.GetStatus();
 
             Feature feature = license.Features.First(f => f.Name == "Users_With_Spaces_Auto");
 
@@ -299,8 +304,9 @@ namespace LicenseManager.Test
         [TestMethod]
         public void User_NameDisplayWithSpacesOther_PropertyReturnsAreCorrect()
         {
-            License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License license = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
+            license.GetStatus();
 
             Feature feature = license.Features.First(f => f.Name == "Users_With_Spaces_Other");
 
@@ -342,8 +348,9 @@ namespace LicenseManager.Test
         [TestMethod]
         public void User_NameDisplayWithSpacesFail_PropertyReturnsAreCorrect()
         {
-            License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License license = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
+            license.GetStatus();
 
             Feature feature = license.Features.First(f => f.Name == "Users_With_Spaces_Fail");
 
@@ -360,8 +367,9 @@ namespace LicenseManager.Test
             // Currently the threading is such that by the time GetStatus returns
             // the identity will be correct. This may not be true in the future.
 
-            License license = new License();
-            license.GetStatus(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")));
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License license = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
+            license.GetStatus();
 
             Feature feature = license.Features.First(f => f.Name == "Users_With_Spaces_ChangedEvent");
 
@@ -380,7 +388,8 @@ namespace LicenseManager.Test
             PrivateObject privateInstance = new PrivateObject(privateKnownHostSet.GetStaticProperty("Instance", null));
             ((HashSet<string>)privateInstance.GetField("knownHosts")).Clear();
 
-            License testLicense = new License();
+            UtilityProgram.Instance.Executable = new FileInfo("MockUtil.exe");
+            License testLicense = new License() { Port = 27001, Host = "LmStatTest" };
 
             // Using GetStatusAsync may be overkill for testing the property changes, but it
             // throws in some threading.
@@ -388,9 +397,9 @@ namespace LicenseManager.Test
             {
                 testLicense.GetStatusCompleted += (s, e) => waitHandle.Set();
 
-                testLicense.GetStatusAsync(new FileInfo(Path.Combine(testFiles.Path, "lmstat-test.log")), 500);
+                testLicense.GetStatusAsync();
 
-                if (!waitHandle.WaitOne(5000, false))
+                if (!waitHandle.WaitOne(5100, false))
                 {
                     Assert.Fail("Test timed out.");
                 }
@@ -406,15 +415,15 @@ namespace LicenseManager.Test
             List<string> propertiesChanged = new List<string>();
             target.PropertyChanged += (s, e) => propertiesChanged.Add(e.PropertyName);
 
-            License nxLicense = new License();
+            License nxLicense = new License() { Port = 27000, Host = "LmStatNX" };
 
             using (AutoResetEvent waitHandle = new AutoResetEvent(false))
             {
                 nxLicense.GetStatusCompleted += (s, e) => waitHandle.Set();
 
-                nxLicense.GetStatusAsync(new FileInfo(Path.Combine(testFiles.Path, "lmstat-nx.log")), 500);
+                nxLicense.GetStatusAsync();
 
-                if (!waitHandle.WaitOne(5000, false))
+                if (!waitHandle.WaitOne(5100, false))
                 {
                     Assert.Fail("Test timed out.");
                 }
