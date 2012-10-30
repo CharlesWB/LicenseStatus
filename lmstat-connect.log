@@ -1,5 +1,0 @@
-lmutil - Copyright (c) 1989-2007 Macrovision Europe Ltd. and/or Macrovision Corporation. All Rights Reserved.
-Flexible License Manager status on Thu 4/12/2012 14:25
-
-[Detecting lmgrd processes...]
-Error getting status: Cannot connect to license server system. (-15,10:10061 "WinSock: Connection refused")
