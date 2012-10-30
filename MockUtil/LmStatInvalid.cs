@@ -27,8 +27,7 @@ namespace MockUtil
         /// Writes the lmstat invalid report.
         /// </summary>
         /// <remarks>
-        /// <para>If OutputFile is not specified the output will only write to the console.</para>
-        /// <para>If ReportDate is not specified the today's date will be used.</para>
+        /// If ReportDate is not specified then today's date will be used.
         /// </remarks>
         public override void CreateReport()
         {

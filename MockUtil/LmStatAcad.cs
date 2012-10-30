@@ -27,6 +27,9 @@ namespace MockUtil
         /// <summary>
         /// Writes the lmstat AutoCAD report.
         /// </summary>
+        /// <remarks>
+        /// If ReportDate is not specified then today's date will be used.
+        /// </remarks>
         public override void CreateReport()
         {
             this.WriteLine("lmutil - Copyright (c) 1989-2006 Macrovision Europe Ltd. and/or Macrovision Corporation. All Rights Reserved.");

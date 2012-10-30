@@ -52,8 +52,7 @@ namespace MockUtil
         /// Writes the lmstat test report.
         /// </summary>
         /// <remarks>
-        /// <para>If OutputFile is not specified the output will only write to the console.</para>
-        /// <para>If ReportDate is not specified today's date will be used.</para>
+        /// If ReportDate is not specified then today's date will be used.
         /// </remarks>
         public abstract void CreateReport();
 
