@@ -169,15 +169,15 @@ namespace LicenseManager.Test
             License target = new License();
 
             target.Port = expectedPort;
-            Assert.AreEqual(expectedPort, target.Port, "Port is incorrect.");
+            Assert.AreEqual(expectedPort, target.Port, "Port property.");
 
             target.Host = expectedHost;
-            Assert.AreEqual(expectedHost, target.Host, "Host is incorrect.");
+            Assert.AreEqual(expectedHost, target.Host, "Host property.");
 
             Assert.AreEqual(expectedNameAutomatic, target.ToString(), "ToString is incorrect.");
 
             target.Name = expectedNameManual;
-            Assert.AreEqual(expectedNameManual, target.Name, "Name is incorrect.");
+            Assert.AreEqual(expectedNameManual, target.Name, "Name property.");
 
             Assert.AreEqual(expectedNameManual, target.ToString(), "ToString is incorrect.");
 
@@ -190,19 +190,24 @@ namespace LicenseManager.Test
         {
             License target = new License();
 
-            Assert.AreEqual(DateTime.MinValue.ToString(), target.Time.ToString());
-            Assert.IsFalse(target.InUse);
+            PropertiesComparer.AssertLicensePropertiesAreEqual(
+                actual: target,
+                time: DateTime.MinValue,
+                serverFile: null,
+                vendorDaemonName: null,
+                vendorDaemonStatus: null,
+                vendorDaemonVersion: null,
+                isVendorDaemonUp: false,
+                featuresCount: 0,
+                isFeatureError: false,
+                userCount: 0,
+                inUse: false,
+                inUseCount: 0,
+                hasError: false,
+                errorMessage: null,
+                isBusy: false);
 
-            // Features.Count is used as a rough check that the Features property is working.
-            Assert.AreEqual(0, target.Features.Count);
-
-            Assert.AreEqual(0, target.InUseCount);
-            Assert.AreEqual(0, target.UserCount);
-            Assert.IsFalse(target.IsVendorDaemonUp);
-            Assert.IsNull(target.VendorDaemonName);
-            Assert.IsNull(target.VendorDaemonStatus);
-            Assert.IsNull(target.VendorDaemonVersion);
-            Assert.IsNull(target.Report);
+            Assert.IsNull(target.Report, "Report property");
         }
 
         [TestMethod]
@@ -226,23 +231,22 @@ namespace LicenseManager.Test
             License target = new License() { Port = 27001, Host = "LmStatTest" };
             target.GetStatus();
 
-            DateTime expectedTime = DateTime.Today.AddHours(10).AddMinutes(43);
-            Assert.AreEqual(expectedTime, target.Time);
-
-            Assert.IsTrue(target.InUse);
-            Assert.AreEqual(13, target.Features.Count);
-            Assert.AreEqual(10, target.InUseCount);
-            Assert.AreEqual(67, target.UserCount);
-            Assert.IsTrue(target.IsVendorDaemonUp);
-            Assert.AreEqual("testdaemon", target.VendorDaemonName);
-            Assert.AreEqual("UP", target.VendorDaemonStatus);
-            Assert.AreEqual("v10.1", target.VendorDaemonVersion);
-            Assert.AreEqual(string.Empty, target.ErrorMessage);
-            Assert.IsFalse(target.HasError);
-            Assert.IsFalse(target.IsBusy);
-            Assert.IsTrue(target.IsFeatureError);
-            Assert.IsTrue(target.IsVendorDaemonUp);
-            Assert.AreEqual(@"C:\License Servers\Test\Test.lic", target.ServerFile);
+            PropertiesComparer.AssertLicensePropertiesAreEqual(
+                actual: target,
+                time: DateTime.Today.AddHours(10).AddMinutes(43),
+                serverFile: @"C:\License Servers\Test\Test.lic",
+                vendorDaemonName: "testdaemon",
+                vendorDaemonStatus: "UP",
+                vendorDaemonVersion: "v10.1",
+                isVendorDaemonUp: true,
+                featuresCount: 13,
+                isFeatureError: true,
+                userCount: 67,
+                inUse: true,
+                inUseCount: 10,
+                hasError: false,
+                errorMessage: string.Empty,
+                isBusy: false);
         }
 
         [TestMethod]
@@ -257,23 +261,22 @@ namespace LicenseManager.Test
                 License target = new License() { Port = MockUtil.Program.NoDelayPort, Host = "LmStatTest" };
                 target.GetStatus();
 
-                DateTime expectedTime = DateTime.Today.AddHours(10).AddMinutes(43);
-                Assert.AreEqual(expectedTime, target.Time);
-
-                Assert.IsTrue(target.InUse);
-                Assert.AreEqual(13, target.Features.Count);
-                Assert.AreEqual(10, target.InUseCount);
-                Assert.AreEqual(67, target.UserCount);
-                Assert.IsTrue(target.IsVendorDaemonUp);
-                Assert.AreEqual("testdaemon", target.VendorDaemonName);
-                Assert.AreEqual("UP", target.VendorDaemonStatus);
-                Assert.AreEqual("v10.1", target.VendorDaemonVersion);
-                Assert.AreEqual(string.Empty, target.ErrorMessage);
-                Assert.IsFalse(target.HasError);
-                Assert.IsFalse(target.IsBusy);
-                Assert.IsTrue(target.IsFeatureError);
-                Assert.IsTrue(target.IsVendorDaemonUp);
-                Assert.AreEqual(@"C:\License Servers\Test\Test.lic", target.ServerFile);
+                PropertiesComparer.AssertLicensePropertiesAreEqual(
+                    actual: target,
+                    time: DateTime.Today.AddHours(10).AddMinutes(43),
+                    serverFile: @"C:\License Servers\Test\Test.lic",
+                    vendorDaemonName: "testdaemon",
+                    vendorDaemonStatus: "UP",
+                    vendorDaemonVersion: "v10.1",
+                    isVendorDaemonUp: true,
+                    featuresCount: 13,
+                    isFeatureError: true,
+                    userCount: 67,
+                    inUse: true,
+                    inUseCount: 10,
+                    hasError: false,
+                    errorMessage: string.Empty,
+                    isBusy: false);
             }
         }
 
@@ -284,23 +287,22 @@ namespace LicenseManager.Test
             License target = new License() { Port = 27001, Host = "LmStatNX" };
             target.GetStatus();
 
-            DateTime expectedTime = DateTime.Today.AddHours(10).AddMinutes(43);
-            Assert.AreEqual(expectedTime, target.Time);
-
-            Assert.IsTrue(target.InUse);
-            Assert.AreEqual(135, target.Features.Count);
-            Assert.AreEqual(9, target.InUseCount);
-            Assert.AreEqual(21, target.UserCount);
-            Assert.IsTrue(target.IsVendorDaemonUp);
-            Assert.AreEqual("uglmd", target.VendorDaemonName);
-            Assert.AreEqual("UP", target.VendorDaemonStatus);
-            Assert.AreEqual("v10.8", target.VendorDaemonVersion);
-            Assert.AreEqual(string.Empty, target.ErrorMessage);
-            Assert.IsFalse(target.HasError);
-            Assert.IsFalse(target.IsBusy);
-            Assert.IsFalse(target.IsFeatureError);
-            Assert.IsTrue(target.IsVendorDaemonUp);
-            Assert.AreEqual(@"C:\License Servers\UGNX\UGNX.dat", target.ServerFile);
+            PropertiesComparer.AssertLicensePropertiesAreEqual(
+                actual: target,
+                time: DateTime.Today.AddHours(10).AddMinutes(43),
+                serverFile: @"C:\License Servers\UGNX\UGNX.dat",
+                vendorDaemonName: "uglmd",
+                vendorDaemonStatus: "UP",
+                vendorDaemonVersion: "v10.8",
+                isVendorDaemonUp: true,
+                featuresCount: 135,
+                isFeatureError: false,
+                userCount: 21,
+                inUse: true,
+                inUseCount: 9,
+                hasError: false,
+                errorMessage: string.Empty,
+                isBusy: false);
         }
 
         [TestMethod]
@@ -313,23 +315,22 @@ namespace LicenseManager.Test
             target.Host = "LmStatAcad";
             target.GetStatus();
 
-            DateTime expectedTime = DateTime.Today.AddHours(10).AddMinutes(43);
-            Assert.AreEqual(expectedTime, target.Time);
-
-            Assert.IsTrue(target.InUse);
-            Assert.AreEqual(22, target.Features.Count);
-            Assert.AreEqual(7, target.InUseCount);
-            Assert.AreEqual(112, target.UserCount);
-            Assert.IsTrue(target.IsVendorDaemonUp);
-            Assert.AreEqual("adskflex", target.VendorDaemonName);
-            Assert.AreEqual("UP", target.VendorDaemonStatus);
-            Assert.AreEqual("v10.8", target.VendorDaemonVersion);
-            Assert.AreEqual(string.Empty, target.ErrorMessage);
-            Assert.IsFalse(target.HasError);
-            Assert.IsFalse(target.IsBusy);
-            Assert.IsFalse(target.IsFeatureError);
-            Assert.IsTrue(target.IsVendorDaemonUp);
-            Assert.AreEqual(@"C:\License Servers\Autodesk\Autodesk.dat", target.ServerFile);
+            PropertiesComparer.AssertLicensePropertiesAreEqual(
+                actual: target,
+                time: DateTime.Today.AddHours(10).AddMinutes(43),
+                serverFile: @"C:\License Servers\Autodesk\Autodesk.dat",
+                vendorDaemonName: "adskflex",
+                vendorDaemonStatus: "UP",
+                vendorDaemonVersion: "v10.8",
+                isVendorDaemonUp: true,
+                featuresCount: 22,
+                isFeatureError: false,
+                userCount: 112,
+                inUse: true,
+                inUseCount: 7,
+                hasError: false,
+                errorMessage: string.Empty,
+                isBusy: false);
         }
 
         [TestMethod]
@@ -339,23 +340,22 @@ namespace LicenseManager.Test
             License target = new License() { Port = 7601, Host = "LmStatErrors" };
             target.GetStatus();
 
-            DateTime expectedTime = new DateTime(2008, 11, 20, 15, 42, 0);
-            Assert.AreEqual(expectedTime, target.Time);
-
-            Assert.IsFalse(target.InUse);
-            Assert.AreEqual(11, target.Features.Count);
-            Assert.AreEqual(0, target.InUseCount);
-            Assert.AreEqual(0, target.UserCount);
-            Assert.IsFalse(target.IsVendorDaemonUp);
-            Assert.AreEqual("theorem", target.VendorDaemonName);
-            Assert.AreEqual("The desired vendor daemon is down. (-97,121)", target.VendorDaemonStatus);
-            Assert.AreEqual(string.Empty, target.VendorDaemonVersion);
-            Assert.AreEqual(string.Empty, target.ErrorMessage);
-            Assert.IsFalse(target.HasError);
-            Assert.IsFalse(target.IsBusy);
-            Assert.IsTrue(target.IsFeatureError);
-            Assert.IsFalse(target.IsVendorDaemonUp);
-            Assert.AreEqual(@"D:\License Servers\Theorem\theorem.dat", target.ServerFile);
+            PropertiesComparer.AssertLicensePropertiesAreEqual(
+                actual: target,
+                time: new DateTime(2008, 11, 20, 15, 42, 0),
+                serverFile: @"D:\License Servers\Theorem\theorem.dat",
+                vendorDaemonName: "theorem",
+                vendorDaemonStatus: "The desired vendor daemon is down. (-97,121)",
+                vendorDaemonVersion: string.Empty,
+                isVendorDaemonUp: false,
+                featuresCount: 11,
+                isFeatureError: true,
+                userCount: 0,
+                inUse: false,
+                inUseCount: 0,
+                hasError: false,
+                errorMessage: string.Empty,
+                isBusy: false);
         }
 
         [TestMethod]
@@ -365,23 +365,22 @@ namespace LicenseManager.Test
             License target = new License() { Port = 7601, Host = "LmStatConnect" };
             target.GetStatus();
 
-            DateTime expectedTime = DateTime.Today.AddHours(14).AddMinutes(25);
-            Assert.AreEqual(expectedTime, target.Time);
-
-            Assert.IsFalse(target.InUse);
-            Assert.AreEqual(0, target.Features.Count);
-            Assert.AreEqual(0, target.InUseCount);
-            Assert.AreEqual(0, target.UserCount);
-            Assert.IsFalse(target.IsVendorDaemonUp);
-            Assert.AreEqual(string.Empty, target.VendorDaemonName);
-            Assert.AreEqual(string.Empty, target.VendorDaemonStatus);
-            Assert.AreEqual(string.Empty, target.VendorDaemonVersion);
-            Assert.AreEqual("Cannot connect to license server system. (-15,10:10061 \"WinSock: Connection refused\")", target.ErrorMessage);
-            Assert.IsTrue(target.HasError);
-            Assert.IsFalse(target.IsBusy);
-            Assert.IsFalse(target.IsFeatureError);
-            Assert.IsFalse(target.IsVendorDaemonUp);
-            Assert.IsNull(target.ServerFile);
+            PropertiesComparer.AssertLicensePropertiesAreEqual(
+                actual: target,
+                time: DateTime.Today.AddHours(14).AddMinutes(25),
+                serverFile: null,
+                vendorDaemonName: string.Empty,
+                vendorDaemonStatus: string.Empty,
+                vendorDaemonVersion: string.Empty,
+                isVendorDaemonUp: false,
+                featuresCount: 0,
+                isFeatureError: false,
+                userCount: 0,
+                inUse: false,
+                inUseCount: 0,
+                hasError: true,
+                errorMessage: "Cannot connect to license server system. (-15,10:10061 \"WinSock: Connection refused\")",
+                isBusy: false);
         }
 
         [TestMethod]

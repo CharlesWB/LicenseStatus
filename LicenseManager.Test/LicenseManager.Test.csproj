@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="FeatureTest.cs" />
     <Compile Include="LicenseTest.cs" />
+    <Compile Include="PropertiesComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserTest.cs" />
     <Compile Include="UtilityProgramTest.cs" />

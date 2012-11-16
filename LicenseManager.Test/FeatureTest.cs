@@ -90,20 +90,22 @@ namespace LicenseManager.Test
             string expectedName = "Empty_Feature_One_License";
             Feature target = license.Features.First(f => f.Name == expectedName);
 
-            Assert.AreEqual(expectedName, target.Name);
-            Assert.AreEqual(1, target.QuantityAvailable);
-            Assert.AreEqual(1, target.QuantityIssued);
-            Assert.AreEqual(0, target.QuantityUsed);
-            Assert.AreEqual(0, target.QuantityBorrowed);
-            Assert.IsFalse(target.InUse);
-            Assert.IsNull(target.Type);
-            Assert.IsNull(target.Vendor);
-            Assert.IsNull(target.Version);
-            Assert.IsFalse(target.HasError);
-            Assert.IsNull(target.ErrorMessage);
-            Assert.AreEqual(0, target.Users.Count);
-            Assert.AreEqual(450 + indexOffset, target.EntryIndex);
-            Assert.AreEqual(97, target.EntryLength);
+            PropertiesComparer.AssertFeaturePropertiesAreEqual(
+                actual: target,
+                name: expectedName,
+                quantityIssued: 1,
+                quantityUsed: 0,
+                quantityAvailable: 1,
+                quantityBorrowed: 0,
+                usersCount: 0,
+                vendor: null,
+                version: null,
+                type: null,
+                inUse: false,
+                hasError: false,
+                errorMessage: null,
+                entryIndex: 450 + indexOffset,
+                entryLength: 97);
         }
 
         [TestMethod]
@@ -116,20 +118,22 @@ namespace LicenseManager.Test
             string expectedName = "Used_Feature_One_License";
             Feature target = license.Features.First(f => f.Name == expectedName);
 
-            Assert.AreEqual(expectedName, target.Name);
-            Assert.AreEqual(0, target.QuantityAvailable);
-            Assert.AreEqual(1, target.QuantityIssued);
-            Assert.AreEqual(1, target.QuantityUsed);
-            Assert.AreEqual(0, target.QuantityBorrowed);
-            Assert.IsTrue(target.InUse);
-            Assert.AreEqual("floating license", target.Type);
-            Assert.AreEqual("testdaemon", target.Vendor);
-            Assert.AreEqual("v22.0", target.Version);
-            Assert.IsFalse(target.HasError);
-            Assert.IsNull(target.ErrorMessage);
-            Assert.AreEqual(1, target.Users.Count);
-            Assert.AreEqual(547 + indexOffset, target.EntryIndex);
-            Assert.AreEqual(255 + indexOffset, target.EntryLength);
+            PropertiesComparer.AssertFeaturePropertiesAreEqual(
+                actual: target,
+                name: expectedName,
+                quantityIssued: 1,
+                quantityUsed: 1,
+                quantityAvailable: 0,
+                quantityBorrowed: 0,
+                usersCount: 1,
+                vendor: "testdaemon",
+                version: "v22.0",
+                type: "floating license",
+                inUse: true,
+                hasError: false,
+                errorMessage: null,
+                entryIndex: 547 + indexOffset,
+                entryLength: 255 + indexOffset);
         }
 
         [TestMethod]
@@ -142,19 +146,22 @@ namespace LicenseManager.Test
             string expectedName = "Feature_With_Borrow";
             Feature target = license.Features.First(f => f.Name == expectedName);
 
-            Assert.AreEqual(expectedName, target.Name);
-            Assert.AreEqual(12, target.QuantityAvailable);
-            Assert.AreEqual(16, target.QuantityIssued);
-            Assert.AreEqual(4, target.QuantityUsed);
-            Assert.AreEqual(2, target.QuantityBorrowed);
-            Assert.IsTrue(target.InUse);
-            Assert.AreEqual("floating license", target.Type);
-            Assert.AreEqual("testdaemon", target.Vendor);
-            Assert.AreEqual("v22.0", target.Version);
-            Assert.IsFalse(target.HasError);
-            Assert.IsNull(target.ErrorMessage);
-            Assert.AreEqual(4, target.Users.Count);
-            Assert.AreEqual(999 + (indexOffset * 2), target.EntryIndex);
+            PropertiesComparer.AssertFeaturePropertiesAreEqual(
+                actual: target,
+                name: expectedName,
+                quantityIssued: 16,
+                quantityUsed: 4,
+                quantityAvailable: 12,
+                quantityBorrowed: 2,
+                usersCount: 4,
+                vendor: "testdaemon",
+                version: "v22.0",
+                type: "floating license",
+                inUse: true,
+                hasError: false,
+                errorMessage: null,
+                entryIndex: 999 + (2 * indexOffset),
+                entryLength: target.EntryLength);
         }
 
         [TestMethod]
@@ -167,20 +174,22 @@ namespace LicenseManager.Test
             string expectedName = "Feature_With_Error";
             Feature target = license.Features.First(f => f.Name == expectedName);
 
-            Assert.AreEqual(expectedName, target.Name);
-            Assert.AreEqual(0, target.QuantityAvailable);
-            Assert.AreEqual(0, target.QuantityIssued);
-            Assert.AreEqual(0, target.QuantityUsed);
-            Assert.AreEqual(0, target.QuantityBorrowed);
-            Assert.IsFalse(target.InUse);
-            Assert.IsNull(target.Type);
-            Assert.IsNull(target.Vendor);
-            Assert.IsNull(target.Version);
-            Assert.IsTrue(target.HasError);
-            Assert.AreEqual("Cannot get users of Feature_With_Error: No such feature exists. (-5,222)", target.ErrorMessage);
-            Assert.AreEqual(0, target.Users.Count);
-            Assert.AreEqual(802 + (indexOffset * 2), target.EntryIndex);
-            Assert.AreEqual(105, target.EntryLength);
+            PropertiesComparer.AssertFeaturePropertiesAreEqual(
+                actual: target,
+                name: expectedName,
+                quantityIssued: 0,
+                quantityUsed: 0,
+                quantityAvailable: 0,
+                quantityBorrowed: 0,
+                usersCount: 0,
+                vendor: null,
+                version: null,
+                type: null,
+                inUse: false,
+                hasError: true,
+                errorMessage: "Cannot get users of Feature_With_Error: No such feature exists. (-5,222)",
+                entryIndex: 802 + (2 * indexOffset),
+                entryLength: 105);
         }
 
         [TestMethod]
@@ -193,19 +202,22 @@ namespace LicenseManager.Test
             string expectedName = "Feature_Non-Word.Characters";
             Feature target = license.Features.First(f => f.Name == expectedName);
 
-            Assert.AreEqual(expectedName, target.Name);
-            Assert.AreEqual(10, target.QuantityAvailable);
-            Assert.AreEqual(16, target.QuantityIssued);
-            Assert.AreEqual(6, target.QuantityUsed);
-            Assert.AreEqual(0, target.QuantityBorrowed);
-            Assert.IsTrue(target.InUse);
-            Assert.AreEqual("floating license", target.Type);
-            Assert.AreEqual("testdaemon", target.Vendor);
-            Assert.AreEqual("v22.0", target.Version);
-            Assert.IsFalse(target.HasError);
-            Assert.IsNull(target.ErrorMessage);
-            Assert.AreEqual(6, target.Users.Count);
-            Assert.AreEqual(694 + (indexOffset * 6), target.EntryLength);
+            PropertiesComparer.AssertFeaturePropertiesAreEqual(
+                actual: target,
+                name: expectedName,
+                quantityIssued: 16,
+                quantityUsed: 6,
+                quantityAvailable: 10,
+                quantityBorrowed: 0,
+                usersCount: 6,
+                vendor: "testdaemon",
+                version: "v22.0",
+                type: "floating license",
+                inUse: true,
+                hasError: false,
+                errorMessage: null,
+                entryIndex: target.EntryIndex,
+                entryLength: 694 + (6 * indexOffset));
         }
 
         [TestMethod]
@@ -218,19 +230,22 @@ namespace LicenseManager.Test
             string expectedName = "User_Multiple_Checkouts";
             Feature target = license.Features.First(f => f.Name == expectedName);
 
-            Assert.AreEqual(expectedName, target.Name);
-            Assert.AreEqual(1, target.QuantityAvailable);
-            Assert.AreEqual(9, target.QuantityIssued);
-            Assert.AreEqual(8, target.QuantityUsed);
-            Assert.AreEqual(2, target.QuantityBorrowed);
-            Assert.IsTrue(target.InUse);
-            Assert.AreEqual("floating license", target.Type);
-            Assert.AreEqual("testdaemon", target.Vendor);
-            Assert.AreEqual("v22.0", target.Version);
-            Assert.IsFalse(target.HasError);
-            Assert.IsNull(target.ErrorMessage);
-            Assert.AreEqual(4, target.Users.Count);
-            Assert.AreEqual(553 + (indexOffset * 4), target.EntryLength);
+            PropertiesComparer.AssertFeaturePropertiesAreEqual(
+                actual: target,
+                name: expectedName,
+                quantityIssued: 9,
+                quantityUsed: 8,
+                quantityAvailable: 1,
+                quantityBorrowed: 2,
+                usersCount: 4,
+                vendor: "testdaemon",
+                version: "v22.0",
+                type: "floating license",
+                inUse: true,
+                hasError: false,
+                errorMessage: null,
+                entryIndex: target.EntryIndex,
+                entryLength: 553 + (4 * indexOffset));
         }
     }
 }
