@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{280E7C3D-FD51-442D-A5FB-35309A245B23}"
 	ProjectSection(SolutionItems) = preProject
 		License Status.FxCop = License Status.FxCop
 		License.txt = License.txt
-		readme.txt = readme.txt
+		readme.md = readme.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseStatus", "LicenseStatus\LicenseStatus.csproj", "{46C70832-B7BC-49E5-BAC1-32B8D7F0AE45}"
