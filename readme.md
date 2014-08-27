@@ -23,7 +23,7 @@ TBD v3.7
 
 August 26, 2014 v3.6
 
-- Released on Github.
+- Released on GitHub.
 
 October 23, 2012 v3.6
 
