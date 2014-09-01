@@ -1,5 +1,5 @@
 ﻿// <copyright file="Program.cs" company="Charles W. Bozarth">
-// Copyright (C) 2009-2012 Charles W. Bozarth
+// Copyright (C) 2009-2014 Charles W. Bozarth
 // Refer to LicenseManager's License.cs for the full copyright notice.
 // </copyright>
 
@@ -103,7 +103,7 @@ namespace MockUtil
         /// </summary>
         private static void WriteHelp()
         {
-            Console.WriteLine("MockUtil - Copyright (c) 2012 Charles W. Bozarth");
+            Console.WriteLine("MockUtil - Copyright (c) 2012-2014 Charles W. Bozarth");
             Console.WriteLine("Emulates the lmutil program to generate test lmstat reports.");
             Console.WriteLine();
             Console.WriteLine("usage:  MockUtil lmstat -a -c license_file");

@@ -1,5 +1,5 @@
 ﻿// <copyright file="ObservableObject.cs" company="Charles W. Bozarth">
-// Copyright (C) 2009-2012 Charles W. Bozarth
+// Copyright (C) 2009-2014 Charles W. Bozarth
 // Refer to License.cs for the full copyright notice.
 // </copyright>
 

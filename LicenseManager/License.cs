@@ -1,5 +1,5 @@
 // <copyright file="License.cs" company="Charles W. Bozarth">
-// Copyright (C) 2009-2012 Charles W. Bozarth
+// Copyright (C) 2009-2014 Charles W. Bozarth
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 // </copyright>
 // <author>Charles W. Bozarth</author>
 // <date>2009-08-17</date>
-// <site>http://licensestatus.sourceforge.net</site>
+// <site>https://github.com/CharlesWB/LicenseStatus</site>
 // <summary>Provides access to FlexLM license information.</summary>
 
 #region Notes

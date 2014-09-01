@@ -17,11 +17,7 @@ Requires .NET Framework 4.0.
 
 ## Release Notes
 
-TBD v3.7
-
-- TODO Update to use MockUtil for design time and debug data.
-
-August 26, 2014 v3.6
+August 31, 2014 v3.7
 
 - Released on GitHub.
 

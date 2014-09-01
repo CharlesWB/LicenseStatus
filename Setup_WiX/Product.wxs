@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (C) 2009-2012 Charles W. Bozarth
+  Copyright (C) 2009-2014 Charles W. Bozarth
   Refer to MainWindow.xaml.cs for the full copyright notice.
   
   Change Product Id and Version for each release.
 -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
-  <Product Id="{C292224E-58BB-4A0F-916A-C3B433515C0C}" Name="License Status" Manufacturer="Charles W. Bozarth" Version="3.6.0" UpgradeCode="{99B04D07-358A-4273-B2AE-0FE6A229D73F}" Language="1033" Codepage="1252">
+  <Product Id="{9868D1C5-471A-4C8C-B5F7-6583916F0888}" Name="License Status" Manufacturer="Charles W. Bozarth" Version="3.7.0" UpgradeCode="{99B04D07-358A-4273-B2AE-0FE6A229D73F}" Language="1033" Codepage="1252">
 
     <Package Id="*" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Manufacturer="Charles W. Bozarth" Comments="Display the status of FlexLM licenses" />
 
@@ -19,8 +19,8 @@
     <Property Id="ARPPRODUCTICON" Value="Application.ico" />
     <Property Id="ARPCOMMENTS" Value="Display the status of FlexLM licenses" />
     <Property Id="ARPCONTACT" Value="Charles W. Bozarth" />
-    <Property Id="ARPURLINFOABOUT" Value="http://sourceforge.net/projects/licensestatus/" />
-    <Property Id="ARPHELPLINK" Value="http://licensestatus.sourceforge.net/" />
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/CharlesWB/LicenseStatus" />
+    <Property Id="ARPHELPLINK" Value="http://charleswb.github.io/LicenseStatus/" />
 
     <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again."><![CDATA[Installed OR NETFRAMEWORK40CLIENT]]></Condition>
 
