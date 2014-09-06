@@ -19,7 +19,7 @@ Requires .NET Framework 4.0.
 
 August 31, 2014 v3.7
 
-- Released on GitHub.
+- Released on [GitHub](https://github.com/CharlesWB/LicenseStatus).
 
 October 23, 2012 v3.6
 
@@ -66,7 +66,7 @@ May 20, 2010 v2.4
 
 October 17, 2009 v2.3
 
-- Released on SourceForge.
+- Released on [SourceForge](http://sourceforge.net/projects/licensestatus/).
 
 October 9, 2009 v2.3
 
