@@ -1,0 +1,38 @@
+<header>
+    <h1>{{ site.title | default: site.github.repository_name }}</h1>
+    <p>{{ site.description | default: site.github.project_tagline }}</p>
+    <p><img src="{{ "images/screenshot.png" | relative_url }}" alt="Screenshot of License Status" /></p>
+
+    <!-- TODO https://github.com/jekyll/github-metadata/issues/80 -->
+    {% assign latestRelease = site.github.releases.first%}
+    <ul>
+        <li style="width: 100%;"><a href="{{ latestRelease.assets.first.browser_download_url }}" title="Download {{ latestRelease.assets.first.name }}"><strong>Download {{ site.title }} {{ latestRelease.tag_name }}</strong></a></li>
+    </ul>
+
+    <p><a href="{{ "/" | relative_url }}">News</a></p>
+
+    {% assign sortedPages = site.pages | sort: "sortorder" %}
+    {% for my_page in sortedPages %}
+        {% if my_page.title %}
+        <p><a href="{{ my_page.url | relative_url }}">{{ my_page.title | escape }}</a></p>
+        {% endif %}
+    {% endfor %}
+
+    <p><a href="{{ site.github.wiki_url }}/Screenshots">View screenshots</a></p>
+
+    {% if site.github.is_project_page %}
+        <p><a href="{{ site.github.repository_url }}">View the Project on GitHub <small>{{ github_name }}</small></a></p>
+    {% endif %}
+
+    {% if site.github.is_user_page %}
+        <p><a href="{{ site.github.owner_url }}">View My GitHub Profile</a></p>
+    {% endif %}
+
+    {% if site.show_downloads %}
+        <ul>
+            <li><a href="{{ site.github.zip_url }}">Download <strong>ZIP File</strong></a></li>
+            <li><a href="{{ site.github.tar_url }}">Download <strong>TAR Ball</strong></a></li>
+            <li><a href="{{ site.github.repository_url }}">View On <strong>GitHub</strong></a></li>
+        </ul>
+    {% endif %}
+</header>

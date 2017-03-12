@@ -1,2 +1,5 @@
-#OS junk files
+_site
+.sass-cache
+.jekyll-metadata
 [Tt]humbs.db
+debug.log

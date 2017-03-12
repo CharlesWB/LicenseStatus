@@ -1,0 +1,25 @@
+---
+layout: default
+---
+<div>
+
+  <h1>News</h1>
+
+  <div>
+    {% for post in site.posts %}
+    <h2>
+      <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+    </h2>
+
+    <p><em>{{ post.date | date: "%B %-d, %Y" }}</em></p>
+
+    {{ post.content }}
+
+    {% if post != site.posts.last %}
+    <hr />
+    {% endif %}
+
+    {% endfor %}
+  </div>
+
+</div>
